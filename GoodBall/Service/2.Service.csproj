@@ -41,6 +41,21 @@
   <ItemGroup>
     <Compile Include="SingModel.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="UserService.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\DataCollection\4.DataCollection.csproj">
+      <Project>{88cef747-1110-45f0-974f-e180ef22e4d9}</Project>
+      <Name>4.DataCollection</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Helper\5.Helper.csproj">
+      <Project>{629ff08a-c46e-4a78-bb2f-e461fa1af618}</Project>
+      <Name>5.Helper</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Repository\3.Repository.csproj">
+      <Project>{C01A18B6-CCCC-4A81-A9AD-9DA71421046F}</Project>
+      <Name>3.Repository</Name>
+    </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
