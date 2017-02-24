@@ -1,0 +1,400 @@
+﻿@charset "utf-8";
+/*基本框架CSS*/
+html, body, h1, h2, h3, h4, h5, h6, div, dl, dt, dd, ul, ol, li, p, blockquote, pre, hr, figure, table, caption, th, td, form, fieldset, legend, input, button, textarea, menu {
+    margin: 0;
+    padding: 0;
+}
+
+header, footer, section, article, aside, nav, hgroup, address, figure, figcaption, menu, details {
+    display: block;
+}
+
+table {
+    border-spacing: 0;
+}
+
+caption, th {
+    text-align: left;
+    font-weight: normal;
+}
+
+html, body, fieldset, img, iframe, abbr {
+    border: 0;
+}
+
+i, cite, em, var, address, dfn {
+    font-style: normal;
+}
+
+[hidefocus], summary {
+    outline: 0;
+}
+
+li {
+    list-style: none;
+}
+
+h1, h2, h3, h4, h5, h6, small {
+    font-size: 100%;
+}
+
+sup, sub {
+    font-size: 83%;
+}
+
+pre, code, kbd, samp {
+    font-family: inherit;
+}
+
+q:before, q:after {
+    content: none;
+}
+
+textarea {
+    overflow: auto;
+    resize: none;
+}
+
+input[disabled] {
+    background-color: #EBEBE5;
+}
+
+select {
+    background-color: #fff;
+    border-width: 1px;
+    border-style: solid;
+}
+
+label, summary {
+    word-break: break-all;
+    cursor: default;
+}
+
+a, a:hover, a:visited {
+    outline: none;
+}
+
+a, button {
+    cursor: pointer;
+}
+
+h1, h2, h3, h4, h5, h6, em, strong, b {
+    font-weight: 500;
+}
+
+del, ins, u, s, a, a:hover {
+    text-decoration: none;
+}
+
+body, textarea, input, button, select, keygen, legend {
+    font: 12px/1.14 arial, \5b8b\4f53;
+    color: #333;
+    outline: 0;
+}
+
+a {
+    outline-style: none;
+    color: #535353;
+    text-decoration: none;
+}
+
+    a:hover {
+        color: #D40000;
+        text-decoration: none;
+    }
+
+.hidden {
+    display: none;
+}
+
+.button {
+    display: inline-block;
+    zoom: 1;
+    *display: inline;
+    vertical-align: baseline;
+    margin: 0 2px;
+    outline: none;
+    cursor: pointer;
+    text-align: center;
+    text-decoration: none;
+    font: 14px/100% Arial, Helvetica, sans-serif;
+    padding: 0.25em 0.6em 0.3em;
+    text-shadow: 0 1px 1px rgba(0,0,0,.3);
+    -webkit-border-radius: .5em;
+    -moz-border-radius: .5em;
+    border-radius: .5em;
+    -webkit-box-shadow: 0 1px 2px rgba(0,0,0,.2);
+    -moz-box-shadow: 0 1px 2px rgba(0,0,0,.2);
+    box-shadow: 0 1px 2px rgba(0,0,0,.2);
+}
+
+.red {
+    color: #faddde;
+    border: solid 1px #980c10;
+    background: #d81b21;
+    background: -webkit-gradient(linear, left top, left bottom, from(#ed1c24), to(#A51715));
+    background: -moz-linear-gradient(top, #ed1c24, #A51715);
+    filter: progid:DXImageTransform.Microsoft.gradient(startColorstr='#ed1c24', endColorstr='#aa1317');
+}
+
+    .red:hover {
+        background: #b61318;
+        background: -webkit-gradient(linear, left top, left bottom, from(#c9151b), to(#a11115));
+        background: -moz-linear-gradient(top, #c9151b, #a11115);
+        filter: progid:DXImageTransform.Microsoft.gradient(startColorstr='#c9151b', endColorstr='#a11115');
+        color: #fff;
+    }
+
+    .red:active {
+        color: #de898c;
+        background: -webkit-gradient(linear, left top, left bottom, from(#aa1317), to(#ed1c24));
+        background: -moz-linear-gradient(top, #aa1317, #ed1c24);
+        filter: progid:DXImageTransform.Microsoft.gradient(startColorstr='#aa1317', endColorstr='#ed1c24');
+    }
+
+.cor_bs, .cor_bs:hover {
+    color: #ffffff;
+}
+
+.keBody {
+    background: url(../images/bodyBg.jpg) repeat #333;
+}
+
+.msKeimgBox {
+    margin: 0px auto;
+    width: 965px;
+    position: relative;
+    padding-top: 30px;
+    height: 93px;
+}
+
+    .msKeimgBox ul {
+        width: 1000px;
+    }
+
+.mskeLayBg {
+    background: #000;
+    width: 100%;
+    position: absolute;
+    left: 0px;
+    top: 0px;
+    z-index: 10;
+    opacity: 0.7;
+    filter: alpha(opacity=70);
+    display: none;
+    _display: none !important;
+}
+
+.mskelayBox {
+    height: 600px;
+    width: 800px;
+    margin-top: -251px;
+    margin-left: -494px;
+    position: fixed;
+    left: 50%;
+    top: 50%;
+    border: 7px solid #FFF;
+    z-index: 20;
+    background: #FFF;
+    display: none;
+    _display: none !important;
+}
+
+.mskeImgBg {
+    height: 57px;
+    width: 100%;
+    position: absolute;
+    left: 0px;
+    bottom: 0px;
+}
+
+.mskeClaose {
+    position: absolute;
+    top: -17px;
+    right: -17px;
+    cursor: pointer;
+}
+
+.mske_downIco {
+    position: absolute;
+    left: 0px;
+    top: 0px;
+}
+
+.mske_imgDown {
+    background: url(../images/mke_imgMbg.png) repeat;
+    height: 57px;
+    width: 818px;
+    position: absolute;
+    right: 0px;
+    bottom: 0px;
+    font: 13px/57px "微软雅黑";
+    color: #FFF;
+}
+
+    .mske_imgDown a {
+        margin-left: 34px;
+    }
+
+.msKeimgBox ul li {
+    float: left;
+    height: 93px;
+    margin: 0 10px 10px 0;
+    width: 185px;
+    cursor: pointer;
+}
+
+.mskeTogBtn {
+    background: url(../images/mke_moreImg.jpg) no-repeat;
+    height: 93px;
+    width: 185px;
+    position: absolute;
+    z-index: 1;
+    right: 0px;
+    cursor: pointer;
+    bottom: 0px;
+}
+
+.mskeTogBtn2 {
+    background: url(../images/mke_moreImg2.jpg) no-repeat;
+    bottom: 10px;
+}
+
+.msKeimgBox2 {
+    height: auto;
+}
+
+.f-cf:after {
+    display: block;
+    clear: both;
+    visibility: hidden;
+    height: 0;
+    overflow: hidden;
+    content: ".";
+}
+
+.f-cf {
+    zoom: 1;
+}
+
+.kePublic {
+    width: 99%;
+    margin: 10px auto;
+}
+
+.btnsgroup {
+    width: 100%;
+}
+
+    .btnsgroup tr td {
+        padding: 4px 10px;
+        text-align: center;
+    }
+
+        .btnsgroup tr td label {
+            margin-left: 20px;
+            width: auto;
+            text-align: center;
+            display: inline-block;
+        }
+
+        .btnsgroup tr td a, .btnsgroup tr td .flash {
+            margin-left: 10px;
+        }
+
+.mskelayBox {
+    width: 840px;
+    height: 500px;
+    margin-top: -250px;
+    margin-left: -420px;
+}
+
+.mske_html {
+    width: 720px;
+    height: 500px;
+    margin: 0 auto;
+    position: relative;
+}
+
+.msKeimgBox {
+    width: 90%;
+    height: 100%;
+    margin-top: 0;
+    padding-top: 0;
+}
+
+    .msKeimgBox ul {
+        width: 100%;
+    }
+
+        .msKeimgBox ul li.limar {
+            padding-bottom: 25px;
+            text-align: center;
+            margin: 10px 0 0 10px;
+            list-style: none;
+        }
+
+            .msKeimgBox ul li.limar.md {
+                height: 114px;
+            }
+
+            .msKeimgBox ul li.limar img {
+                width: 120px;
+                height: 90px;
+            }
+
+    .msKeimgBox .panel.easyui-fluid {
+        margin-top: 4px;
+    }
+
+.spanmar {
+    color: #666;
+    font-size: 14px;
+    padding-top: 5px;
+}
+
+.mskeImgBg {
+    position: absolute;
+    top: 0;
+    width: 144px;
+    left: 0;
+    display: inline-block;
+    height: 40px;
+    background: url(../images/mke_spng1.png) no-repeat;
+}
+
+.picname {
+    text-align: center;
+    margin-top: 10px;
+    font-weight: 700;
+}
+
+.ico_next, .ico_pre {
+    position: absolute;
+    width: 30px;
+    height: 60px;
+    display: inline-block;
+    top: 50%;
+    margin-top: -30px;
+    cursor: pointer;
+    background-image: url(../images/pic_arrow.png);
+    background-repeat: no-repeat;
+}
+
+.ico_pre {
+    left: -50px;
+    background-position: 0 0;
+}
+
+.ico_next {
+    right: -50px;
+    background-position: -30px 0;
+}
+.normal .easyui-panel.panel-body.panel-body-noheader{
+    width: auto!important
+}
+.f-down {
+    float:right;
+    display: inline-block;
+    margin-right: 10px;
+}

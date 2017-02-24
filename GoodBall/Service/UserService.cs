@@ -1,5 +1,7 @@
-﻿using DataCollection.Entity;
+﻿using System.Configuration;
+using DataCollection.Entity;
 using Helper;
+using Newtonsoft.Json;
 using Repository;
 using System;
 using System.Collections.Generic;
@@ -13,12 +15,32 @@ namespace Service
     public class UserService : SingModel<UserService>
     {
         private static readonly UserRepository userRepository = UserRepository.Instance;
+        private static string userKey = "GBUser";
 
         private UserService() { }
 
         public bool Login(string userName, string password)
         {
-            return userRepository.Find(x => x.UserName == userName && x.Password == MD5Helper.MD5Encrypt64(password)).Any();
+            var userQuery = userRepository.Find(x => x.UserName == userName && x.Password == MD5Helper.MD5Encrypt64(password));
+            var result = userQuery.Any();
+            if (result)
+            {
+                CookieHelper.WriteCookie(userKey, userQuery.FirstOrDefault().UserName);
+            }
+
+            return result;
+        }
+
+        public bool AdminLogin(string userName, string password)
+        {
+            var userQuery = userRepository.Find(x => x.UserName == userName && x.Password == MD5Helper.MD5Encrypt64(password));
+            var result = userQuery.Any();
+            if (result && userName == ConfigurationManager.AppSettings["AdminName"])
+            {
+                CookieHelper.WriteCookie(userKey, userQuery.FirstOrDefault().UserName);
+            }
+
+            return result;
         }
 
         public User AddUser(User user)
@@ -38,7 +60,8 @@ namespace Service
 
         public static User GetCurrentUser()
         {
-            return new User();
+            var userStr = CookieHelper.GetCookie(userKey);
+            return JsonConvert.DeserializeObject<User>(userStr);
         }
     }
 }

@@ -1,0 +1,542 @@
+﻿@using Peacock.ESB.Helper
+@{
+    Layout = null;
+    string[] newWinCodes = new string[] { "System.Power" };
+}
+<!DOCTYPE html>
+<html lang="zh-cn" class="f-oh">
+<head>
+    <meta charset="utf-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link href="~/Content/css/base.css" rel="stylesheet" />
+    <link href="~/Content/plug-in/ligerUI/skins/Aqua/css/ligerui-all.css" rel="stylesheet" />
+    <link href="~/Content/plug-in/ligerUI/skins/ligerui-icons.css" rel="stylesheet" />
+    <link href="~/Content/css/loadTips/loadTips.css?v=2.3" rel="stylesheet" />
+    <link href="~/Content/plug-in/jquery.tools/jquery-tool.css" rel="stylesheet" />
+    <link href="~/Content/css/index.css?v=2.8" rel="stylesheet" />
+    <script src="~/Scripts/jquery-1.8.2.min.js"></script>
+    <script src="~/Content/plug-in/layer/layer.min.js?v=1.14"></script>
+    <script src="~/Content/plug-in/jquery.tools/jquery.tools.min.js"></script>
+    <script src="~/Scripts/jquery.cookie.js"></script>
+    <script src="~/Content/plug-in/ligerui/js/ligerui.all.js"></script>
+    <script src="~/Scripts/Base.js?v=1.06"></script>
+    <title>评E评-业务流程系统</title>
+    <meta name="renderer" content="webkit" />
+</head>
+<body class="bgcolor f-oh">
+    <div id="topmenu" class="l-topmenu">
+        <div class="l-topmenu-welcome">
+            <div id="companywrap" class="companywrap">
+                <span id="workRangSelect" class="companyname">@ViewBag.CompanyName</span>
+                <i class="user user-droplist" style="cursor: pointer" id="btn_companyList"></i>
+            </div>
+
+            @*<a href="javascript:void(0)" onclick="UpdatePassWord()" class="l-link"><i class="user user-editpwd"></i>修改密码</a>*@
+            <a href="javascript:void(0)" onclick="RefreshCache()" class="l-link"><i class="user user-refresh "></i>刷新缓存</a>
+            <a href="http://101.200.145.92:9199/bin/view/Main/" target="_blank" class="l-link"><i class="user user-help "></i>帮助</a>
+            <a href="javascript:;" class="l-link" id="userName"><i class="user user-name"></i>@ViewBag.EmployeeName&nbsp;&nbsp;&nbsp;&nbsp;<i class="user user-droplist" style="cursor: pointer" id="btn_userList"></i></a>
+
+            <ul class="droplistWrap" id="droplistWrap">
+                <li><a href="javascript:void(0)" onclick="UpdatePassWord()" class="l-link"><i class="user user-editpwd"></i>修改密码</a></li>
+                <li><a href="@ViewBag.ReLogInUrl?service=@ViewBag.ReLogInUrl" class="l-link"><i class="user user-logout"></i>用户注销</a></li>
+            </ul>
+            @*<a href="@ViewBag.ReLogInUrl?service=@ViewBag.ReLogInUrl" class="l-link"><i class="user user-logout"></i>用户注销</a>*@
+        </div>
+        <div class="l-topmenu-logo"><img src="../../Content/images/logotit.png" /></div>
+        <div class="server"><a href="javascript:void(0)" class="serverName">@ViewBag.ServerName</a></div>
+    </div>
+    <div id="layout1" class="easyui-doc-layout" style="height:100%;">
+        <div position="left" id="accordion1" style=" overflow-y:auto;  overflow-x:hidden; background-color:#f5f9fc">
+            <ul id="expmenu-freebie" style=" width:100%">
+                <li>
+                    <!-- Start -->
+                    <ul class="expmenu">
+                        @foreach (var menu in ViewBag.MenuList)
+                        {
+                            <li>
+                                <div class="header">
+                                    <span class="@menu.CssName"></span>@menu.Name
+                                    <span class="arrow down"></span>
+                                </div>
+                                <ul class="menu">
+                                    @foreach (var child in ViewBag.ChildList)
+                                    {
+                                        if (menu.Name == child.ParentName)
+                                        {
+                                            if (string.Format("{0}", child.PowerCode) != "System.Power")
+                                            {
+                                                <li onclick="f_addTab('@child.PowerCode', '@child.Name', '@child.Url')">
+                                                    <i class="ubale @child.CssName"></i>&nbsp;<a href="javascript:f_addTab('@child.PowerCode','@child.Name','@child.Url')">@child.Name</a>
+                                                </li>
+                                            }
+                                            else
+                                            {
+                                                <li onclick="window.open('@child.Url','@child.PowerCode');return false;"><i class="ubale @child.CssName"></i>&nbsp;<a href="window.open('@child.Url','@child.PowerCode');return false;">@child.Name</a></li>
+                                            }
+                                        }
+                                    }
+                                </ul>
+                            </li>
+                        }
+                    </ul>
+                </li>
+            </ul>
+            <!-- End -->
+            @*
+                </div>*@
+
+        </div>
+        <div position="center" id="framecenter">
+            <div tabid="home" title="待办事项" style="height:300px">
+                <iframe frameborder="0" name="home" id="home" src="/Home/Todo"></iframe>
+            </div>
+
+        </div>
+    </div>
+    <div id="companyListWrap" class="companylist" style="display: none; ">
+        <ul>
+            @foreach (var workRang in @ViewBag.WorkRang)
+            {
+                <li onclick="setcookie(event,@workRang.CompanyID,'@workRang.WorkRangeName')">@workRang.WorkRangeName</li>
+            }
+        </ul>
+    </div>
+
+    <script type="text/javascript">
+        function UpdatePassWord() {
+            $.layer({
+                type: 2,
+                title: '修改密码',
+                iframe: { src: "/user/updateinfo" },
+                area: ['300px', '180px']
+            });
+        }
+
+        var username = "@ViewBag.EmployeeID";
+        var tab = null;
+        var accordion = null;
+        var tree = null;
+        var tabItems = [];
+        var IntervalTime; //人工询价单定时器
+        var _index;
+        var _messageIdx;
+        var companyIdx;
+        var companyFlag = false;
+        $(function () {
+            if ($("#companyListWrap ul li").length <= 1) {
+                $("#companywrap").remove();
+            }
+            setT();
+            $("ul.expmenu li:first").find(".menu li:first").removeClass("selected");
+            /* Slide Toogle */
+            $("ul.expmenu li > div.header").click(function () {
+                $(".menu").each(function () {
+                    $(this).css("display", "none");
+                });
+
+                var arrow = $(this).find("span.arrow").first();
+                var classes = arrow.hasClass("up") ? "up" : "down";
+                $("span.arrow").each(function () {
+                    $(this).removeClass("up");
+                    $(this).addClass("down");
+                });
+                if (classes == 'up') {
+                    arrow.removeClass("up");
+                    arrow.addClass("down");
+                } else {
+                    arrow.removeClass("down");
+                    arrow.addClass("up");
+                    $(this).parent().find("ul.menu").slideToggle();
+                }
+
+            });
+
+            $(".expmenu").first().find("li").each(function (i) {
+                if (i == 0) {
+                    var item = $(this).find("div").first().find(".down").first();
+                    item.removeClass("down");
+                    item.addClass("up");
+                }
+                if (i > 0) {
+                    $(this).find("ul").first().css("display", "none");
+                }
+            });
+
+            //document.getElementById("layout1").style.height = '100%';
+            document.getElementById("accordion1").style.height = ($("#layout1").innerHeight() - 80) + "px";
+
+            $(".nav li a").find("span:first").first().removeClass("arrow-up").addClass("arrow-down");
+            $(".nav li a").find("span:first").first().parent("a").siblings("ul").show();
+            //
+            $(".nav li a").each(function () {
+                $(this).click(function () {
+                    if ($(this).find("span").hasClass("arrow-up")) {
+                        $(this).find("span").removeClass("arrow-up").addClass("arrow-down");
+                        $(this).siblings("ul").show();
+                    } else if ($(this).find("span").hasClass("arrow-down")) {
+                        $(this).find("span").removeClass("arrow-down").addClass("arrow-up");
+                        $(this).siblings("ul").hide();
+                    }
+                });
+            });
+            //布局
+            $("#layout1").ligerLayout({ leftWidth: 160, heightDiff: -4, space: 4, onHeightChanged: f_heightChanged });
+
+
+            var height = $(".l-layout-center").height();
+            //Tab
+            $("#framecenter").ligerTab({
+                //height: $(window).height() - 50,//#framecenter中的tab高度应该为窗口的高度减去上部的高度。修改 by徐铮
+                height: height,
+                showSwitchInTab: true,
+                showSwitch: true,
+                onAfterAddTabItem: function (tabdata) {
+                    tabItems.push(tabdata);
+                },
+                onBeforeRemoveTabItem: function (tabid) {
+                    if (tabid == "audit_report") {
+                        if (document.getElementById("PageOfficeCtrl1") != undefined) {
+                            document.getElementById("PageOfficeCtrl1").Close();
+                        }
+                    }
+                },
+                onAfterRemoveTabItem: function (tabid) {
+                    for (var i = 0; i < tabItems.length; i++) {
+                        var o = tabItems[i];
+                        if (o.tabid == tabid) {
+                            tabItems.splice(i, 1);
+                            break;
+                        }
+                    }
+                }
+            });
+
+            tab = liger.get("framecenter");
+
+            //页面加载时清除cookie（用作记忆外业、内业）
+            $.cookie('DealingOut_' + username, null);
+            $.cookie('Dealing_' + username, null);
+            $.cookie('expressno_' + username, null);
+            @*var messagePower = '@ViewBag.MessagePower';
+            if (messagePower == 'True') {
+                GetMessageCount();
+                window.setInterval("GetMessageCount()", 60000); //一分钟获取一次未处理的消息
+            }*@
+
+            $(document).on("click", "#btn_companyList", function (event) {
+                event.stopPropagation();
+                companyList(event);
+            });
+            //隐藏城市和行政区选择
+            $(document).click(function (event) {
+                if (event && event.stopPropagation) {
+                    event.stopPropagation();
+                } else {
+                    window.event.cancelBubble = true;
+                }
+                $("#companyListWrap,#droplistWrap").hide();
+            });
+            $(document).on("click", "#userName", function (event) {
+                console.log($("#userName").offset().left);
+                if ($("#userName").offset().left + $("#droplistWrap").width() >= $(window).width()) {
+                    $("#droplistWrap").css({ "right": "0", "width": "96px" });
+                } else {
+                    $("#droplistWrap").css({ "right": "30px", "width": $("#userName").width() });
+                }
+                event.stopPropagation();
+                $("#droplistWrap").toggle();
+            });
+        });
+
+        function f_heightChanged(options) {
+            if (tab)
+                tab.addHeight(options.diff);
+            if (accordion && options.middleHeight - 4 > 0)
+                accordion.setHeight(options.middleHeight - 4);
+        }
+
+        function f_addTab(tabid, text, url, callback) {
+            tab.addTabItem({
+                tabid: tabid,
+                text: text,
+                url: url,
+                callback: function () {
+                    if (callback) {
+                        callback();
+                    }
+                }
+            });
+        }
+
+        function f_closeTab(tabid) {
+            tab.removeTabItem(tabid);
+        }
+
+        //刷新缓存
+        function RefreshCache() {
+            var span = 60; //设置刷新间隔时间，秒为单位
+            var lasttime;
+            var nowtime = new Date();
+            var match = /lasttime=[\w\W]+?\)/.exec(document.cookie);
+            if (match != null) {
+                lasttime = new Date(match[0].replace("lasttime=", ""));
+            }
+            if (lasttime != null) {
+                var timespan = (nowtime - lasttime) / 1000;
+                if (timespan < span) {
+                    var times = Math.round(60 - timespan);
+
+                    return $.ligerDialog.warn("请" + times + "秒后再尝试操作");
+
+                }
+            }
+            document.cookie = "lasttime=" + nowtime;
+            loadTips.showLoading();
+            $.ajax({
+                type: "post",
+                url: "/Home/RefreshCache",
+                success: function () {
+                    loadTips.hideLoadind();
+                    $.ligerDialog.success("刷新缓存成功");
+
+                }
+            });
+        }
+
+        //获取未处理的消息条数
+        function GetMessageCount() {
+            $.ajax({
+                url: "/TerminateMessage/GetNotDealMessage?time=" + new Date().getTime(), //加时间戳参数，解决ie下ajax请求不刷新
+                type: "get",
+                dataType: 'jsonp',
+                jsonp: "callback",
+                success: function (data) {
+                    if (data != "0") {
+                        $("#li_animation").addClass("animation");
+                    } else {
+                        $("#li_animation").removeClass("animation");
+                    }
+                }
+            });
+        }
+
+        var InquriyIds = "";
+
+        //获取当前公司的人工询价数据
+        function GetInquriyMsg() {
+            $.ajax({
+                url: "/Project/GetInquriyTipsList",
+                data: { time: new Date().getTime() },
+                type: "get",
+                dataType: 'jsonp',
+                jsonp: "callback",
+                success: function (data) {
+                    if (data.length > 0) {
+                        var _offset = { width: '450px', _height: "256px", height: "300px" };
+                        var html = "<div class=\"wrap\" style=\"width:" + _offset.width + ";height:" + _offset._height + ";overflow:auto;padding-bottom:8px\">";
+                        for (var i = 0; i < data.length; i++) {
+                            InquriyIds += data[i]["TID"] + ",";
+                            html += "<table class=\"easyui-doc-table easyui-doc-table-border easyui-doc-table-fixed\" style='margin-top:8px'>";
+                            html += "<tr><td width=\"15%\">交易编号:</td><td colspan='2'><label style='cursor:pointer;color:blue;' onclick=\"opreatoin('View_OnlineBusiness" + data[i]["TID"] + "','查看详细','/Project/OnlineBusinessItemDetails?tid=" + data[i]["TID"] + "','" + data[i]["TID"] + "');\">" + data[i]["bscode"] + "</label>";
+                            html += "<td width=\"15%\">小区名称:</td><td colspan='2'><label>" + data[i]["community"] + "</label></td></tr>";
+                            html += "<tr><td width=\"15%\">城市:</td><td><label>" + data[i]["CityName"] + "</label></td>" +
+                                "<td width=\"15%\">行政区:</td><td><label>" + data[i]["region"] + "</label></td>";
+                            html += "<td width=\"15%\">面积 :</td><td><label>" + data[i]["area"] + "</label></td></tr>";
+                            html += "<tr><td>银行 :</td><td  colspan='5'><label>" + data[i]["BankInfoListStr"] + "</label></td></tr>";
+                            html += "<tr><td width=\"15%\">单价:</td><td><label>" + (data[i]["area"] == 0 ? data[i]["assessment"] * 10000 : (data[i]["assessment"] * 10000 / data[i]["area"]).toFixed(2)) + "</label></td>" +
+                                "<td width=\"15%\">总价:</td><td><label>" + data[i]["assessment"] + "</label></td>";
+                            html += "<td colspan='2'><a href=\"javascript:\" onclick=\"opreatoin('add_inquiry_house" + data[i]["TID"] + "','添加询价','/House/AddInquiryPrice?onlineid=" + data[i]["TID"] + "','" + data[i]["TID"] + "');\" style=\"margin-left: 10px;\"><span style='color:red;font-weight:bold'>抢 单</span></a>";
+                            html += "<a href=\"javascript:;\" onclick=\"opreatoin('View_OnlineBusiness" + data[i]["TID"] + "','查看详细','/Project/OnlineBusinessItemDetails?tid=" + data[i]["TID"] + "','" + data[i]["TID"] + "');\"  style=\"margin-left: 10px;\"><span style='color:red;font-weight:bold'>详 细</span></a>";
+                            html += "</td></tr></table>";
+                        }
+                        html += "</div>";
+                        if (_index) {
+                            layer.close(_index);
+                        }
+                        //页面层
+                        _index = $.layer({
+                            type: 1,
+                            area: [_offset.width, _offset.height], //宽高
+                            page: { html: html },
+                            title: '<span style=\"color:red;font-weight:bold;\">您有新的人工询价单,请在15分钟内处理完！！！！</span>',
+                            shade: false,
+                            close: function (index) {
+                                UpdateReadStatus(InquriyIds.substring(0, InquriyIds.length - 1));
+                                setT();
+                            },
+                            success: function () {
+                                window.clearInterval(IntervalTime);
+                            }
+                        });
+                    }
+                }
+            });
+        }
+
+        function UpdateReadStatus(id) {
+            $.ajax({
+                url: "/Project/UpdateInquriyReadStatus",
+                type: "post",
+                data: { ids: id },
+                success: function () { InquriyIds = ""; }
+            });
+        }
+
+        function opreatoin(id, text, url, inquiryId) {
+            UpdateReadStatus(inquiryId);
+            f_addTab(id, text, url);
+            layer.close(_index);
+            setT();
+        }
+
+        //启用定时器
+        function setT() {
+            var inquriyTipsPower = '@ViewBag.InquriyTipsPower'; //人工询价定时提醒
+            if (inquriyTipsPower == 'True') {
+                IntervalTime = window.setInterval("GetInquriyMsg()", 10000);
+            }
+        }
+
+
+        function tip(event, content) {
+            if (_messageIdx) {
+                layer.close(_messageIdx);
+            }
+            var obj = {};
+            var _ev = event || window.event;
+            obj.left = _ev.target.offsetParent.offsetLeft + _ev.target.offsetLeft;
+            obj.top = _ev.target.offsetParent.offsetTop + 30;
+            _messageIdx = $.layer({
+                type: 1,
+                title: false,
+                area: ['400px'],
+                offset: [obj.top + 'px', obj.left + 'px'],
+                border: [0],
+                shade: [0],
+                page: {
+                    html: '<div class="messagelist">' + content + '</div>'
+                },
+                success: function () {
+                    $(".messagelist_title li").removeClass("current");
+                    $(".messagelist_body .messagelist_wrap").hide();
+                    $(".messagelist_title li").eq(0).addClass("current");
+                    $(".messagelist_body .messagelist_wrap").eq(0).show();
+                    $(".messagelist_title li").each(function () {
+                        $(this).click(function () {
+                            var _index = $(this).index();
+                            $(".messagelist_title li").removeClass("current");
+                            $(this).addClass("current");
+                            $(".messagelist_body .messagelist_wrap").hide();
+                            $(".messagelist_body .messagelist_wrap").eq(_index).show();
+                        });
+                    });
+                }
+
+            });
+
+        }
+
+        //用于展现消息提醒列表，tab(在线业务，外采完成，业务取消)
+        function GetMessageTipsList(event) {
+            if (!$("#li_animation").hasClass("animation")) return;//没有消息
+            $.ajax({
+                url: "/TerminateMessage/GetMessageTipsList?time=" + new Date().getTime(),//加时间戳参数，解决ie下ajax请求不刷新
+                type: "get",
+                dataType: 'jsonp',
+                jsonp: "callback",
+                success: function (data) {
+                    var headhtml = '<ul class="messagelist_title">';
+                    var bodyhtml = '<div class="messagelist_body">';
+                    data.forEach(function (item) {
+                        headhtml += '<li><a href="javascript:void(0);">' + item.Item1 + '<i>' + (item.Item2 > 99 ? "99+" : item.Item2) + '</i></a></li>';
+                        bodyhtml += '<div class="messagelist_wrap"><ul>';
+
+                        var moreinfo = 'moreInfo(0)';
+                        var codedesc = "交易编号";
+                        if (item.Item1 == "外采完成") {
+                            codedesc = "流水号";
+                            moreinfo = 'moreInfo(2)';
+                        }
+                        if (item.Item1 == "报告处理结果")
+                            moreinfo = 'moreInfo(1)';
+
+                        item.Item3.forEach(function (message) {
+                            var messageContent = message.Content;
+                            var code = message.BsCode;
+                            var singleClike = 'onlineinfo(' + message.OnlineBusinessId + ')';
+                            if (item.Item1 == "外采完成") {
+                                code = message.ProjectNo;
+                                messageContent = "小区名称:" + message.ResidentialAreaName;
+                                singleClike = 'offlineinfo(' + message.ProjectId + ')';
+                            }
+                            bodyhtml += '<li><p>' + codedesc + ': <a href="javascript:void(0);" onclick="' + singleClike + '">' + code + '</a></p><p class="info">' + messageContent + '</p></li>';
+                        });
+                        bodyhtml += '</ul><p class="more"><a class="" href="javascript:void(0);" onclick="' + moreinfo + '">更多信息</a></p></div>';
+                    });
+                    headhtml += '</ul>';
+                    bodyhtml += '</div>';
+                    tip(event, headhtml + bodyhtml);
+                }
+            });
+        }
+
+        //线上详细调整
+        function onlineinfo(id) {
+            var tabid = "项目详细-" + id;
+            if (tab.isTabItemExist(tabid)) {
+                tab.removeTabItem(tabid);
+            }
+            f_addTab(tabid, tabid, 'Project/OnlineBusinessItemDetails?tid=' + id, function () {
+
+            });
+        }
+
+        //外采详细调整
+        function offlineinfo(id) {
+            var tabid = "项目详细-" + id;
+            if (tab.isTabItemExist(tabid)) {
+                tab.removeTabItem(tabid);
+            }
+            f_addTab(tabid, tabid, '/Partial/ProjectView?TID=' + id, function () {
+                // layer.close(_messageIdx);
+            });
+        }
+
+
+        //更多跳转
+        function moreInfo(type) {
+            if (tab.isTabItemExist("project.messageTip")) {
+                tab.removeTabItem("project.messageTip");
+            }
+            f_addTab('project.messageTip', '消息提醒', '/TerminateMessage/Index?type=' + type);
+        }
+
+        //打开公司列表
+        function companyList() {
+            var obj = $("#workRangSelect").offset();
+            $("#companyListWrap").css({ "left": obj.left, "top": obj.top + 24 }).toggle();
+        }
+        //选择公司列表
+        function setcookie(event, id, name) {
+            if (event) {
+                if (event.stopPropagation) {
+                    event.stopPropagation();
+                } else {
+                    window.event.cancelBubble = true;
+                }
+            }
+            $.ajax({
+                url: "@Url.Action("SetWorkRangCompanyId", "Home")",
+                data: { "userid": username, "companyid": id },
+                success: function (result) {
+                    if (result) {
+                        $("#workRangSelect").text(name);
+                        $("#companyListWrap").hide();
+                    }
+                }
+            });
+        }
+    </script>
+</body>
+</html>

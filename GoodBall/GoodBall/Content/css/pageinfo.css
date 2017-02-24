@@ -1,0 +1,19 @@
+﻿@media print {
+    #ShowInfo {
+        height: 1066px;
+        width: 756px;
+        margin: auto;
+    }
+    .img-list {
+        height: 1046px;
+        line-height: 1046px;
+        page-break-before: always;
+    }
+    .img-vertical {
+        height: 80%;
+    }
+    .img-transform {
+        transform: rotate(90deg);
+        -ms-transform: rotate(90deg);
+    }
+}

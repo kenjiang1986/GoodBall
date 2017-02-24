@@ -265,6 +265,8 @@ namespace Repository
             }
             catch (DbEntityValidationException ex)
             {
+                //当抛出异常时，将EF本地实体清除，防止同一线程插入或者更新失败，下次更新数据库时将原有实体同时提交，引起异常
+                _read.Set<TEntity>().Local.Clear();
                 string errorMsg = string.Empty;
                 foreach (var efError in ex.EntityValidationErrors)
                 {
@@ -279,6 +281,8 @@ namespace Repository
             }
             catch (DbUpdateException ex)
             {
+                //当抛出异常时，将EF本地实体清除，防止同一线程插入或者更新失败，下次更新数据库时将原有实体同时提交，引起异常
+                _read.Set<TEntity>().Local.Clear();
                 string errorMsg = string.Empty;
                 foreach (var e in ex.Entries)
                 {

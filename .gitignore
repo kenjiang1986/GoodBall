@@ -1,8 +1,7 @@
-#ºöÂÔwindowsÉú³ÉµÄËõÂÔÍ¼ÎÄ¼ş
+#å¿½ç•¥windowsç”Ÿæˆçš„ç¼©ç•¥å›¾æ–‡ä»¶
 Thunbs.db
-#ºöÂÔVisual StudioÉú³ÉÊ±µÄ²úÉúµÄÎÄ¼ş
+#å¿½ç•¥Visual Studioç”Ÿæˆæ—¶çš„äº§ç”Ÿçš„æ–‡ä»¶
 *.obj
-*.exe
 *.pdb
 *.user
 *.aps
@@ -18,12 +17,21 @@ Thunbs.db
 *.cache
 *.ilk
 *.log
+*.lib
 [Bb]in
 [Dd]ebug*/
-*.lib
 *.sbr
+*.dll
 obj/
-lib/
-packages/
 [Rr]elease*/
 _ReSharper*/
+packages/
+logs/
+log/
+TempFile/
+*.orig
+*.gitignore
+*.doc
+*.BASE
+*.LOCAL
+*.REMOTE

@@ -1,0 +1,108 @@
+.l-btn-icon {
+    background-repeat: no-repeat;
+    background-image: url('icons/icon.png');
+}
+.icon-add {
+    background-position: 0 0;
+}
+
+.icon-clear {
+    background-position: -16px 0;
+}
+
+.icon-remove {
+    background-position: -32px 0;
+}
+
+.icon-save {
+    background-position: -48px 0;
+}
+
+.icon-cut {
+    background-position: -64px 0;
+}
+
+.icon-ok {
+    background-position: -80px 0;
+}
+
+.icon-no {
+    background-position: -96px 0;
+}
+
+.icon-cancel {
+    background-position: -112px 0;
+}
+
+.icon-reload {
+    background-position: -128px 0;
+}
+
+.icon-search {
+    background-position: -144px 0;
+}
+
+.icon-download {
+    background-position: 0 -16px;
+}
+
+.icon-edit {
+    background-position: -16px -16px;
+}
+
+.icon-print {
+    background-position: -32px -16px;
+}
+
+.icon-help {
+    background-position: -48px -16px;
+}
+
+.icon-undo {
+    background-position: -64px -16px;
+}
+
+.icon-redo,.icon-export {
+    background-position: -80px -16px;
+}
+
+.icon-back {
+    background-position: -96px -16px;
+}
+
+.icon-sum {
+    background-position: -112px -16px;
+}
+
+.icon-tip {
+    background-position: -128px -16px;
+}
+
+.icon-filter {
+    background-position: -144px -16px;
+}
+
+.icon-man {
+    background-position: 0 -32px
+}
+
+.icon-lock {
+    background-position: -16px -32px;
+}
+
+.icon-more {
+    background-position: -32px -32px;
+}
+
+
+.icon-mini-add {
+    background-position: -48px -32px;
+}
+
+.icon-mini-edit {
+    background-position: -64px -32px;
+}
+
+.icon-mini-refresh {
+    background-position: -80px -32px;
+}
