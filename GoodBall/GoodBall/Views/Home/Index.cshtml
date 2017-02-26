@@ -26,9 +26,14 @@
 <body class="bgcolor f-oh">
     <div id="topmenu" class="l-topmenu">
         <div class="l-topmenu-welcome">
-            
+            <div id="companywrap" class="companywrap">
+                <span id="workRangSelect" class="companyname">@ViewBag.CompanyName</span>
+                <i class="user user-droplist" style="cursor: pointer" id="btn_companyList"></i>
+            </div>
 
-            
+            @*<a href="javascript:void(0)" onclick="UpdatePassWord()" class="l-link"><i class="user user-editpwd"></i>修改密码</a>*@
+         
+            <a href="javascript:;" class="l-link" id="userName"><i class="user user-name"></i>@ViewBag.EmployeeName&nbsp;&nbsp;&nbsp;&nbsp;<i class="user user-droplist" style="cursor: pointer" id="btn_userList"></i></a>
 
             <ul class="droplistWrap" id="droplistWrap">
                 <li><a href="javascript:void(0)" onclick="UpdatePassWord()" class="l-link"><i class="user user-editpwd"></i>修改密码</a></li>
@@ -36,26 +41,52 @@
             </ul>
             @*<a href="@ViewBag.ReLogInUrl?service=@ViewBag.ReLogInUrl" class="l-link"><i class="user user-logout"></i>用户注销</a>*@
         </div>
-        <div class="l-topmenu-logo">后台管理系统</div>
-       
+        <div class="l-topmenu-logo"><img src="../../Content/images/logotit.png" /></div>
+        <div class="server"><a href="javascript:void(0)" class="serverName">@ViewBag.ServerName</a></div>
     </div>
     <div id="layout1" class="easyui-doc-layout" style="height:100%;">
-        <div position="left" id="accordion1" style=" overflow-y:auto;  overflow-x:hidden; background-color:#f5f9fc">
+        <div position="left" id="accordion1" style=" overflow-y:auto; overflow-x:hidden; background-color:#f5f9fc">
             <ul id="expmenu-freebie" style=" width:100%">
                 <li>
                     <!-- Start -->
                     <ul class="expmenu">
-                      
-                            <li>
-                              
-                                <ul class="menu">
-                                   
-                                    <li onclick="f_addTab('用户管理', '用户管理', 'User/Index')">
-                                        <i class="ubale7"></i>&nbsp;<a href="javascript:f_addTab(('用户管理', '用户管理', 'User/Index')">用户管理</a>
-                                     
-                                </ul>
-                            </li>
-                        </ul>
+                        <li>
+                            <div class="header">
+                                <span class="label icon-project-claim"></span>
+                                <a href="javascript:f_addTab('用户管理','用户管理','User/Index')">用户管理</a>
+                            </div>
+                        </li>
+                        <li>
+                            <div class="header">
+                                <span class="label icon-project-valuation"></span>
+                                <a href="javascript:f_addTab('文章管理','文章管理','User/Index')">文章管理</a>
+                            </div>
+                        </li>
+                        <li>
+                            <div class="header">
+                                <span class="label icon-project-acceptance"></span>
+                                <a href="javascript:f_addTab('推介管理','推介管理','User/Index')">推介管理</a>
+                            </div>
+                        </li>
+                        <li>
+                            <div class="header">
+                                <span class="label icon-project-allocate"></span>
+                                <a href="javascript:f_addTab('比赛管理','比赛管理','User/Index')">比赛管理</a>
+                            </div>
+                        </li>
+                        <li>
+                            <div class="header">
+                                <span class="label icon-project-print"></span>
+                                <a href="javascript:f_addTab('客服管理','客服管理','User/Index')">客服管理</a>
+                            </div>
+                        </li>
+                        <li>
+                            <div class="header">
+                                <span class="label icon-project-send"></span>
+                                <a href="javascript:f_addTab('基础数据','基础数据','User/Index')">基础数据</a>
+                            </div>
+                        </li>
+                    </ul>
                 </li>
             </ul>
             <!-- End -->
@@ -64,13 +95,15 @@
 
         </div>
         <div position="center" id="framecenter">
-            <div tabid="home" title="待办事项" style="height:300px">
-                <iframe frameborder="0" name="home" id="home" src="/Home/Todo"></iframe>
-            </div>
+         
 
         </div>
     </div>
-    
+    <div id="companyListWrap" class="companylist" style="display: none; ">
+        <ul>
+          
+        </ul>
+    </div>
 
     <script type="text/javascript">
         function UpdatePassWord() {
@@ -92,7 +125,34 @@
         var _messageIdx;
         var companyIdx;
         var companyFlag = false;
-       
+        $(function () {
+            if ($("#companyListWrap ul li").length <= 1) {
+                $("#companywrap").remove();
+            }
+            setT();
+            $("ul.expmenu li:first").find(".menu li:first").removeClass("selected");
+            /* Slide Toogle */
+            $("ul.expmenu li > div.header").click(function () {
+                $(".menu").each(function () {
+                    $(this).css("display", "none");
+                });
+
+                var arrow = $(this).find("span.arrow").first();
+                var classes = arrow.hasClass("up") ? "up" : "down";
+                $("span.arrow").each(function () {
+                    $(this).removeClass("up");
+                    $(this).addClass("down");
+                });
+                if (classes == 'up') {
+                    arrow.removeClass("up");
+                    arrow.addClass("down");
+                } else {
+                    arrow.removeClass("down");
+                    arrow.addClass("up");
+                    $(this).parent().find("ul.menu").slideToggle();
+                }
+
+            });
 
             $(".expmenu").first().find("li").each(function (i) {
                 if (i == 0) {
@@ -215,11 +275,270 @@
             tab.removeTabItem(tabid);
         }
 
-        
+        //刷新缓存
+        function RefreshCache() {
+            var span = 60; //设置刷新间隔时间，秒为单位
+            var lasttime;
+            var nowtime = new Date();
+            var match = /lasttime=[\w\W]+?\)/.exec(document.cookie);
+            if (match != null) {
+                lasttime = new Date(match[0].replace("lasttime=", ""));
+            }
+            if (lasttime != null) {
+                var timespan = (nowtime - lasttime) / 1000;
+                if (timespan < span) {
+                    var times = Math.round(60 - timespan);
+
+                    return $.ligerDialog.warn("请" + times + "秒后再尝试操作");
+
+                }
+            }
+            document.cookie = "lasttime=" + nowtime;
+            loadTips.showLoading();
+            $.ajax({
+                type: "post",
+                url: "/Home/RefreshCache",
+                success: function () {
+                    loadTips.hideLoadind();
+                    $.ligerDialog.success("刷新缓存成功");
+
+                }
+            });
+        }
+
+        //获取未处理的消息条数
+        function GetMessageCount() {
+            $.ajax({
+                url: "/TerminateMessage/GetNotDealMessage?time=" + new Date().getTime(), //加时间戳参数，解决ie下ajax请求不刷新
+                type: "get",
+                dataType: 'jsonp',
+                jsonp: "callback",
+                success: function (data) {
+                    if (data != "0") {
+                        $("#li_animation").addClass("animation");
+                    } else {
+                        $("#li_animation").removeClass("animation");
+                    }
+                }
+            });
+        }
+
+        var InquriyIds = "";
+
+        //获取当前公司的人工询价数据
+        function GetInquriyMsg() {
+            $.ajax({
+                url: "/Project/GetInquriyTipsList",
+                data: { time: new Date().getTime() },
+                type: "get",
+                dataType: 'jsonp',
+                jsonp: "callback",
+                success: function (data) {
+                    if (data.length > 0) {
+                        var _offset = { width: '450px', _height: "256px", height: "300px" };
+                        var html = "<div class=\"wrap\" style=\"width:" + _offset.width + ";height:" + _offset._height + ";overflow:auto;padding-bottom:8px\">";
+                        for (var i = 0; i < data.length; i++) {
+                            InquriyIds += data[i]["TID"] + ",";
+                            html += "<table class=\"easyui-doc-table easyui-doc-table-border easyui-doc-table-fixed\" style='margin-top:8px'>";
+                            html += "<tr><td width=\"15%\">交易编号:</td><td colspan='2'><label style='cursor:pointer;color:blue;' onclick=\"opreatoin('View_OnlineBusiness" + data[i]["TID"] + "','查看详细','/Project/OnlineBusinessItemDetails?tid=" + data[i]["TID"] + "','" + data[i]["TID"] + "');\">" + data[i]["bscode"] + "</label>";
+                            html += "<td width=\"15%\">小区名称:</td><td colspan='2'><label>" + data[i]["community"] + "</label></td></tr>";
+                            html += "<tr><td width=\"15%\">城市:</td><td><label>" + data[i]["CityName"] + "</label></td>" +
+                                "<td width=\"15%\">行政区:</td><td><label>" + data[i]["region"] + "</label></td>";
+                            html += "<td width=\"15%\">面积 :</td><td><label>" + data[i]["area"] + "</label></td></tr>";
+                            html += "<tr><td>银行 :</td><td  colspan='5'><label>" + data[i]["BankInfoListStr"] + "</label></td></tr>";
+                            html += "<tr><td width=\"15%\">单价:</td><td><label>" + (data[i]["area"] == 0 ? data[i]["assessment"] * 10000 : (data[i]["assessment"] * 10000 / data[i]["area"]).toFixed(2)) + "</label></td>" +
+                                "<td width=\"15%\">总价:</td><td><label>" + data[i]["assessment"] + "</label></td>";
+                            html += "<td colspan='2'><a href=\"javascript:\" onclick=\"opreatoin('add_inquiry_house" + data[i]["TID"] + "','添加询价','/House/AddInquiryPrice?onlineid=" + data[i]["TID"] + "','" + data[i]["TID"] + "');\" style=\"margin-left: 10px;\"><span style='color:red;font-weight:bold'>抢 单</span></a>";
+                            html += "<a href=\"javascript:;\" onclick=\"opreatoin('View_OnlineBusiness" + data[i]["TID"] + "','查看详细','/Project/OnlineBusinessItemDetails?tid=" + data[i]["TID"] + "','" + data[i]["TID"] + "');\"  style=\"margin-left: 10px;\"><span style='color:red;font-weight:bold'>详 细</span></a>";
+                            html += "</td></tr></table>";
+                        }
+                        html += "</div>";
+                        if (_index) {
+                            layer.close(_index);
+                        }
+                        //页面层
+                        _index = $.layer({
+                            type: 1,
+                            area: [_offset.width, _offset.height], //宽高
+                            page: { html: html },
+                            title: '<span style=\"color:red;font-weight:bold;\">您有新的人工询价单,请在15分钟内处理完！！！！</span>',
+                            shade: false,
+                            close: function (index) {
+                                UpdateReadStatus(InquriyIds.substring(0, InquriyIds.length - 1));
+                                setT();
+                            },
+                            success: function () {
+                                window.clearInterval(IntervalTime);
+                            }
+                        });
+                    }
+                }
+            });
+        }
+
+        function UpdateReadStatus(id) {
+            $.ajax({
+                url: "/Project/UpdateInquriyReadStatus",
+                type: "post",
+                data: { ids: id },
+                success: function () { InquriyIds = ""; }
+            });
+        }
+
+        function opreatoin(id, text, url, inquiryId) {
+            UpdateReadStatus(inquiryId);
+            f_addTab(id, text, url);
+            layer.close(_index);
+            setT();
+        }
+
+        //启用定时器
+        function setT() {
+            var inquriyTipsPower = '@ViewBag.InquriyTipsPower'; //人工询价定时提醒
+            if (inquriyTipsPower == 'True') {
+                IntervalTime = window.setInterval("GetInquriyMsg()", 10000);
+            }
+        }
 
 
-       
-       
+        function tip(event, content) {
+            if (_messageIdx) {
+                layer.close(_messageIdx);
+            }
+            var obj = {};
+            var _ev = event || window.event;
+            obj.left = _ev.target.offsetParent.offsetLeft + _ev.target.offsetLeft;
+            obj.top = _ev.target.offsetParent.offsetTop + 30;
+            _messageIdx = $.layer({
+                type: 1,
+                title: false,
+                area: ['400px'],
+                offset: [obj.top + 'px', obj.left + 'px'],
+                border: [0],
+                shade: [0],
+                page: {
+                    html: '<div class="messagelist">' + content + '</div>'
+                },
+                success: function () {
+                    $(".messagelist_title li").removeClass("current");
+                    $(".messagelist_body .messagelist_wrap").hide();
+                    $(".messagelist_title li").eq(0).addClass("current");
+                    $(".messagelist_body .messagelist_wrap").eq(0).show();
+                    $(".messagelist_title li").each(function () {
+                        $(this).click(function () {
+                            var _index = $(this).index();
+                            $(".messagelist_title li").removeClass("current");
+                            $(this).addClass("current");
+                            $(".messagelist_body .messagelist_wrap").hide();
+                            $(".messagelist_body .messagelist_wrap").eq(_index).show();
+                        });
+                    });
+                }
+
+            });
+
+        }
+
+        //用于展现消息提醒列表，tab(在线业务，外采完成，业务取消)
+        function GetMessageTipsList(event) {
+            if (!$("#li_animation").hasClass("animation")) return;//没有消息
+            $.ajax({
+                url: "/TerminateMessage/GetMessageTipsList?time=" + new Date().getTime(),//加时间戳参数，解决ie下ajax请求不刷新
+                type: "get",
+                dataType: 'jsonp',
+                jsonp: "callback",
+                success: function (data) {
+                    var headhtml = '<ul class="messagelist_title">';
+                    var bodyhtml = '<div class="messagelist_body">';
+                    data.forEach(function (item) {
+                        headhtml += '<li><a href="javascript:void(0);">' + item.Item1 + '<i>' + (item.Item2 > 99 ? "99+" : item.Item2) + '</i></a></li>';
+                        bodyhtml += '<div class="messagelist_wrap"><ul>';
+
+                        var moreinfo = 'moreInfo(0)';
+                        var codedesc = "交易编号";
+                        if (item.Item1 == "外采完成") {
+                            codedesc = "流水号";
+                            moreinfo = 'moreInfo(2)';
+                        }
+                        if (item.Item1 == "报告处理结果")
+                            moreinfo = 'moreInfo(1)';
+
+                        item.Item3.forEach(function (message) {
+                            var messageContent = message.Content;
+                            var code = message.BsCode;
+                            var singleClike = 'onlineinfo(' + message.OnlineBusinessId + ')';
+                            if (item.Item1 == "外采完成") {
+                                code = message.ProjectNo;
+                                messageContent = "小区名称:" + message.ResidentialAreaName;
+                                singleClike = 'offlineinfo(' + message.ProjectId + ')';
+                            }
+                            bodyhtml += '<li><p>' + codedesc + ': <a href="javascript:void(0);" onclick="' + singleClike + '">' + code + '</a></p><p class="info">' + messageContent + '</p></li>';
+                        });
+                        bodyhtml += '</ul><p class="more"><a class="" href="javascript:void(0);" onclick="' + moreinfo + '">更多信息</a></p></div>';
+                    });
+                    headhtml += '</ul>';
+                    bodyhtml += '</div>';
+                    tip(event, headhtml + bodyhtml);
+                }
+            });
+        }
+
+        //线上详细调整
+        function onlineinfo(id) {
+            var tabid = "项目详细-" + id;
+            if (tab.isTabItemExist(tabid)) {
+                tab.removeTabItem(tabid);
+            }
+            f_addTab(tabid, tabid, 'Project/OnlineBusinessItemDetails?tid=' + id, function () {
+
+            });
+        }
+
+        //外采详细调整
+        function offlineinfo(id) {
+            var tabid = "项目详细-" + id;
+            if (tab.isTabItemExist(tabid)) {
+                tab.removeTabItem(tabid);
+            }
+            f_addTab(tabid, tabid, '/Partial/ProjectView?TID=' + id, function () {
+                // layer.close(_messageIdx);
+            });
+        }
+
+
+        //更多跳转
+        function moreInfo(type) {
+            if (tab.isTabItemExist("project.messageTip")) {
+                tab.removeTabItem("project.messageTip");
+            }
+            f_addTab('project.messageTip', '消息提醒', '/TerminateMessage/Index?type=' + type);
+        }
+
+        //打开公司列表
+        function companyList() {
+            var obj = $("#workRangSelect").offset();
+            $("#companyListWrap").css({ "left": obj.left, "top": obj.top + 24 }).toggle();
+        }
+        //选择公司列表
+        function setcookie(event, id, name) {
+            if (event) {
+                if (event.stopPropagation) {
+                    event.stopPropagation();
+                } else {
+                    window.event.cancelBubble = true;
+                }
+            }
+            $.ajax({
+                url: "@Url.Action("SetWorkRangCompanyId", "Home")",
+                data: { "userid": username, "companyid": id },
+                success: function(result) {
+                    if (result) {
+                        $("#workRangSelect").text(name);
+                        $("#companyListWrap").hide();
+                    }
+                }
+            });
+        }
     </script>
 </body>
 </html>

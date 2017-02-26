@@ -9,6 +9,9 @@ using System.Linq;
 using System.Net;
 using System.Text;
 using System.Threading.Tasks;
+using DataCollection;
+using GoodBall.Dto;
+using GoodBall;
 
 namespace Service
 {
@@ -56,6 +59,22 @@ namespace Service
         public bool DeleteUser(User user)
         {
             return userRepository.Delete(user);
+        }
+
+        public List<UserDto> GetUserListByPage(string userName, int size, int index, out int total)
+        {
+            var cond = EfCondition.True<User>();
+            if(!string.IsNullOrEmpty(userName))
+            {
+                cond = cond.And(x => x.UserName == userName);
+            }
+            var query = userRepository.Source.Where(cond);
+            return userRepository.FindForPaging(size, index, userRepository.Source, out total).ToList().ToListModel<User, UserDto>();
+        }
+
+        public UserDto GetUser(long id)
+        {
+            return userRepository.Find(x => x.Id == id).FirstOrDefault().ToModel<UserDto>();
         }
 
         public static User GetCurrentUser()

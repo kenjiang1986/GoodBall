@@ -1,4 +1,5 @@
 ﻿using AutoMapper;
+using DataCollection.Entity;
 using GoodBall.Dto;
 using System;
 using System.Collections.Generic;
@@ -27,7 +28,7 @@ namespace GoodBall
             return Mapper.Map<TResult>(entity);
         }
 
-        public static List<TResult> ToListModel<TResult, TInput>(this IEnumerable<TInput> list)
+        public static List<TResult> ToListModel<TInput,TResult>(this List<TInput> list)
         {
             return list.Select(x => x.ToModel<TResult>()).ToList();
         }
