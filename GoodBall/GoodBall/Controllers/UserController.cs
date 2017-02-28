@@ -57,7 +57,6 @@ namespace GoodBall.Controllers
             return ExceptionCatch.Invoke(() =>
             {
                 UserService.Instance.UpdateUser(user);
-               
             });
         }
 
