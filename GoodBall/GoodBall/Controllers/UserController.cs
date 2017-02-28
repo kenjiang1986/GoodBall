@@ -52,11 +52,11 @@ namespace GoodBall.Controllers
             return Json(result, JsonRequestBehavior.AllowGet);
         }
 
-        public JsonResult UpdateUser(long id)
+        public JsonResult UpdateUser(UserDto user)
         {
             return ExceptionCatch.Invoke(() =>
             {
-                UserService.Instance.UpdateUser(id);
+                UserService.Instance.UpdateUser(user);
                
             });
         }

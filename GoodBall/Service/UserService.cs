@@ -51,9 +51,9 @@ namespace Service
             return userRepository.InsertReturnEntity(user);
         }
 
-        public bool UpdateUser(User user)
+        public bool UpdateUser(UserDto user)
         {
-            return userRepository.Save(user);
+            return userRepository.Save(user.ToModel<User>());
         }
 
         public bool DeleteUser(User user)
