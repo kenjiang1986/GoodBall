@@ -18,7 +18,7 @@ using Newtonsoft.Json;
 
 namespace Repository
 {
-    public abstract class Repository<TEntity, TSing> where TEntity : class
+    public abstract class BaseRepository<TEntity, TSing> where TEntity : class
     {
         private static readonly Lazy<TSing> _instance = new Lazy<TSing>(() =>
         {
@@ -37,58 +37,45 @@ namespace Repository
             get { return _instance.Value; }
         }
 
-        private static readonly string _readKey = "_readDbContextKey";
-        private static DataCollection.Collection _read
+        private static readonly string _dbContextKey = "_dbContextDbContextKey";
+        private static DataCollection.Collection _dbContext
         {
             get
             {
-                Collection collection = CallContext.GetData(_readKey) as Collection;
+                Collection collection = CallContext.GetData(_dbContextKey) as Collection;
                 if (collection == null)
                 {
-                    collection = new Collection(ConfigurationManager.AppSettings["ReadConnection"]);
-                    CallContext.SetData(_readKey, collection);
+                    collection = new Collection(ConfigurationManager.AppSettings["DbConnection"]);
+                    CallContext.SetData(_dbContextKey, collection);
                 }
                 return collection;
             }
         }
-        private static readonly string _writeKey = "_writeDbContextKey";
-        private static Collection _write
-        {
-            get
-            {
-                Collection collection = CallContext.GetData(_writeKey) as Collection;
-                if (collection == null)
-                {
-                    collection = new Collection(ConfigurationManager.AppSettings["WriteConnection"]);
-                    CallContext.SetData(_writeKey, collection);
-                }
-                return collection;
-            }
-        }
+     
 
         public virtual IQueryable<TEntity> Source
         {
-            get { return _read.Set<TEntity>(); }
+            get { return _dbContext.Set<TEntity>(); }
         }
 
         public virtual IQueryable<TEntity> Find(Expression<Func<TEntity, bool>> expression)
         {
-            return _read.Set<TEntity>().Where(expression);
+            return _dbContext.Set<TEntity>().Where(expression);
         }
 
         public virtual DataTable ExecuteSqlToTable(string sql, params object[] Obj)
         {
-            return (DataTable)_read.Database.SqlQuery<TEntity>(sql, Obj).AsQueryable();
+            return (DataTable)_dbContext.Database.SqlQuery<TEntity>(sql, Obj).AsQueryable();
         }
 
         public virtual List<T> ExecuteSql<T>(string sql, params object[] obj) where T : class
         {
-            return _read.Database.SqlQuery<T>(sql, obj).ToList();
+            return _dbContext.Database.SqlQuery<T>(sql, obj).ToList();
         }
 
         public virtual int Count(Expression<Func<TEntity, bool>> expression)
         {
-            return _read.Set<TEntity>().Count(expression);
+            return _dbContext.Set<TEntity>().Count(expression);
         }
 
         public virtual IQueryable<TEntity> FindForPaging(int size, int index, Expression<Func<TEntity, bool>> expression, out int total)
@@ -120,8 +107,8 @@ namespace Repository
 
             CatchEfException(() =>
             {
-                _read.Set<TEntity>().Add(entity);
-                result = _read.SaveChanges() > 0;
+                _dbContext.Set<TEntity>().Add(entity);
+                result = _dbContext.SaveChanges() > 0;
             });
 
             return result;
@@ -138,8 +125,8 @@ namespace Repository
             {
                 if (entity == null)
                     throw new Exception("新增对象不能为空");
-                _read.Set<TEntity>().Add(entity);
-                _read.SaveChanges();
+                _dbContext.Set<TEntity>().Add(entity);
+                _dbContext.SaveChanges();
             });
 
             return entity;
@@ -155,8 +142,8 @@ namespace Repository
             bool result = false;
             CatchEfException(() =>
             {
-                _read.Set<TEntity>().AddRange(batch);
-                result = _read.SaveChanges() > 0;
+                _dbContext.Set<TEntity>().AddRange(batch);
+                result = _dbContext.SaveChanges() > 0;
             });
 
             return result;
@@ -177,8 +164,8 @@ namespace Repository
 
             CatchEfException(() =>
             {
-                _read.Entry<TEntity>(entity).State = EntityState.Modified;
-                result = _read.SaveChanges() > 0;
+                _dbContext.Entry<TEntity>(entity).State = EntityState.Modified;
+                result = _dbContext.SaveChanges() > 0;
             });
 
             return result;
@@ -188,14 +175,14 @@ namespace Repository
         {
             if (entity == null)
                 throw new Exception("删除对象不能为空");
-            _read.Set<TEntity>().Remove(entity);
-            return _read.SaveChanges() > 0;
+            _dbContext.Set<TEntity>().Remove(entity);
+            return _dbContext.SaveChanges() > 0;
         }
 
         public virtual bool Delete(IEnumerable<TEntity> batch)
         {
-            _read.Set<TEntity>().RemoveRange(batch);
-            return _read.SaveChanges() > 0;
+            _dbContext.Set<TEntity>().RemoveRange(batch);
+            return _dbContext.SaveChanges() > 0;
         }
 
         public virtual bool Delete(Expression<Func<TEntity, bool>> expression)
@@ -231,7 +218,7 @@ namespace Repository
         /// 开启事务-不可以在事务期间读取可变数据，但是可以修改它
         /// </summary>
         /// <param name="action"></param>
-        public void Transaction_ReadCommit(Action action)
+        public void Transaction_dbContextCommit(Action action)
         {
             TransactionOptions transOptions = new TransactionOptions();
             transOptions.IsolationLevel = System.Transactions.IsolationLevel.ReadCommitted;
@@ -266,7 +253,7 @@ namespace Repository
             catch (DbEntityValidationException ex)
             {
                 //当抛出异常时，将EF本地实体清除，防止同一线程插入或者更新失败，下次更新数据库时将原有实体同时提交，引起异常
-                _read.Set<TEntity>().Local.Clear();
+                _dbContext.Set<TEntity>().Local.Clear();
                 string errorMsg = string.Empty;
                 foreach (var efError in ex.EntityValidationErrors)
                 {
@@ -282,7 +269,7 @@ namespace Repository
             catch (DbUpdateException ex)
             {
                 //当抛出异常时，将EF本地实体清除，防止同一线程插入或者更新失败，下次更新数据库时将原有实体同时提交，引起异常
-                _read.Set<TEntity>().Local.Clear();
+                _dbContext.Set<TEntity>().Local.Clear();
                 string errorMsg = string.Empty;
                 foreach (var e in ex.Entries)
                 {

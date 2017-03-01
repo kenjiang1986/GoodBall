@@ -63,13 +63,12 @@ namespace Service
 
         public List<UserDto> GetUserListByPage(string userName, int size, int index, out int total)
         {
-            var cond = EfCondition.True<User>();
+            var query = userRepository.Source;
             if(!string.IsNullOrEmpty(userName))
             {
-                cond = cond.And(x => x.UserName == userName);
+                query = query.Where(x => x.UserName == userName);
             }
-            var query = userRepository.Source.Where(cond);
-            return userRepository.FindForPaging(size, index, userRepository.Source, out total).ToList().ToListModel<User, UserDto>();
+            return userRepository.FindForPaging(size, index, query, out total).ToList().ToListModel<User, UserDto>();
         }
 
         public UserDto GetUser(long id)

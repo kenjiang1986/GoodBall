@@ -7,11 +7,8 @@ using System.Threading.Tasks;
 
 namespace Repository
 {
-    public sealed class UserRepository : BaseRepository<User, UserRepository>
+    internal class RechargeRecordRepository : BaseRepository<RechargeRecord, RechargeRecordRepository>
     {
-        private UserRepository()
-        {
-
-        }
+        internal RechargeRecordRepository() { }
     }
 }

@@ -16,7 +16,7 @@ namespace DataCollection
         /// （构造函数）默认将所有string类型长度设为500
         /// </summary>
         internal EntityConfig()
-            : this(500)
+            : this(50)
         {
 
         }
