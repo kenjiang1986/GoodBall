@@ -22,7 +22,9 @@
             return;
         } else {
             $("#dg").datagrid({
-                //height: tabHeight,
+                onClickRow: function (value, row) {
+                    LoadRecharge(row.Id);
+                },
                 url: "/User/GetUserList?UserName=" + name,
                 onLoadError: function (data) {
                     BaseHelper.ShowException(data);
@@ -31,9 +33,18 @@
         }
     }
 
+    function LoadRecharge(userId) {
+        $("#dgRecharge").datagrid({
+            url: "/User/GetRechargeList?userId=" + userId,
+            error: function (data) {
+                BaseHelper.ShowException(data);
+            }
+        });
+    }
+
     function Update(value, row) {
-        var result = "<a href='javascript:void(0)' onclick='UpdateUser(\"" + value + "\")'>编辑</a>  ";
-        result += "<a href='javascript:void(0)' onclick='DelCompany(\"" + row.TID + "\",\"" + row.Name + "\")'>删除</a>";
+        var result = "<a href='javascript:void(0)' onclick='UpdateUser(\"" + row.Id + "\")'>编辑</a>  ";
+        result += "<a href='javascript:void(0)' onclick='DelUser(\"" + row.Id + "\",\"" + row.Name + "\")'>删除</a>";
         return result;
 
     }
@@ -59,17 +70,20 @@
             }
         });
     }
-  
 
-    function UpdateUser(tid) {
-        var src = "/User/UpdateUser";
-        var title = "修改用户信息";
-        if (tid != '') {
-            src += "?tid=" + tid;
-            title = "修改";
-        }
-        parent.f_addTab('公司操作' + tid, '公司' + title, src);
+    function UpdateUser(id) {
+        var url = "/User/Update?id=" + id;
+        $.layer({
+            scrolling: 'auto',
+            type: 2,
+            title: '修改用户信息',
+            iframe: {
+                src: url
+            },
+            area: ['500px', '400px']
+        });
     }
+   
 
 </script>
 
@@ -92,16 +106,34 @@
                data-options="rownumbers:true,singleSelect:true,pagination:true,method:'post',pageSize:10,toolbar:'#toolbar'">
             <thead>
                 <tr>
-                    <th data-options="field:'UserName',width:'20%',resizable:false,align:'left'">用户名称</th>
-                    <th data-options="field:'NickName',width:'15%',resizable:false,align:'left'">昵称</th>
-                    <th data-options="field:'Phone',width:'15%',resizable:false,align:'left'">电话</th>
-                    <th data-options="field:'Balance',width:'32%',resizable:false,align:'left'">用户余额</th>
-                    <th data-options="field:'Integral',width:'32%',resizable:false,align:'left'">用户积分</th>
-                    <th data-options="field:'CreateTime',width:'32%',resizable:false,align:'left'">创建时间</th>
+                    <th data-options="field:'UserName',width:'5%',resizable:false,align:'left'">用户名称</th>
+                    <th data-options="field:'NickName',width:'5%',resizable:false,align:'left'">昵称</th>
+                    <th data-options="field:'Phone',width:'10%',resizable:false,align:'left'">电话</th>
+                    <th data-options="field:'Balance',width:'5%',resizable:false,align:'left'">用户余额</th>
+                    <th data-options="field:'Integral',width:'5%',resizable:false,align:'left'">用户积分</th>
+                    <th data-options="field:'CreateTime',width:'10%',resizable:false,align:'left'">创建时间</th>
                  
-                    <th data-options="field:'TID',width:'15%',formatter:Update">操作</th>
+                    <th data-options="field:'Id',width:'15%',formatter:Update">操作</th>
                 </tr>
             </thead>
         </table>
+
+        <div class="easyui-tabs" data-options="tabWidth:112" style="width: 100%; margin-bottom: 2px; min-height: 80px" id="tabsinfo">
+           
+            <div title="用户充值记录" style="padding: 2px; width: 101%;" id="tab_recharge">
+                <table id="dgRecharge" class="easyui-datagrid" title="" style="width: 100%; margin-bottom: 15px; padding-bottom: 10px !important; min-height: 100px;"
+                       data-options="rownumbers:true,singleSelect:true,method:'post'">
+                    <thead>
+                        <tr>
+                            <th data-options="field:'Price',width:'5%'">充值金额</th>
+                            <th data-options="field:'CreateTime',width:'10%'">充值时间</th>
+                            <th data-options="field:'RechargeUser',width:'10%'">充值帐号</th>
+                            <th data-options="field:'Operator',width:'10%'">操作人</th>
+                            <th data-options="field:'Remark',width:'20%'">备注</th>
+                        </tr>
+                    </thead>
+                </table>
+            </div>
+        </div>
     </div>
 </form>

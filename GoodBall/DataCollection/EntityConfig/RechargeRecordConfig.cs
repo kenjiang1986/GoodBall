@@ -13,7 +13,7 @@ namespace DataCollection.EntityConfig
         {
             base.ToTable("RechargeRecord");
             base.HasKey(x => x.Id);
-            base.HasRequired(x => x.RechargeUser).WithMany().HasForeignKey(x => x.RechargeUserId);
+            base.HasRequired(x => x.RechargeUser).WithMany().HasForeignKey(x => x.UserId);
         }
     }
 }

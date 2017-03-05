@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace Repository
 {
-    public class NewsRepository : BaseRepository<News, NewsRepository>
+    public sealed class NewsRepository : BaseRepository<News, NewsRepository>
     {
         private NewsRepository() { }
     }

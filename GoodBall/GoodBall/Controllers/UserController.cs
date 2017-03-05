@@ -46,9 +46,9 @@ namespace GoodBall.Controllers
             }, JsonRequestBehavior.AllowGet);
         }
 
-        public JsonResult GetUser(long id)
+        public JsonResult GetUser(long? id)
         {
-            var result = UserService.Instance.GetUser(id);
+            var result = UserService.Instance.GetUser(id.Value);
             return Json(result, JsonRequestBehavior.AllowGet);
         }
 
@@ -60,5 +60,31 @@ namespace GoodBall.Controllers
             });
         }
 
+        public JsonResult DeleteUser(long? id)
+        {
+            return ExceptionCatch.Invoke(() =>
+            {
+                UserService.Instance.DeleteUser(id.Value);
+            });
+        }
+
+        public JsonResult GetRechargeList(long? userId)
+        {
+            var result = RechargeRecordService.Instance.GetRechargeListByUserId(userId.Value);
+
+            return Json(new
+            {
+                rows = result.Select(x => new
+                {
+                    x.Id,
+                    x.Price,
+                    x.Operator,
+                    x.RechargeUser,
+                    x.Remark,
+                    CreateTime = x.CreateTime.ToString(),
+                   
+                })
+            }, JsonRequestBehavior.AllowGet);
+        }
     }
 }

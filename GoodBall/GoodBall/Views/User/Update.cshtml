@@ -3,10 +3,8 @@
 }
 <script>
     var id = "@Request.QueryString["Id"]";
-
-
     $(function () {
-        if (tid > 0) {
+        if (id > 0) {
             loadTips.showLoading();
             BaseHelper.loadform("form1", "/User/GetUser?id=" + id, function (data) {
                 loadTips.hideLoadind();
@@ -20,9 +18,9 @@
         }
 
 
-        $("#TID").val(tid);
+        $("#id").val(id);
         loadTips.showLoading();
-        var url = "/User/SaveParameter";
+        var url = "/User/UpdateUser";
         $.ajax({
             type: "POST",
             url: url,
@@ -33,12 +31,7 @@
                 loadTips.hideLoadind();
                 alert(data.message);
                 if (data.success) {
-                    if (pid > 0) {
-                        parent.Search();
-                        parent.parent.LoadTree();
-                    } else {
-                        parent.LoadTree();
-                    }
+                    parent.Search();
                     parent.layer.closeAll();
                 }
             },
@@ -50,13 +43,11 @@
 
 </script>
 
-
-
 <form id="form1" class="easyui-doc-form">
 
     <input type="hidden" id="id" name="id" />
 
-    <table>
+    <table class="easyui-doc-table">
         <tr>
             <td>
                 用户名称

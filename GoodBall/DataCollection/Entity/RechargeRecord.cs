@@ -24,8 +24,8 @@ namespace DataCollection.Entity
 
         public DateTime CreateTime { get; set; }
 
-        public long RechargeUserId { get; set; }
+        public long UserId { get; set; }
 
-        public User RechargeUser { get; set; }
+        public virtual User RechargeUser { get; set; }
     }
 }

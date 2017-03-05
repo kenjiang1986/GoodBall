@@ -20,6 +20,9 @@ namespace GoodBall.Dto
 
         public int Balance { get; set; }
 
+        /// <summary>
+        /// 积分
+        /// </summary>
         public int Integral { get; set; }
 
         public string CreateTime { get; set; }

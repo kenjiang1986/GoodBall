@@ -8,7 +8,7 @@ using System.Threading.Tasks;
 
 namespace Repository
 {
-    public class MatchRepository : BaseRepository<Match, MatchRepository>
+    public sealed class MatchRepository : BaseRepository<Match, MatchRepository>
     {
         private MatchRepository()
         {

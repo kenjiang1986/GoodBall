@@ -54,6 +54,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="EfExtensionMethods.cs" />
     <Compile Include="MatchRepository.cs" />
     <Compile Include="NewsRepository.cs" />
     <Compile Include="PromoteRepository.cs" />

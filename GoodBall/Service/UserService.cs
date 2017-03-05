@@ -11,7 +11,7 @@ using System.Text;
 using System.Threading.Tasks;
 using DataCollection;
 using GoodBall.Dto;
-using GoodBall;
+
 
 namespace Service
 {
@@ -46,28 +46,54 @@ namespace Service
             return result;
         }
 
-        public User AddUser(User user)
+        public User AddUser(UserDto user)
         {
-            return userRepository.InsertReturnEntity(user);
+            return userRepository.InsertReturnEntity(user.ToModel<User>());
         }
 
         public bool UpdateUser(UserDto user)
         {
-            return userRepository.Save(user.ToModel<User>());
+            if (userRepository.Find(x => x.UserName == user.UserName).Any())
+            {
+                throw new ServiceException("已存在相同的用户名");
+            }
+            if (userRepository.Find(x => x.NickName == user.NickName).Any())
+            {
+                throw new ServiceException("已存在相同的昵称");
+            }
+            if (userRepository.Find(x => x.Phone == user.Phone).Any())
+            {
+                throw new ServiceException("已存在相同的电话号码");
+            }
+
+            var entity = userRepository.Find(x => x.Id == user.Id).FirstOrDefault();
+            if(entity == null)
+            {
+                throw new ServiceException("不存在当前用户");
+            }
+            entity.UserName = user.UserName;
+            entity.NickName = user.NickName;
+            entity.Password = user.Password;
+            entity.Password = MD5Helper.MD5Encrypt64(user.Password);
+            entity.Integral = user.Integral;
+            entity.IconUrl = user.IconUrl;
+            
+            return userRepository.Save(entity);
         }
 
-        public bool DeleteUser(User user)
+        public bool DeleteUser(long id)
         {
-            return userRepository.Delete(user);
+            return userRepository.Delete(x => x.Id == id);
         }
 
         public List<UserDto> GetUserListByPage(string userName, int size, int index, out int total)
         {
             var query = userRepository.Source;
-            if(!string.IsNullOrEmpty(userName))
+            if (!string.IsNullOrEmpty(userName))
             {
-                query = query.Where(x => x.UserName == userName);
+                query = query.Where(x => x.UserName.Contains(userName));
             }
+            query = query.OrderByDescending(x => x.CreateTime);
             return userRepository.FindForPaging(size, index, query, out total).ToList().ToListModel<User, UserDto>();
         }
 
