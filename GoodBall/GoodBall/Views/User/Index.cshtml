@@ -44,7 +44,8 @@
 
     function Update(value, row) {
         var result = "<a href='javascript:void(0)' onclick='UpdateUser(\"" + row.Id + "\")'>编辑</a>  ";
-        result += "<a href='javascript:void(0)' onclick='DelUser(\"" + row.Id + "\",\"" + row.Name + "\")'>删除</a>";
+        result += "<a href='javascript:void(0)' onclick='DelUser(\"" + row.Id + "\",\")'>删除</a>";
+        result += "<a href='javascript:void(0)'  onclick='GivingPrice(\"" + row.Id + "\")'>赠送V币</a>  ";
         return result;
 
     }
