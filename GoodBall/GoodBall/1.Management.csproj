@@ -114,6 +114,7 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Controllers\BaseController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\UserController.cs" />
     <Compile Include="Global.asax.cs">
@@ -767,6 +768,8 @@
     <Content Include="Views\Shared\_Page.cshtml" />
     <Content Include="Views\Shared\_ShowPic.cshtml" />
     <Content Include="Views\User\Update.cshtml" />
+    <Content Include="Views\User\GivingPrice.cshtml" />
+    <Content Include="Views\Home\Login.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
@@ -776,6 +779,10 @@
     <Content Include="packages.config" />
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\DataCollection\4.DataCollection.csproj">
+      <Project>{88CEF747-1110-45F0-974F-E180EF22E4D9}</Project>
+      <Name>4.DataCollection</Name>
+    </ProjectReference>
     <ProjectReference Include="..\Helper\5.Helper.csproj">
       <Project>{629ff08a-c46e-4a78-bb2f-e461fa1af618}</Project>
       <Name>5.Helper</Name>

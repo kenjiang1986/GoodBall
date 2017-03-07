@@ -25,6 +25,11 @@ namespace GoodBall.Controllers
             return View();
         }
 
+        public ActionResult GivingPrice()
+        {
+            return View();
+        }
+
         public JsonResult GetUserList(string userName, int page, int rows)
         {
             int total;
@@ -57,6 +62,20 @@ namespace GoodBall.Controllers
             return ExceptionCatch.Invoke(() =>
             {
                 UserService.Instance.UpdateUser(user);
+            });
+        }
+
+        /// <summary>
+        /// 更新用户余额
+        /// </summary>
+        /// <param name="userId"></param>
+        /// <param name="price"></param>
+        /// <returns></returns>
+        public JsonResult UpdateUserBalance(long? id, int? price)
+        {
+            return ExceptionCatch.Invoke(() =>
+            {
+                UserService.Instance.UpdateUserBalance(id.Value, price.Value);
             });
         }
 

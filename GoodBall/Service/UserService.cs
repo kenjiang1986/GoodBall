@@ -18,6 +18,7 @@ namespace Service
     public class UserService : SingModel<UserService>
     {
         private static readonly UserRepository userRepository = UserRepository.Instance;
+        private static readonly RechargeRecordRepository rechargeRepository = RechargeRecordRepository.Instance;
         private static string userKey = "GBUser";
 
         private UserService() { }
@@ -81,6 +82,32 @@ namespace Service
             return userRepository.Save(entity);
         }
 
+        public bool UpdateUserBalance(long userId, int price)
+        {
+            var entity = userRepository.Find(x => x.Id == userId).FirstOrDefault();
+            if (entity == null)
+            {
+                throw new ServiceException("不存在当前用户");
+            }
+            entity.Balance += price;
+
+            var rechargeRecord = new RechargeRecord();
+            rechargeRecord.CreateTime = DateTime.Now;
+            rechargeRecord.Operator = GetCurrentUser().UserName;
+            rechargeRecord.Price = price;
+            rechargeRecord.UserId = userId;
+
+
+
+            userRepository.Transaction(()=>
+            {
+                userRepository.Save(entity);
+                rechargeRepository.Insert(rechargeRecord);
+            });
+
+            return true;
+        }
+
         public bool DeleteUser(long id)
         {
             return userRepository.Delete(x => x.Id == id);
@@ -102,10 +129,10 @@ namespace Service
             return userRepository.Find(x => x.Id == id).FirstOrDefault().ToModel<UserDto>();
         }
 
-        public static User GetCurrentUser()
+        public static UserDto GetCurrentUser()
         {
             var userStr = CookieHelper.GetCookie(userKey);
-            return JsonConvert.DeserializeObject<User>(userStr);
+            return JsonConvert.DeserializeObject<UserDto>(userStr);
         }
     }
 }
