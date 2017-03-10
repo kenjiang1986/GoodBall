@@ -1,0 +1,88 @@
+﻿@{
+    Layout = null;
+}
+<!DOCTYPE html>
+<html lang="zh">
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <meta charset="utf-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width" />
+    <link href="~/Content/css/base.css" rel="stylesheet" />
+    <link href="~/Content/plug-in/easyui/themes/default/easyui.css" rel="stylesheet" />
+    <link href="~/Content/plug-in/easyui/themes/icon.css?v=2.3" rel="stylesheet" />
+    <link href="~/Content/css/loadTips/loadTips.css?v=2.3" rel="stylesheet" />
+    <link href="~/Content/plug-in/easyui/easyui-rtl.css" rel="stylesheet" id="easyui-rtlcss" />
+    <link href="~/Content/css/index.css?v=2.8" rel="stylesheet" />
+    <script src="~/Scripts/jquery-1.8.2.min.js"></script>
+    <script src="~/Content/plug-in/layer/layer.min.js?v=1.14"></script>
+    <script src="~/Content/plug-in/easyui/jquery.easyui.min.js"></script>
+    <script src="~/Content/plug-in/jquery-validation/jquery.metadata.js"></script>
+    <script src="~/Content/plug-in/jquery-validation/jquery.validate.min.js"></script>
+    <script src="~/Content/plug-in/jquery-validation/messages_cn.js"></script>
+    <script src="~/Content/plug-in/easyui/locale/easyui-lang-zh_CN.js" charset="utf-8"></script>
+    <script src="~/Scripts/Base.js?v=1.07"></script>
+    <script src="~/Content/plug-in/js/validataboxextend.js?v=1.0.5"></script>
+    <script src="~/Content/plug-in/easyui/easyui-rtl.js" id="easyui-rtljs"></script>
+
+    <script>
+
+        function Submit() {
+
+
+            //loadTips.showLoading();
+            var url = "/Admin/AdminLogin";
+            $.ajax({
+                type: "POST",
+                url: url,
+                dataType: "json",
+                async: true,
+                data: $("#form1").serialize(),
+                success: function (data) {
+                    //loadTips.hideLoadind();
+
+                    if (data.success) {
+                        window.location.href = "/home/index"
+                    }
+                    else {
+                        alert(data.message)
+                    }
+                },
+                //error: function (data) {
+                //    BaseHelper.ShowException(data);
+                //}
+            });
+        }
+
+    </script>
+
+    <form id="form1" class="easyui-doc-form">
+
+
+        <table class="easyui-doc-table">
+            <tr>
+                <td>
+                    用户名
+                </td>
+                <td>
+                    <input type="text" id="UserName" name="UserName" style="padding-left:5px; line-height:20px;" />
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    密码
+                </td>
+                <td>
+                    <input type="password" id="Password" name="Password" style="padding-left:5px; line-height:20px;" />
+                </td>
+            </tr>
+            <tr>
+                <td colspan="2" style="text-align: center;">
+                    <a href="javascript:;" class="easyui-linkbutton" iconcls="icon-ok" id="submitform" onclick="Submit()">登录</a>
+                </td>
+            </tr>
+
+        </table>
+        </div>
+
+    </form>

@@ -35,16 +35,23 @@ namespace Service
             return result;
         }
 
-        public bool AdminLogin(string userName, string password)
+        public void AdminLogin(string userName, string password)
         {
-            var userQuery = userRepository.Find(x => x.UserName == userName && x.Password == MD5Helper.MD5Encrypt64(password));
-            var result = userQuery.Any();
-            if (result && userName == ConfigurationManager.AppSettings["AdminName"])
+            if (userName != ConfigurationManager.AppSettings["AdminName"])
             {
-                CookieHelper.WriteCookie(userKey, userQuery.FirstOrDefault().UserName);
+                throw new ServiceException("用户名错误");
             }
 
-            return result;
+            string md5Password = MD5Helper.MD5Encrypt64(password);
+            var result = userRepository.Find(x => x.UserName == userName && x.Password == md5Password);
+            if (result.Any())
+            {
+                CookieHelper.WriteEncryptCookie(userKey, JsonConvert.SerializeObject(result.FirstOrDefault().ToModel<UserDto>()), DateTime.Now);
+            }
+            else
+            {
+                throw new ServiceException("密码错误");
+            }
         }
 
         public User AddUser(UserDto user)
@@ -131,7 +138,7 @@ namespace Service
 
         public static UserDto GetCurrentUser()
         {
-            var userStr = CookieHelper.GetCookie(userKey);
+            var userStr = CookieHelper.GetDecryptCookie(userKey);
             return JsonConvert.DeserializeObject<UserDto>(userStr);
         }
     }

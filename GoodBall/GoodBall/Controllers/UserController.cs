@@ -1,6 +1,7 @@
 ﻿using GoodBall;
 using GoodBall.Dto;
 using Helper;
+using Management.Controllers;
 using Service;
 using System;
 using System.Collections.Generic;
@@ -10,7 +11,7 @@ using System.Web.Mvc;
 
 namespace GoodBall.Controllers
 {
-    public class UserController : Controller
+    public class UserController : BaseController
     {
         //
         // GET: /User/
@@ -86,6 +87,8 @@ namespace GoodBall.Controllers
                 UserService.Instance.DeleteUser(id.Value);
             });
         }
+
+
 
         public JsonResult GetRechargeList(long? userId)
         {

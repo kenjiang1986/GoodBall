@@ -112,14 +112,13 @@ namespace Helper
         /// <param name="strName">名称</param>
         /// <param name="nowTime">当前时间</param>
         /// <returns>cookie值</returns>
-        public static string GetDecryptCookie(string strName, out DateTime nowTime)
+        public static string GetDecryptCookie(string strName)
         {
             if (HttpContext.Current.Request.Cookies[strName] != null)
             {
-                nowTime = DateTime.Now.AddMinutes(-CookieExpiresMinute);
                 return DESEncrypt.Decrypt(HttpContext.Current.Request.Cookies[strName].Value);
             }
-            nowTime = DateTime.Now;
+            
             return "";
         }
 

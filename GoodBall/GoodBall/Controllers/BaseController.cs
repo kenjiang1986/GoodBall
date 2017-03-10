@@ -9,12 +9,13 @@ namespace Management.Controllers
 {
     public class BaseController : Controller
     {
-        public BaseController()
+        protected override void Initialize(System.Web.Routing.RequestContext requestContext)
         {
             if(UserService.GetCurrentUser() == null)
             {
-                Response.Redirect("Home/Login");
+                requestContext.HttpContext.Response.Redirect("/Admin/Login");
             }
+            base.Initialize(requestContext);
         }
     }
 }
