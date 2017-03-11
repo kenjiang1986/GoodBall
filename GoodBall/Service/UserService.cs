@@ -59,7 +59,7 @@ namespace Service
             return userRepository.InsertReturnEntity(user.ToModel<User>());
         }
 
-        public bool UpdateUser(UserDto user)
+        public void UpdateUser(UserDto user)
         {
             if (userRepository.Find(x => x.UserName == user.UserName).Any())
             {
@@ -86,10 +86,10 @@ namespace Service
             entity.Integral = user.Integral;
             entity.IconUrl = user.IconUrl;
             
-            return userRepository.Save(entity);
+            userRepository.Save(entity);
         }
 
-        public bool UpdateUserBalance(long userId, int price)
+        public void UpdateUserBalance(long userId, int price)
         {
             var entity = userRepository.Find(x => x.Id == userId).FirstOrDefault();
             if (entity == null)
@@ -111,13 +111,11 @@ namespace Service
                 userRepository.Save(entity);
                 rechargeRepository.Insert(rechargeRecord);
             });
-
-            return true;
         }
 
-        public bool DeleteUser(long id)
+        public void DeleteUser(long id)
         {
-            return userRepository.Delete(x => x.Id == id);
+            userRepository.Delete(x => x.Id == id);
         }
 
         public List<UserDto> GetUserListByPage(string userName, int size, int index, out int total)

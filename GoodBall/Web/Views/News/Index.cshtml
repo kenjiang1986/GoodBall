@@ -8,24 +8,17 @@
     $(function () {
         $("input[type=text]").validatebox();
         Search();
-        if ($.validatePower("System.Company.Edit")) {
-            $("#btnAdd").show();
-        }
     });
 
     function Search() {
         var tabHeight = $(window).height();
-        var code = $("#Code").val();
         var name = encodeURI($("#UserName").val());
         var validate = $("#form1").form('validate');
         if (!validate) {
             return;
         } else {
             $("#dg").datagrid({
-                onClickRow: function (value, row) {
-                    LoadRecharge(row.Id);
-                },
-                url: "/User/GetUserList?UserName=" + name,
+                url: "/News/GetList?title=" + $("#Title").val(),
                 onLoadError: function (data) {
                     BaseHelper.ShowException(data);
                 }
@@ -84,7 +77,7 @@
             area: ['500px', '400px']
         });
     }
-   
+
     //赠送V币
     function GivingPrice(id) {
         var url = "/User/GivingPrice?id=" + id;
@@ -107,7 +100,7 @@
                 <tr>
 
                     <td>用户名称:</td>
-                    <td><input type="text" id="UserName" class="easyui-doc-textbox" validtype="companyCode" maxlength="20" /></td>
+                    <td><input type="text" id="Title" class="easyui-doc-textbox" validtype="Title" maxlength="20" /></td>
                     <td><a href="javascript:;" class="easyui-linkbutton" data-options="iconCls:'icon-search'" onclick="Search()">查询</a></td>
                 </tr>
             </table>
@@ -119,34 +112,17 @@
                data-options="rownumbers:true,singleSelect:true,pagination:true,method:'post',pageSize:10,toolbar:'#toolbar'">
             <thead>
                 <tr>
-                    <th data-options="field:'UserName',width:'5%',resizable:false,align:'left'">用户名称</th>
-                    <th data-options="field:'NickName',width:'5%',resizable:false,align:'left'">昵称</th>
-                    <th data-options="field:'Phone',width:'10%',resizable:false,align:'left'">电话</th>
-                    <th data-options="field:'Balance',width:'5%',resizable:false,align:'left'">用户余额</th>
-                    <th data-options="field:'Integral',width:'5%',resizable:false,align:'left'">用户积分</th>
+                    <th data-options="field:'Title',width:'15%',resizable:false,align:'left'">标题</th>
+                    <th data-options="field:'NewsType',width:'5%',resizable:false,align:'left'">新闻类型</th>
+                    <th data-options="field:'Opterator',width:'10%',resizable:false,align:'left'">操作人</th>
+                    <th data-options="field:'Soruce',width:'5%',resizable:false,align:'left'">来源</th>
                     <th data-options="field:'CreateTime',width:'10%',resizable:false,align:'left'">创建时间</th>
-                 
+
                     <th data-options="field:'Id',width:'15%',formatter:Update">操作</th>
                 </tr>
             </thead>
         </table>
 
-        <div class="easyui-tabs" data-options="tabWidth:112" style="width: 100%; margin-bottom: 2px; min-height: 80px" id="tabsinfo">
-           
-            <div title="用户充值记录" style="padding: 2px; width: 101%;" id="tab_recharge">
-                <table id="dgRecharge" class="easyui-datagrid" title="" style="width: 100%; margin-bottom: 15px; padding-bottom: 10px !important; min-height: 100px;"
-                       data-options="rownumbers:true,singleSelect:true,method:'post'">
-                    <thead>
-                        <tr>
-                            <th data-options="field:'Price',width:'5%'">充值金额</th>
-                            <th data-options="field:'CreateTime',width:'10%'">充值时间</th>
-                            <th data-options="field:'RechargeUser',width:'10%'">充值帐号</th>
-                            <th data-options="field:'Operator',width:'10%'">操作人</th>
-                            <th data-options="field:'Remark',width:'20%'">备注</th>
-                        </tr>
-                    </thead>
-                </table>
-            </div>
-        </div>
+        
     </div>
 </form>

@@ -14,16 +14,16 @@ namespace Helper.Enum
         /// <summary>
         /// 让球
         /// </summary>
-        LetBall = 1,
+        让球 = 1,
 
         /// <summary>
         /// 竞彩
         /// </summary>
-        SMG = 2,
+        竞彩 = 2,
 
         /// <summary>
         /// 足彩310
         /// </summary>
-        SoccerBetting = 3,
+        足彩310 = 3,
     }
 }

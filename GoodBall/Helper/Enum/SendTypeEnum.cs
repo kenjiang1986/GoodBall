@@ -14,11 +14,11 @@ namespace Helper.Enum
         /// <summary>
         /// 短信
         /// </summary>
-        SMS =1,
+        短信 = 1,
 
         /// <summary>
         /// 微信
         /// </summary>
-        Wechat = 2,
+        微信 = 2,
     }
 }

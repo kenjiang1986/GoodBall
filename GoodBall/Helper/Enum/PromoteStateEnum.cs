@@ -14,11 +14,11 @@ namespace Helper.Enum
         /// <summary>
         /// 中
         /// </summary>
-        In =1,
+        中 =1,
 
         /// <summary>
         /// 不中
         /// </summary>
-        Miss = 2,
+        不中 = 2,
     }
 }

@@ -26,7 +26,7 @@ namespace Service
             AutoMapper.Mapper.CreateMap<UserDto, User>().ForMember(x => x.Password, x => x.MapFrom(src => MD5Helper.MD5Encrypt64(src.Password)));
             AutoMapper.Mapper.CreateMap<Match, MatchDto>();
             AutoMapper.Mapper.CreateMap<MatchDto, Match>();
-            AutoMapper.Mapper.CreateMap<News, NewsDto>();
+            AutoMapper.Mapper.CreateMap<News, NewsDto>().ForMember(x => x.NewsType, x => x.MapFrom(src => src.NewsType.ToString())); ;
             AutoMapper.Mapper.CreateMap<NewsDto, News>();
             AutoMapper.Mapper.CreateMap<Promote, PromoteDto>();
             AutoMapper.Mapper.CreateMap<PromoteDto, Promote>();

@@ -1,0 +1,149 @@
+﻿@{
+    Layout = "~/Views/Shared/_Page.cshtml";
+}
+
+<script>
+    $("#easyui-rtljs").remove();
+    $("#easyui-rtlcss").remove();
+    $(function () {
+        $("input[type=text]").validatebox();
+        Search();
+    });
+
+    function Search() {
+        var tabHeight = $(window).height();
+      
+        var name = encodeURI($("#UserName").val());
+        var validate = $("#form1").form('validate');
+        if (!validate) {
+            return;
+        } else {
+            $("#dg").datagrid({
+                onClickRow: function (value, row) {
+                    LoadRecharge(row.Id);
+                },
+                url: "/User/GetUserList?UserName=" + name,
+                onLoadError: function (data) {
+                    BaseHelper.ShowException(data);
+                }
+            });
+        }
+    }
+
+    function LoadRecharge(userId) {
+        $("#dgRecharge").datagrid({
+            url: "/User/GetRechargeList?userId=" + userId,
+            error: function (data) {
+                BaseHelper.ShowException(data);
+            }
+        });
+    }
+
+    function Update(value, row) {
+        var result = "<a href='javascript:void(0)' onclick='UpdateUser(\"" + row.Id + "\")'>编辑</a>  ";
+        result += "<a href='javascript:void(0)' onclick='DelUser(\"" + row.Id + "\",\")'>删除</a>  ";
+        result += "<a href='javascript:void(0)'  onclick='GivingPrice(\"" + row.Id + "\")'>赠送V币</a>  ";
+        return result;
+
+    }
+
+    function DelUser(id) {
+
+        $.messager.confirm('温馨提示', '确定要删除用户吗？', function (r) {
+            if (r) {
+                $.ajax({
+                    type: "post",
+                    url: "/User/DeleteUser",
+                    data: { id: id },
+                    success: function(data) {
+                        if (data) {
+                            alert("操作成功", "success", function() {
+                                Search();
+                            });
+                        } else {
+                            alert("操作失败", "error");
+                        }
+                    }
+                });
+            }
+        });
+    }
+
+    function UpdateUser(id) {
+        var url = "/User/Update?id=" + id;
+        $.layer({
+            scrolling: 'auto',
+            type: 2,
+            title: '修改用户信息',
+            iframe: {
+                src: url
+            },
+            area: ['500px', '400px']
+        });
+    }
+   
+    //赠送V币
+    function GivingPrice(id) {
+        var url = "/User/GivingPrice?id=" + id;
+        $.layer({
+            scrolling: 'auto',
+            type: 2,
+            title: '赠送V币',
+            iframe: {
+                src: url
+            },
+            area: ['300px', '200px']
+        });
+    }
+</script>
+
+<form id="form1" class="easyui-doc-padding">
+    <div id="toolbar">
+        <div class="easyui-filter">
+            <table>
+                <tr>
+
+                    <td>用户名称:</td>
+                    <td><input type="text" id="UserName" class="easyui-doc-textbox" validtype="companyCode" maxlength="20" /></td>
+                    <td><a href="javascript:;" class="easyui-linkbutton" data-options="iconCls:'icon-search'" onclick="Search()">查询</a></td>
+                </tr>
+            </table>
+        </div>
+    </div>
+
+    <div class="easyui-doc-padding">
+        <table id="dg" class="easyui-datagrid" title="" style="width:100%;min-height:350px;"
+               data-options="rownumbers:true,singleSelect:true,pagination:true,method:'post',pageSize:10,toolbar:'#toolbar'">
+            <thead>
+                <tr>
+                    <th data-options="field:'UserName',width:'5%',resizable:false,align:'left'">用户名称</th>
+                    <th data-options="field:'NickName',width:'5%',resizable:false,align:'left'">昵称</th>
+                    <th data-options="field:'Phone',width:'10%',resizable:false,align:'left'">电话</th>
+                    <th data-options="field:'Balance',width:'5%',resizable:false,align:'left'">用户余额</th>
+                    <th data-options="field:'Integral',width:'5%',resizable:false,align:'left'">用户积分</th>
+                    <th data-options="field:'CreateTime',width:'10%',resizable:false,align:'left'">创建时间</th>
+                 
+                    <th data-options="field:'Id',width:'15%',formatter:Update">操作</th>
+                </tr>
+            </thead>
+        </table>
+
+        <div class="easyui-tabs" data-options="tabWidth:112" style="width: 100%; margin-bottom: 2px; min-height: 80px" id="tabsinfo">
+           
+            <div title="用户充值记录" style="padding: 2px; width: 101%;" id="tab_recharge">
+                <table id="dgRecharge" class="easyui-datagrid" title="" style="width: 100%; margin-bottom: 15px; padding-bottom: 10px !important; min-height: 100px;"
+                       data-options="rownumbers:true,singleSelect:true,method:'post'">
+                    <thead>
+                        <tr>
+                            <th data-options="field:'Price',width:'5%'">充值金额</th>
+                            <th data-options="field:'CreateTime',width:'10%'">充值时间</th>
+                            <th data-options="field:'RechargeUser',width:'10%'">充值帐号</th>
+                            <th data-options="field:'Operator',width:'10%'">操作人</th>
+                            <th data-options="field:'Remark',width:'20%'">备注</th>
+                        </tr>
+                    </thead>
+                </table>
+            </div>
+        </div>
+    </div>
+</form>
