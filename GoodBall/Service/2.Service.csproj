@@ -48,7 +48,9 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Cond\MatchCond.cs" />
     <Compile Include="Cond\NewsCond.cs" />
+    <Compile Include="Cond\PromoteCond.cs" />
     <Compile Include="Dto\MatchDto.cs" />
     <Compile Include="Dto\NewsDto.cs" />
     <Compile Include="Dto\PromoteDto.cs" />
@@ -57,6 +59,7 @@
     <Compile Include="MapperConfig.cs" />
     <Compile Include="MatchService.cs" />
     <Compile Include="NewsService.cs" />
+    <Compile Include="PromoteService.cs" />
     <Compile Include="RechargeRecordService.cs" />
     <Compile Include="SingModel.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
