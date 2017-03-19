@@ -43,13 +43,13 @@
 
     }
 
-    function DelUser(id) {
+    function DelNews(id) {
 
-        $.messager.confirm('温馨提示', '确定要删除用户吗？', function (r) {
+        $.messager.confirm('温馨提示', '确定要删除新闻吗？', function (r) {
             if (r) {
                 $.ajax({
                     type: "post",
-                    url: "/User/DeleteUser",
+                    url: "/News/DeleteNews",
                     data: { id: id },
                     success: function(data) {
                         if (data) {
@@ -65,32 +65,23 @@
         });
     }
 
-    function UpdateUser(id) {
-        var url = "/User/Update?id=" + id;
+    function UpSetNews(id) {
+        var url = "/News/UpSet?id=" + id;
+        var title = '添加新闻'
+        if (id > 0) {
+            title = '修改新闻'
+        }
         $.layer({
             scrolling: 'auto',
             type: 2,
-            title: '修改用户信息',
+            title: title,
             iframe: {
                 src: url
             },
-            area: ['500px', '400px']
+            area: ['800px', '600px']
         });
     }
 
-    //赠送V币
-    function GivingPrice(id) {
-        var url = "/User/GivingPrice?id=" + id;
-        $.layer({
-            scrolling: 'auto',
-            type: 2,
-            title: '赠送V币',
-            iframe: {
-                src: url
-            },
-            area: ['300px', '200px']
-        });
-    }
 </script>
 
 <form id="form1" class="easyui-doc-padding">
@@ -101,7 +92,13 @@
 
                     <td>用户名称:</td>
                     <td><input type="text" id="Title" class="easyui-doc-textbox" validtype="Title" maxlength="20" /></td>
-                    <td><a href="javascript:;" class="easyui-linkbutton" data-options="iconCls:'icon-search'" onclick="Search()">查询</a></td>
+                    <td>
+                        <a href="javascript:;" class="easyui-linkbutton" data-options="iconCls:'icon-search'" onclick="Search()">查询</a>
+                        <a id="project_created_create" href="javascript:;" class="l-btn" onclick="CreateNews()">
+                            <span class="l-btn-left l-btn-icon-left"><span class="l-btn-text">添加</span><span class="l-btn-icon icon-redo">&nbsp;</span></span>
+                        </a>
+                    </td>
+
                 </tr>
             </table>
         </div>

@@ -19,16 +19,30 @@ namespace Management.Controllers
             return View();
         }
 
+        public ActionResult UpSet()
+        {
+            //ViewBag.NewsType = EnumHelper.
+            return View();
+        }
+        
+
         public JsonResult GetList(string title, string startDate, string endDate,string newsType, int page, int rows)
         {
             int total;
             var newsCond = new NewsCond()
             {
                 Title = title,
-                StartDate = Convert.ToDateTime(startDate),
-                EndDate = Convert.ToDateTime(endDate),
                 NewsType = newsType
             };
+
+            if(!string.IsNullOrEmpty(startDate))
+            {
+                newsCond.StartDate = Convert.ToDateTime(startDate);
+            }
+            if (!string.IsNullOrEmpty(endDate))
+            {
+                newsCond.EndDate = Convert.ToDateTime(endDate);
+            }
             var result = NewsService.Instance.GetNewsListByPage(newsCond, rows, page, out total);
 
             return Json(new
