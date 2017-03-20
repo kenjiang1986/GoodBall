@@ -1,4 +1,5 @@
 ﻿using DataCollection.Entity;
+using EnumUtils;
 using Helper.Enum;
 using Repository;
 using Service.Cond;
@@ -36,10 +37,21 @@ namespace Service
             return newsRepository.FindForPaging(size, index, query, out total).ToList().ToListModel<News, NewsDto>();
         }
 
+        public NewsDto GetNews(long id)
+        {
+            return newsRepository.Find(x => x.Id == id).FirstOrDefault().ToModel<NewsDto>();
+        }
+
+
         public void AddNews(NewsDto dto)
         {
-            var entity = dto.ToModel<News>();
-            newsRepository.Insert(entity);
+            var entity = new News();
+            entity.Title = dto.Title;
+            entity.Content = dto.Content;
+            entity.NewsType = EnumHelper.TryParse<NewsTypeEnum>(dto.NewsType);
+            entity.Operator = UserService.GetCurrentUser().UserName;
+            entity.CreateTime = DateTime.Now;
+            NewsRepository.Instance.InsertReturnEntity(entity);
         }
 
         public void UpdateNews(NewsDto dto)

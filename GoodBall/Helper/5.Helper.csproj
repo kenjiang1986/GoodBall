@@ -76,7 +76,6 @@
   <ItemGroup>
     <Compile Include="CookieHelper.cs" />
     <Compile Include="DESEncrypt.cs" />
-    <Compile Include="EnumHelper.cs" />
     <Compile Include="Enum\NewsTypeEnum.cs" />
     <Compile Include="Enum\PromoteStateEnum.cs" />
     <Compile Include="Enum\RaceTypeEnum.cs" />

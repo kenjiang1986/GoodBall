@@ -6,7 +6,7 @@
     $(function () {
         if (id > 0) {
             loadTips.showLoading();
-            BaseHelper.loadform("form1", "/User/GetUser?id=" + id, function (data) {
+            BaseHelper.loadform("form1", "/News/GetNews?id=" + id, function (data) {
                 loadTips.hideLoadind();
             });
         }
@@ -20,7 +20,7 @@
 
         $("#id").val(id);
         loadTips.showLoading();
-        var url = "/User/UpdateUser";
+        var url = "/News/UpSetUser";
         $.ajax({
             type: "POST",
             url: url,
@@ -73,7 +73,7 @@
                     <option></option>
                     @{foreach (var item in ViewBag.NewsType)
                         {
-                            <option value="@item.Name">@item.Name</option>
+                            <option value="@item">@item</option>
                         }}
                 </select>
 
@@ -81,10 +81,10 @@
         </tr>
         <tr>
             <td>
-                电话
+                新闻内容
             </td>
             <td>
-                <input type="text" id="Phone" name="Phone" style="padding-left:5px; line-height:20px;" class="easyui-validatebox textbox" missingmessage="请填写电话" required="true" />
+                <input type="text" id="Content" name="Content" style="padding-left:5px; line-height:20px;" class="easyui-validatebox textbox" missingmessage="请填写电话" required="true" />
             </td>
         </tr>
         <tr>

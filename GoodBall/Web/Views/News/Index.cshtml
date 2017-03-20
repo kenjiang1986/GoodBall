@@ -38,7 +38,7 @@
     function Update(value, row) {
         var result = "<a href='javascript:void(0)' onclick='UpdateUser(\"" + row.Id + "\")'>编辑</a>  ";
         result += "<a href='javascript:void(0)' onclick='DelUser(\"" + row.Id + "\",\")'>删除</a>  ";
-        result += "<a href='javascript:void(0)'  onclick='GivingPrice(\"" + row.Id + "\")'>赠送V币</a>  ";
+     
         return result;
 
     }
@@ -94,7 +94,7 @@
                     <td><input type="text" id="Title" class="easyui-doc-textbox" validtype="Title" maxlength="20" /></td>
                     <td>
                         <a href="javascript:;" class="easyui-linkbutton" data-options="iconCls:'icon-search'" onclick="Search()">查询</a>
-                        <a id="project_created_create" href="javascript:;" class="l-btn" onclick="CreateNews()">
+                        <a id="btnCreate" href="javascript:;" class="l-btn" onclick="UpSetNews(0)">
                             <span class="l-btn-left l-btn-icon-left"><span class="l-btn-text">添加</span><span class="l-btn-icon icon-redo">&nbsp;</span></span>
                         </a>
                     </td>

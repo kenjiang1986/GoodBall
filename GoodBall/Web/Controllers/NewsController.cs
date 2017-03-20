@@ -1,4 +1,6 @@
-﻿using Helper.Enum;
+﻿using EnumUtils;
+using Helper;
+using Helper.Enum;
 using Service;
 using Service.Cond;
 using System;
@@ -6,6 +8,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Web;
 using System.Web.Mvc;
+using Service.Dto;
 
 namespace Management.Controllers
 {
@@ -21,10 +24,30 @@ namespace Management.Controllers
 
         public ActionResult UpSet()
         {
-            //ViewBag.NewsType = EnumHelper.
+            ViewBag.NewsType = EnumHelper.GetValues<NewsTypeEnum>(); ;
             return View();
         }
-        
+
+        public JsonResult UpSetUser(NewsDto news)
+        {
+            return ExceptionCatch.Invoke(() =>
+            {
+                if (news.Id > 0)
+                {
+                    NewsService.Instance.UpdateNews(news);
+                }
+                else
+                {
+                    NewsService.Instance.AddNews(news);
+                }
+            });
+        }
+
+        public JsonResult GetNews(long? id)
+        {
+            var result = NewsService.Instance.GetNews(id.Value);
+            return Json(result, JsonRequestBehavior.AllowGet);
+        }
 
         public JsonResult GetList(string title, string startDate, string endDate,string newsType, int page, int rows)
         {
@@ -51,7 +74,7 @@ namespace Management.Controllers
                 {
                     x.Id,
                     x.Title,
-                    x.Soruce,
+                    x.Source,
                     x.Content,
                     x.Operator,
                     CreateTime = x.CreateTime.ToString(),
