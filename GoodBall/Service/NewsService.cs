@@ -48,7 +48,7 @@ namespace Service
             var entity = new News();
             entity.Title = dto.Title;
             entity.Content = dto.Content;
-            entity.Soruce = dto.Source;
+            entity.Source = dto.Source;
             entity.NewsType = EnumHelper.TryParse<NewsTypeEnum>(dto.NewsType);
             entity.Operator = UserService.GetCurrentUser().UserName;
             entity.CreateTime = DateTime.Now;

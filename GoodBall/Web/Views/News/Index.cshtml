@@ -71,15 +71,18 @@
         if (id > 0) {
             title = '修改新闻'
         }
-        $.layer({
-            scrolling: 'auto',
-            type: 2,
-            title: title,
-            iframe: {
-                src: url
-            },
-            area: ['800px', '600px']
-        });
+
+        parent.f_addTab(title, title, url);
+    }
+
+    function Add(tid) {
+        var src = "/Company/Add";
+        var title = "添加";
+        if (tid != '') {
+            src += "?tid=" + tid;
+            title = "修改";
+        }
+        parent.f_addTab('公司操作' + tid, '公司' + title, src);
     }
 
 </script>

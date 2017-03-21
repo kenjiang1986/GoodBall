@@ -1,7 +1,13 @@
 ﻿@{
     Layout = "~/Views/Shared/_Page.cshtml";
 }
+
+<script src="~/Scripts/Ueditor/ueditor.config.js"></script>
+<script src="~/Scripts/Ueditor/ueditor.all.min.js"></script>
+<script src="~/Scripts/Ueditor/lang/zh-cn/zh-cn.js"></script>
 <script>
+    var ue = UE.getEditor('container');
+
     var id = "@Request.QueryString["Id"]";
     $(function () {
         if (id > 0) {
@@ -13,14 +19,16 @@
     })
 
     function Submit() {
+        alert(UE.getEditor('editor').getPlainTxt());
         if (!$("#form1").form('validate')) {
             return false;
         }
-
+        alert(UE.getEditor('editor').getPlainTxt());
 
         $("#id").val(id);
         loadTips.showLoading();
         var url = "/News/UpSetUser";
+        $("#Content").val(UE.getEditor('editor').getPlainTxt());
         $.ajax({
             type: "POST",
             url: url,
@@ -46,14 +54,15 @@
 <form id="form1" class="easyui-doc-form">
 
     <input type="hidden" id="id" name="id" />
+    <input type="hidden" id="Content" name="Content" />
 
     <table class="easyui-doc-table">
         <tr>
-            <td>
+            <td width="100px">
                 标题
             </td>
             <td>
-                <input type="text" id="Title" name="Title" style="padding-left:5px; line-height:20px;" class="easyui-validatebox textbox" missingmessage="请填写标题" required="true" />
+                <input type="text" id="Title" name="Title" style="padding-left:5px; line-height:20px;width:300px;" class="easyui-validatebox textbox" missingmessage="请填写标题" required="true" />
             </td>
         </tr>
         <tr>
@@ -84,7 +93,9 @@
                 新闻内容
             </td>
             <td>
-                <input type="text" id="Content" name="Content" style="padding-left:5px; line-height:20px;" class="easyui-validatebox textbox" missingmessage="请填写电话" required="true" />
+                <!-- 加载编辑器的容器 -->
+                <script id="container" name="content" type="text/plain" style="width:800px;height:500px;">
+                </script>
             </td>
         </tr>
         <tr>

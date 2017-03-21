@@ -764,7 +764,35 @@
     <Content Include="Scripts\jquery-1.8.2.min.js" />
     <Content Include="Scripts\jquery.cookie.js" />
     <Content Include="Scripts\jquery.ellipsis.min.js" />
+    <Content Include="Scripts\Ueditor\.DS_Store" />
     <None Include="Scripts\_references.js" />
+    <Content Include="Scripts\Ueditor\lang\en\en.js" />
+    <Content Include="Scripts\Ueditor\lang\en\images\addimage.png" />
+    <Content Include="Scripts\Ueditor\lang\en\images\alldeletebtnhoverskin.png" />
+    <Content Include="Scripts\Ueditor\lang\en\images\alldeletebtnupskin.png" />
+    <Content Include="Scripts\Ueditor\lang\en\images\background.png" />
+    <Content Include="Scripts\Ueditor\lang\en\images\button.png" />
+    <Content Include="Scripts\Ueditor\lang\en\images\copy.png" />
+    <Content Include="Scripts\Ueditor\lang\en\images\deletedisable.png" />
+    <Content Include="Scripts\Ueditor\lang\en\images\deleteenable.png" />
+    <Content Include="Scripts\Ueditor\lang\en\images\listbackground.png" />
+    <Content Include="Scripts\Ueditor\lang\en\images\localimage.png" />
+    <Content Include="Scripts\Ueditor\lang\en\images\music.png" />
+    <Content Include="Scripts\Ueditor\lang\en\images\rotateleftdisable.png" />
+    <Content Include="Scripts\Ueditor\lang\en\images\rotateleftenable.png" />
+    <Content Include="Scripts\Ueditor\lang\en\images\rotaterightdisable.png" />
+    <Content Include="Scripts\Ueditor\lang\en\images\rotaterightenable.png" />
+    <Content Include="Scripts\Ueditor\lang\en\images\upload.png" />
+    <Content Include="Scripts\Ueditor\lang\zh-cn\images\copy.png" />
+    <Content Include="Scripts\Ueditor\lang\zh-cn\images\localimage.png" />
+    <Content Include="Scripts\Ueditor\lang\zh-cn\images\music.png" />
+    <Content Include="Scripts\Ueditor\lang\zh-cn\images\upload.png" />
+    <Content Include="Scripts\Ueditor\lang\zh-cn\zh-cn.js" />
+    <Content Include="Scripts\Ueditor\ueditor.all.js" />
+    <Content Include="Scripts\Ueditor\ueditor.all.min.js" />
+    <Content Include="Scripts\Ueditor\ueditor.config.js" />
+    <Content Include="Scripts\Ueditor\ueditor.parse.js" />
+    <Content Include="Scripts\Ueditor\ueditor.parse.min.js" />
     <Content Include="Web.config" />
     <Content Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
@@ -790,6 +818,10 @@
   <ItemGroup>
     <Folder Include="App_Data\" />
     <Folder Include="Content\plug-in\daterangepicker\" />
+    <Folder Include="Scripts\Ueditor\dialogs\" />
+    <Folder Include="Scripts\Ueditor\net\" />
+    <Folder Include="Scripts\Ueditor\themes\" />
+    <Folder Include="Scripts\Ueditor\third-party\" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="packages.config" />
