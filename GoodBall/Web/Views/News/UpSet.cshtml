@@ -19,16 +19,16 @@
     })
 
     function Submit() {
-        alert(UE.getEditor('editor').getPlainTxt());
+       
         if (!$("#form1").form('validate')) {
             return false;
         }
-        alert(UE.getEditor('editor').getPlainTxt());
+      
 
         $("#id").val(id);
         loadTips.showLoading();
         var url = "/News/UpSetUser";
-        $("#Content").val(UE.getEditor('editor').getPlainTxt());
+        $("#Content").val(UE.getEditor('container').getContent());
         $.ajax({
             type: "POST",
             url: url,
@@ -120,6 +120,6 @@
         </tr>
 
     </table>
-    </div>
+   
 
 </form>

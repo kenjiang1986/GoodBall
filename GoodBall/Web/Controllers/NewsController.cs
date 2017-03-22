@@ -28,6 +28,7 @@ namespace Management.Controllers
             return View();
         }
 
+        [ValidateInput(false)]
         public JsonResult UpSetUser(NewsDto news)
         {
             return ExceptionCatch.Invoke(() =>
@@ -77,6 +78,7 @@ namespace Management.Controllers
                     x.Source,
                     x.Content,
                     x.Operator,
+                    x.NewsType,
                     CreateTime = x.CreateTime.ToString(),
                 }),
                 total
