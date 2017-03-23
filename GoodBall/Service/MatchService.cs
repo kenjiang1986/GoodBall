@@ -27,6 +27,12 @@ namespace Service
             return matchRepository.FindForPaging(size, index, query, out total).ToList().ToListModel<Match, MatchDto>();
         }
 
+        public MatchDto GetMatch(long id)
+        {
+            return matchRepository.Find(x => x.Id == id).FirstOrDefault().ToModel<MatchDto>();
+        }
+
+
         public void AddMatch(MatchDto dto)
         {
             var entity = dto.ToModel<Match>();
@@ -45,7 +51,7 @@ namespace Service
             matchRepository.Save(entity);
         }
 
-        public void DeleteNews(long id)
+        public void DeleteMatch(long id)
         {
             matchRepository.Delete(x => x.Id == id);
         }

@@ -38,7 +38,7 @@
     function Update(value, row) {
         var result = "<a href='javascript:void(0)' onclick='UpSetNews(\"" + row.Id + "\")'>编辑</a>  ";
         result += "<a href='javascript:void(0)' onclick='DelNews(\"" + row.Id + "\")'>删除</a>  ";
-     
+
         return result;
 
     }
@@ -51,9 +51,9 @@
                     type: "post",
                     url: "/News/DeleteNews",
                     data: { id: id },
-                    success: function(data) {
+                    success: function (data) {
                         if (data) {
-                            alert("操作成功", "success", function() {
+                            alert("操作成功", "success", function () {
                                 Search();
                             });
                         } else {
@@ -123,6 +123,6 @@
             </thead>
         </table>
 
-        
+
     </div>
 </form>

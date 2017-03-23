@@ -12,7 +12,7 @@ using Service.Dto;
 
 namespace Management.Controllers
 {
-    public class NewsController : Controller
+    public class NewsController : BaseController
     {
         //
         // GET: /News/
@@ -48,6 +48,14 @@ namespace Management.Controllers
         {
             var result = NewsService.Instance.GetNews(id.Value);
             return Json(result, JsonRequestBehavior.AllowGet);
+        }
+
+        public JsonResult DeleteNews(long? id)
+        {
+            return ExceptionCatch.Invoke(() =>
+            {
+                NewsService.Instance.DeleteNews(id.Value);
+            });
         }
 
         public JsonResult GetList(string title, string startDate, string endDate,string newsType, int page, int rows)

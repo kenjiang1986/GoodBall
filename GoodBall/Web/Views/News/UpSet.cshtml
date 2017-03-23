@@ -13,6 +13,7 @@
         if (id > 0) {
             loadTips.showLoading();
             BaseHelper.loadform("form1", "/News/GetNews?id=" + id, function (data) {
+                ue.setContent(data.Content);
                 loadTips.hideLoadind();
             });
         }
@@ -28,7 +29,7 @@
         $("#id").val(id);
         loadTips.showLoading();
         var url = "/News/UpSetUser";
-        $("#Content").val(UE.getEditor('container').getContent());
+        $("#Content").val(ue.getContent());
         $.ajax({
             type: "POST",
             url: url,
@@ -100,15 +101,7 @@
         </tr>
         <tr>
             <td>
-                积分
-            </td>
-            <td>
-                <input type="text" id="Integral" name="Integral" style="padding-left:5px; line-height:20px;" class="easyui-validatebox textbox" missingmessage="请填写积分" required="true" />
-            </td>
-        </tr>
-        <tr>
-            <td>
-                头像
+                标题图片
             </td>
             <td></td>
         </tr>
