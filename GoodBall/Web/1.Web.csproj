@@ -816,6 +816,7 @@
     <Content Include="Views\News\Index.cshtml" />
     <Content Include="Views\News\UpSet.cshtml" />
     <Content Include="Views\Match\Index.cshtml" />
+    <Content Include="Views\Match\UpSet.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

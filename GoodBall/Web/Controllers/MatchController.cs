@@ -21,6 +21,11 @@ namespace Web.Controllers
             return View();
         }
 
+        public ActionResult UpSet()
+        {
+            return View();
+        }
+
         public JsonResult UpSetMatch(MatchDto match)
         {
             return ExceptionCatch.Invoke(() =>
@@ -53,12 +58,7 @@ namespace Web.Controllers
         public JsonResult GetList(string startDate, string endDate, int page, int rows)
         {
             int total;
-            var cond = new MatchCond()
-            {
-               StartDate = Convert.ToDateTime(startDate),
-               EndDate = Convert.ToDateTime(endDate)
-            };
-
+            var cond = new MatchCond();
             if (!string.IsNullOrEmpty(startDate))
             {
                 cond.StartDate = Convert.ToDateTime(startDate);
@@ -67,7 +67,7 @@ namespace Web.Controllers
             {
                 cond.EndDate = Convert.ToDateTime(endDate);
             }
-            var result = MatchService.Instance.GetNewsListByPage(cond, rows, page, out total);
+            var result = MatchService.Instance.GetMatchListByPage(cond, rows, page, out total);
 
             return Json(new
             {

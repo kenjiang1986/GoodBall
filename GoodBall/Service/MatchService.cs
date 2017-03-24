@@ -16,12 +16,12 @@ namespace Service
 
         private MatchService() { }
 
-        public List<MatchDto> GetNewsListByPage(MatchCond cond, int size, int index, out int total)
+        public List<MatchDto> GetMatchListByPage(MatchCond cond, int size, int index, out int total)
         {
             var query = matchRepository.Source;
             if (cond.StartDate != null && cond.EndDate != null)
             {
-                query = query.Where(x => x.MatchTime >= cond.StartDate.Value && x.MatchTime <= cond.StartDate.Value);
+                query = query.Where(x => x.MatchTime >= cond.StartDate.Value && x.MatchTime <= cond.EndDate.Value);
             }
             query = query.OrderByDescending(x => x.CreateTime);
             return matchRepository.FindForPaging(size, index, query, out total).ToList().ToListModel<Match, MatchDto>();
@@ -35,8 +35,7 @@ namespace Service
 
         public void AddMatch(MatchDto dto)
         {
-            var entity = dto.ToModel<Match>();
-            matchRepository.Insert(entity);
+            matchRepository.Insert(dto.ToModel<Match>());
         }
 
         public void UpdateMatch(MatchDto dto)
@@ -47,7 +46,6 @@ namespace Service
             entity.MatchTime = Convert.ToDateTime(dto.MatchTime);
             entity.Dish = dto.Dish;
             entity.Venue = dto.Venue;
-            entity.Operator = dto.Operator;
             matchRepository.Save(entity);
         }
 

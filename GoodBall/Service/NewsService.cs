@@ -45,14 +45,7 @@ namespace Service
 
         public void AddNews(NewsDto dto)
         {
-            var entity = new News();
-            entity.Title = dto.Title;
-            entity.Content = dto.Content;
-            entity.Source = dto.Source;
-            entity.NewsType = EnumHelper.TryParse<NewsTypeEnum>(dto.NewsType);
-            entity.Operator = UserService.GetCurrentUser().UserName;
-            entity.CreateTime = DateTime.Now;
-            NewsRepository.Instance.Insert(entity);
+            NewsRepository.Instance.Insert(dto.ToModel<News>());
         }
 
         public void UpdateNews(NewsDto dto)

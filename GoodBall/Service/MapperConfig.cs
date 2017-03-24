@@ -1,7 +1,9 @@
 ﻿using AutoMapper;
 using DataCollection.Entity;
+using EnumUtils;
 using GoodBall.Dto;
 using Helper;
+using Helper.Enum;
 using Service.Dto;
 using System;
 using System.Collections.Generic;
@@ -24,12 +26,22 @@ namespace Service
         {
             AutoMapper.Mapper.CreateMap<User, UserDto>();
             AutoMapper.Mapper.CreateMap<UserDto, User>().ForMember(x => x.Password, x => x.MapFrom(src => MD5Helper.MD5Encrypt64(src.Password)));
+            
             AutoMapper.Mapper.CreateMap<Match, MatchDto>();
-            AutoMapper.Mapper.CreateMap<MatchDto, Match>();
-            AutoMapper.Mapper.CreateMap<News, NewsDto>().ForMember(x => x.NewsType, x => x.MapFrom(src => src.NewsType.ToString())); ;
-            AutoMapper.Mapper.CreateMap<NewsDto, News>();
+            AutoMapper.Mapper.CreateMap<MatchDto, Match>()
+                .ForMember(x => x.Operator, x => x.MapFrom(src => UserService.GetCurrentUser().UserName))
+                .ForMember(x => x.CreateTime, x => x.MapFrom(src => DateTime.Now));
+            
+            AutoMapper.Mapper.CreateMap<News, NewsDto>()
+                .ForMember(x => x.NewsType, x => x.MapFrom(src => src.NewsType.ToString())); 
+            AutoMapper.Mapper.CreateMap<NewsDto, News>()
+                .ForMember(x => x.Operator, x => x.MapFrom(src => UserService.GetCurrentUser().UserName))
+                .ForMember(x => x.CreateTime, x => x.MapFrom(src => DateTime.Now))
+                .ForMember(x => x.NewsType, x => x.MapFrom(src => EnumHelper.Parse<NewsTypeEnum>(src.NewsType)));
+            
             AutoMapper.Mapper.CreateMap<Promote, PromoteDto>();
             AutoMapper.Mapper.CreateMap<PromoteDto, Promote>();
+           
             AutoMapper.Mapper.CreateMap<RechargeRecord, RechargeRecordDto>().ForMember(x => x.RechargeUser, x => x.MapFrom(src => src.RechargeUser.UserName)); 
             AutoMapper.Mapper.CreateMap<RechargeRecordDto, RechargeRecord>();
 
