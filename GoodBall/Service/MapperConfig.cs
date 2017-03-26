@@ -45,6 +45,15 @@ namespace Service
             AutoMapper.Mapper.CreateMap<RechargeRecord, RechargeRecordDto>().ForMember(x => x.RechargeUser, x => x.MapFrom(src => src.RechargeUser.UserName)); 
             AutoMapper.Mapper.CreateMap<RechargeRecordDto, RechargeRecord>();
 
+            AutoMapper.Mapper.CreateMap<Goods, GoodsDto>();
+            AutoMapper.Mapper.CreateMap<GoodsDto, Goods>();
+
+            AutoMapper.Mapper.CreateMap<Order, OrderDto>()
+                 .ForMember(x => x.GoodsName, x => x.MapFrom(src => src.Goods.GoodsName))
+                .ForMember(x => x.GoodsImage, x => x.MapFrom(src => src.Goods.GoodsImage));
+            AutoMapper.Mapper.CreateMap<OrderDto, Order>()
+                .ForMember(x => x.OrderNo, x => x.MapFrom(src => OrderHelper.GetOrderNo()));
+
         }
 
         public static TResult ToModel<TResult>(this object entity)

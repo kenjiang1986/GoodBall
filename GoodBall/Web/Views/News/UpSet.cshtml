@@ -50,6 +50,20 @@
         });
     }
 
+    function UploadTitleImage() {
+        var filetype = $("input[name='UpLoad_fileType']:checked").val();
+        $.layer({
+            type: 2,
+            title: '上传报告文件',
+            iframe: { src: '@ViewBag.FileUpLoadUri?ProjectId=' + projectid },
+            area: ['1000px', '500px'],
+            close: function () {//关闭层的时候刷新列表
+                Refresh();
+            }
+        });
+    }
+
+
 </script>
 
 <form id="form1" class="easyui-doc-form">
@@ -103,7 +117,10 @@
             <td>
                 标题图片
             </td>
-            <td></td>
+            <td>
+                
+            </td>
+            <td><a href="javascript:void(0);" class="easyui-linkbutton" data-options="iconCls:'icon-add'" onclick="UploadTitleImage()">标题图片上传</a></td>
         </tr>
 
         <tr>

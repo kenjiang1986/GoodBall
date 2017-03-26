@@ -4,9 +4,9 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace DataCollection.Entity
+namespace Service.Dto
 {
-    public class Goods
+    public class GoodsDto
     {
         public long Id { get; set; }
 
@@ -25,14 +25,11 @@ namespace DataCollection.Entity
         /// </summary>
         public string Integral { get; set; }
 
-        public DateTime CreateTime { get; set; }
+        public string  CreateTime { get; set; }
 
         /// <summary>
         /// 货物图片
         /// </summary>
         public string GoodsImage { get; set; }
-
-
-
     }
 }

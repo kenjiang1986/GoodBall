@@ -27,6 +27,11 @@ namespace Service
             return promoteRepository.FindForPaging(size, index, query, out total).ToList().ToListModel<Promote, PromoteDto>();
         }
 
+        public PromoteDto GetPromote(long id)
+        {
+            return promoteRepository.Find(x => x.Id == id).FirstOrDefault().ToModel<PromoteDto>();
+        }
+
         public void AddPromote(PromoteDto dto)
         {
             var entity = dto.ToModel<Promote>();

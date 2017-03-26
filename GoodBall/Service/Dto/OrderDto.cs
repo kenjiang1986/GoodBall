@@ -4,9 +4,9 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace DataCollection.Entity
+namespace Service.Dto
 {
-    public class Order
+    public class OrderDto
     {
         public long Id { get; set; }
 
@@ -32,12 +32,22 @@ namespace DataCollection.Entity
 
         public string ContactPhone { get; set; }
 
+       
+        public string CreateTime { get; set; }
 
-        public DateTime CreateTime { get; set; }
+        /// <summary>
+        /// 货物名称
+        /// </summary>
+        public string GoodsName { get; set; }
 
-        public virtual Goods Goods { get; set; }
+        /// <summary>
+        /// 数量
+        /// </summary>
+        public string Quantity { get; set; }
 
-        public long UserId { get; set; }
-
+        /// <summary>
+        /// 货物图片
+        /// </summary>
+        public string GoodsImage { get; set; }
     }
 }
