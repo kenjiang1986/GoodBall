@@ -38,5 +38,7 @@ namespace Service.Dto
         public string Operator { get; set; }
 
         public string CreateTime { get; set; }
+
+        public string MatchState { get; set; }
     }
 }

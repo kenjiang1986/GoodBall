@@ -26,9 +26,11 @@ namespace Service
         {
             AutoMapper.Mapper.CreateMap<User, UserDto>();
             AutoMapper.Mapper.CreateMap<UserDto, User>().ForMember(x => x.Password, x => x.MapFrom(src => MD5Helper.MD5Encrypt64(src.Password)));
-            
-            AutoMapper.Mapper.CreateMap<Match, MatchDto>();
+
+            AutoMapper.Mapper.CreateMap<Match, MatchDto>()
+                .ForMember(x => x.MatchState, x => x.MapFrom(src => src.MatchState.ToString()));
             AutoMapper.Mapper.CreateMap<MatchDto, Match>()
+                .ForMember(x => x.MatchState, x => x.MapFrom(src => MatchStateEnum.未开始))
                 .ForMember(x => x.Operator, x => x.MapFrom(src => UserService.GetCurrentUser().UserName))
                 .ForMember(x => x.CreateTime, x => x.MapFrom(src => DateTime.Now));
             

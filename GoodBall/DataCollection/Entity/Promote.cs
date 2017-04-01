@@ -51,5 +51,9 @@ namespace DataCollection.Entity
         public string Operator { get; set; }
 
         public DateTime CreateTime { get; set; }
+
+        public virtual Match Match { get; set; }
+
+        public long MatchId { get; set; }
     }
 }

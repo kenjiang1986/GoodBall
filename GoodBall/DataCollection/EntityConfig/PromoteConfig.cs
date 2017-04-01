@@ -13,6 +13,7 @@ namespace DataCollection.EntityConfig
         {
             base.ToTable("Promote");
             base.HasKey(x => x.Id);
+            base.HasRequired(x => x.Match).WithMany().HasForeignKey(x => x.MatchId);
         }
     }
 }

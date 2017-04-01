@@ -4,6 +4,7 @@ using System.Linq;
 using System.Web;
 using System.Web.Mvc;
 using Helper;
+using Helper.Enum;
 using Management.Controllers;
 using Service;
 using Service.Cond;
@@ -80,6 +81,7 @@ namespace Web.Controllers
                     x.Operator,
                     x.Dish,
                     x.Venue,
+                    x.MatchState,
                     CreateTime = x.CreateTime.ToString(),
                 }),
                 total

@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using Helper.Enum;
 
 namespace DataCollection.Entity
 {
@@ -38,5 +39,7 @@ namespace DataCollection.Entity
         public string Operator { get; set; }
 
         public DateTime CreateTime { get; set; }
+
+        public MatchStateEnum MatchState { get; set; }
     }
 }
