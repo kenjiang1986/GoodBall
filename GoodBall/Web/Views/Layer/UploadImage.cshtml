@@ -1,0 +1,65 @@
+﻿@{
+    Layout = "~/Views/Shared/_Page.cshtml";
+}
+<script>
+    $(function () {
+        $("input[type=file]").change(function () {
+            $(this).parents(".uploader").find(".filename").val($(this).val());
+        });
+        $("input[type=file]").each(function () {
+            if ($(this).val() == "") { $(this).parents(".uploader").find(".filename").val("未选择文件"); }
+        });
+
+        var imageType = '@Request.QueryString["imageType"]';
+    });
+
+    function SetUpload() {
+        $("input[name='filetype']").each(function (a) {
+            if (this.checked) {
+                $("#Uploadfile").attr('accept', this.value);
+                var ResourcesType = this.value == $("#word").val() ? "报告" : "计算表";
+                $("#resourcestype").val(ResourcesType);
+            }
+        });
+    }
+
+    function SubmitForm() {
+        var val = $("#Uploadfile").val();
+        if (val == "" || val == null) {
+            parent.alert("请选择上传文件","error");
+            return;
+        }
+        loadTips.showLoading();
+        $("#form1").submit();
+    }
+
+    //关闭窗体
+    function CloseWindow() {
+        var index = parent.layer.getFrameIndex(window.name);
+        parent.layer.close(index); //执行关闭
+    }
+
+
+</script>
+<form id="form1" action="/Layer/UploadReport" enctype="multipart/form-data" method="post">
+    <input type="hidden" id="projectid" name="projectid" value="@(Request.QueryString["id"])" />
+    <table style="margin-top:10px;margin-left:20px;">
+       
+        <tr>
+            <td style="text-align:right;">文&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;件：</td>
+            <td>
+                <div class="uploader blue">
+                    <input type="text" class="filename" readonly="readonly" />
+                    <input type="button" name="file" class="uploadbutton" value="请选择文件" />
+                    <input type="file" id="Uploadfile" name="Uploadfile" style=" height:30px !important; border-radius:3px;margin-left:10px !important;" />
+                </div>
+            </td>
+        </tr>
+        <tr>
+            <td colspan="2" style="text-align:center" height="40px">
+                <a href="javascript:void(0)" class="easyui-linkbutton" iconcls="icon-ok" onclick="SubmitForm()">保存</a>
+            </td>
+
+        </tr>
+    </table>
+</form>

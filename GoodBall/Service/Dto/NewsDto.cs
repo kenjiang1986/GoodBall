@@ -21,5 +21,7 @@ namespace Service.Dto
         public string CreateTime { get; set; }
 
         public string NewsType { get; set; }
+
+        public string TitleImageUrl { get; set; }
     }
 }

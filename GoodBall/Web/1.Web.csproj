@@ -129,6 +129,7 @@
     <Compile Include="Controllers\AdminController.cs" />
     <Compile Include="Controllers\BaseController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
+    <Compile Include="Controllers\LayerController.cs" />
     <Compile Include="Controllers\MatchController.cs" />
     <Compile Include="Controllers\NewsController.cs" />
     <Compile Include="Controllers\UserController.cs" />
@@ -817,6 +818,7 @@
     <Content Include="Views\News\UpSet.cshtml" />
     <Content Include="Views\Match\Index.cshtml" />
     <Content Include="Views\Match\UpSet.cshtml" />
+    <Content Include="Views\Layer\UploadImage.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

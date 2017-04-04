@@ -22,5 +22,7 @@ namespace DataCollection.Entity
         public DateTime CreateTime { get; set; }
 
         public NewsTypeEnum NewsType { get; set; }
+
+        public string TitleImageUrl { get; set; }
     }
 }
