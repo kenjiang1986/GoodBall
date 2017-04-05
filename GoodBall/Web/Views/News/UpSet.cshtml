@@ -7,13 +7,16 @@
 <script src="~/Scripts/Ueditor/lang/zh-cn/zh-cn.js"></script>
 <script>
     var ue = UE.getEditor('container');
+   
 
     var id = "@Request.QueryString["Id"]";
     $(function () {
         if (id > 0) {
             loadTips.showLoading();
             BaseHelper.loadform("form1", "/News/GetNews?id=" + id, function (data) {
-                ue.setContent(data.Content);
+                ue.ready(function () {
+                    ue.setContent(data.Content);
+                });
                 loadTips.hideLoadind();
             });
         }
@@ -108,7 +111,7 @@
             </td>
             <td>
                 <!-- 加载编辑器的容器 -->
-                <script id="container" name="content" type="text/plain" style="width:800px;height:500px;">
+                <script id="container" type="text/plain" style="width:800px;height:500px;">
                 </script>
             </td>
         </tr>

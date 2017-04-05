@@ -12,6 +12,7 @@ namespace DataCollection.EntityConfig
         internal NewsConfig()
         {
             base.ToTable("News");
+            base.Property(x => x.Content).IsMaxLength();
             base.HasKey(x => x.Id);
         }
     }
