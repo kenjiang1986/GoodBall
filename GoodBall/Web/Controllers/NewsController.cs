@@ -87,6 +87,7 @@ namespace Management.Controllers
                     x.Content,
                     x.Operator,
                     x.NewsType,
+                    x.TitleImageUrl,
                     CreateTime = x.CreateTime.ToString(),
                 }),
                 total

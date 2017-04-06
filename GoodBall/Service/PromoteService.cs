@@ -16,7 +16,7 @@ namespace Service
         
         private PromoteService() { }
 
-        public List<PromoteDto> GetNewsListByPage(PromoteCond cond, int size, int index, out int total)
+        public List<PromoteDto> GetPromoteListByPage(PromoteCond cond, int size, int index, out int total)
         {
             var query = promoteRepository.Source;
             if (cond.StartDate != null && cond.EndDate != null)

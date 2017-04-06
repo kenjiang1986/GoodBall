@@ -10,17 +10,18 @@
    
 
     var id = "@Request.QueryString["Id"]";
-    $(function () {
+    $(function() {
         if (id > 0) {
             loadTips.showLoading();
-            BaseHelper.loadform("form1", "/News/GetNews?id=" + id, function (data) {
-                ue.ready(function () {
+            BaseHelper.loadform("form1", "/News/GetNews?id=" + id, function(data) {
+                ue.ready(function() {
                     ue.setContent(data.Content);
                 });
+                $("#TitleImageUrl").attr("src", data.TitleImageUrl);
                 loadTips.hideLoadind();
             });
         }
-    })
+    });
 
     function Submit() {
        
@@ -120,9 +121,9 @@
                 标题图片
             </td>
             <td>
-                <img id="TitleImageUrl"  />
+                <img id="TitleImageUrl" width="400" height="300"  />
             </td>
-            <td><a href="javascript:void(0);" class="easyui-linkbutton" data-options="iconCls:'icon-add'" onclick="UploadTitleImage()">标题图片上传</a></td>
+           
         </tr>
 
         <tr>

@@ -33,18 +33,15 @@
         $("#form1").submit();
     }
 
-    //关闭窗体
-    function CloseWindow() {
-        var index = parent.layer.getFrameIndex(window.name);
-        parent.layer.close(index); //执行关闭
-    }
+ 
 
 
 </script>
-<form id="form1" action="/Layer/UploadReport" enctype="multipart/form-data" method="post">
-    <input type="hidden" id="projectid" name="projectid" value="@(Request.QueryString["id"])" />
+<form id="form1" action="/Layer/Upload" enctype="multipart/form-data" method="post">
+    <input type="hidden" id="id" name="id" value="@(Request.QueryString["id"])" />
+    <input type="hidden" id="imageType" name="imageType" value="@(Request.QueryString["imageType"])" />
     <table style="margin-top:10px;margin-left:20px;">
-       
+
         <tr>
             <td style="text-align:right;">文&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;件：</td>
             <td>

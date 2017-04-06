@@ -95,7 +95,7 @@ namespace Web.Controllers
                 Id = long.Parse(id),
                 TitleImageUrl = RelativelyPath
             };
-            NewsService.Instance.UpdateNews(newsDto);
+            NewsService.Instance.UpdateNewsImage(newsDto);
         }
     }
 }

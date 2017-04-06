@@ -15,6 +15,7 @@ using DataCollection;
 using System.Data.Entity;
 using Helper;
 using Newtonsoft.Json;
+using EntityFramework.Extensions;
 
 namespace Repository
 {
@@ -168,6 +169,16 @@ namespace Repository
                 result = _dbContext.SaveChanges() > 0;
             });
 
+            return result;
+        }
+
+        public virtual bool Save(Expression<Func<TEntity, bool>> expression, Expression<Func<TEntity, TEntity>> filter)
+        {
+            bool result = false;
+            CatchEfException(() =>
+            {
+                result = _dbContext.Set<TEntity>().Update(expression, filter) > 0;
+            });
             return result;
         }
 

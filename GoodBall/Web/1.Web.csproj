@@ -132,6 +132,7 @@
     <Compile Include="Controllers\LayerController.cs" />
     <Compile Include="Controllers\MatchController.cs" />
     <Compile Include="Controllers\NewsController.cs" />
+    <Compile Include="Controllers\PromoteController.cs" />
     <Compile Include="Controllers\UserController.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
@@ -819,6 +820,7 @@
     <Content Include="Views\Match\Index.cshtml" />
     <Content Include="Views\Match\UpSet.cshtml" />
     <Content Include="Views\Layer\UploadImage.cshtml" />
+    <Content Include="Views\Promote\Index.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

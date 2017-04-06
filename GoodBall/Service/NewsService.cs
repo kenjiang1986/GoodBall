@@ -53,7 +53,13 @@ namespace Service
             var entity = newsRepository.Find(x => x.Id == dto.Id).FirstOrDefault();
             entity.Content = dto.Content;
             entity.Title = dto.Title;
+            entity.TitleImageUrl = dto.TitleImageUrl;
             newsRepository.Save(entity);
+        }
+
+        public void UpdateNewsImage(NewsDto dto)
+        {
+            newsRepository.Save(x => x.Id == dto.Id, x=> new News { TitleImageUrl = dto.TitleImageUrl});
         }
 
         public void DeleteNews(long id)
