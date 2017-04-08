@@ -20,6 +20,13 @@ namespace Web.Controllers
             return View();
         }
 
+        public ActionResult ChooseMatch()
+        {
+            return View();
+        }
+
+        
+
         public JsonResult Upload()
         {
             return ExceptionCatch.Invoke(() =>

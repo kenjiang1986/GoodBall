@@ -18,7 +18,7 @@
             return;
         } else {
             $("#dg").datagrid({
-                url: "/Match/GetList?StartDate=" + $('#StartDate').datetimebox('getValue') + "&EndDate=" + $('#EndDate').datetimebox('getValue'),
+                url: "/Match/GetList?"+ $("#form1").serialize(),
                 onLoadError: function (data) {
                     BaseHelper.ShowException(data);
                 }

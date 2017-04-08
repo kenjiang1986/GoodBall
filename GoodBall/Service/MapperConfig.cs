@@ -40,10 +40,22 @@ namespace Service
                 .ForMember(x => x.Operator, x => x.MapFrom(src => UserService.GetCurrentUser().UserName))
                 .ForMember(x => x.CreateTime, x => x.MapFrom(src => DateTime.Now))
                 .ForMember(x => x.NewsType, x => x.MapFrom(src => EnumHelper.Parse<NewsTypeEnum>(src.NewsType)));
-            
-            AutoMapper.Mapper.CreateMap<Promote, PromoteDto>();
-            AutoMapper.Mapper.CreateMap<PromoteDto, Promote>();
-           
+
+            AutoMapper.Mapper.CreateMap<Promote, PromoteDto>()
+                 .ForMember(x => x.RaceType, x => x.MapFrom(src => src.RaceType.ToString()))
+                  .ForMember(x => x.State, x => x.MapFrom(src => src.State.ToString()))
+                   .ForMember(x => x.SendType, x => x.MapFrom(src => src.SendType.ToString()))
+                .ForMember(x => x.Match, x => x.MapFrom(src => src.Match.TeamA + "VS" + src.Match.TeamB));
+            AutoMapper.Mapper.CreateMap<PromoteDto, Promote>()
+                   .ForMember(x => x.Operator, x => x.MapFrom(src => UserService.GetCurrentUser().UserName))
+                .ForMember(x => x.CreateTime, x => x.MapFrom(src => DateTime.Now))
+                .ForMember(x => x.RaceType, x => x.MapFrom(src => EnumHelper.Parse<RaceTypeEnum>(src.RaceType)))
+                  .ForMember(x => x.State, x => x.MapFrom(src => EnumHelper.Parse<PromoteStateEnum>(src.State)))
+                 .ForMember(x => x.SendType, x => x.MapFrom(src => EnumHelper.Parse<SendTypeEnum>(src.SendType)));
+                
+
+
+
             AutoMapper.Mapper.CreateMap<RechargeRecord, RechargeRecordDto>().ForMember(x => x.RechargeUser, x => x.MapFrom(src => src.RechargeUser.UserName)); 
             AutoMapper.Mapper.CreateMap<RechargeRecordDto, RechargeRecord>();
 

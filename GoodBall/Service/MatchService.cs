@@ -23,6 +23,14 @@ namespace Service
             {
                 query = query.Where(x => x.MatchTime >= cond.StartDate.Value && x.MatchTime <= cond.EndDate.Value);
             }
+            if(!string.IsNullOrEmpty(cond.TeamA))
+            {
+                query = query.Where(x => cond.TeamA.Contains(x.TeamA));
+            }
+            if (!string.IsNullOrEmpty(cond.TeamB))
+            {
+                query = query.Where(x => cond.TeamB.Contains(x.TeamB));
+            }
             query = query.OrderByDescending(x => x.CreateTime);
             return matchRepository.FindForPaging(size, index, query, out total).ToList().ToListModel<Match, MatchDto>();
         }

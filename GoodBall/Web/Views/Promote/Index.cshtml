@@ -18,7 +18,7 @@
             return;
         } else {
             $("#dg").datagrid({
-                url: "/Match/GetList?StartDate=" + $('#StartDate').datetimebox('getValue') + "&EndDate=" + $('#EndDate').datetimebox('getValue'),
+                url: "/Promote/GetList?" + $("#form1").serialize(),
                 onLoadError: function (data) {
                     BaseHelper.ShowException(data);
                 }
@@ -27,20 +27,20 @@
     }
 
     function Update(value, row) {
-        var result = "<a href='javascript:void(0)' onclick='UpSetMatch(\"" + row.Id + "\")'>编辑</a>  ";
-        result += "<a href='javascript:void(0)' onclick='DelMatch(\"" + row.Id + "\")'>删除</a>  ";
+        var result = "<a href='javascript:void(0)' onclick='UpSetPromote(\"" + row.Id + "\")'>编辑</a>  ";
+        result += "<a href='javascript:void(0)' onclick='DelPromote(\"" + row.Id + "\")'>删除</a>  ";
 
         return result;
 
     }
 
-    function DelMatch(id) {
+    function DelPromote(id) {
 
-        $.messager.confirm('温馨提示', '确定要删除比赛吗？', function (r) {
+        $.messager.confirm('温馨提示', '确定要删除推介吗？', function (r) {
             if (r) {
                 $.ajax({
                     type: "post",
-                    url: "/Match/DeleteMatch",
+                    url: "/Promote/DeletePromote",
                     data: { id: id },
                     success: function (data) {
                         if (data) {
@@ -56,22 +56,14 @@
         });
     }
 
-    function UpSetMatch(id) {
-        var url = "/Match/UpSet?id=" + id;
-        var title = '添加比赛';
+    function UpSetPromote(id) {
+        var url = "/Promote/UpSet?id=" + id;
+        var title = '添加推介'
         if (id > 0) {
-            title = '修改比赛';
+            title = '修改推介'
         }
 
-        $.layer({
-            scrolling: 'auto',
-            type: 2,
-            title: title,
-            iframe: {
-                src: url
-            },
-            area: ['500px', '400px']
-        });
+        parent.f_addTab(title, title, url);
     }
 </script>
 
@@ -86,8 +78,17 @@
                     <td>结束时间:</td>
                     <td><input type="text" id="EndDate" class="easyui-datetimebox" /></td>
                     <td>
+                    <td>竞彩类型:</td>
+                    <td><select id="RaceType" name="RaceType" class="easyui-doc-select">
+                            <option></option>
+                            @{foreach (var item in ViewBag.RaceType)
+                                {
+                                    <option value="@item">@item</option>
+                                }}
+                        </select></td>
+                    <td>
                         <a href="javascript:;" class="easyui-linkbutton" data-options="iconCls:'icon-search'" onclick="Search()">查询</a>
-                        <a id="btnCreate" href="javascript:;" class="l-btn" onclick="UpSetMatch(0)">
+                        <a id="btnCreate" href="javascript:;" class="l-btn" onclick="UpSetPromote(0)">
                             <span class="l-btn-left l-btn-icon-left"><span class="l-btn-text">添加</span><span class="l-btn-icon icon-redo">&nbsp;</span></span>
                         </a>
                     </td>
@@ -102,12 +103,13 @@
                data-options="rownumbers:true,singleSelect:true,pagination:true,method:'post',pageSize:10,toolbar:'#toolbar'">
             <thead>
                 <tr>
-                    <th data-options="field:'TeamA',width:'10%',resizable:false,align:'left'">主队</th>
-                    <th data-options="field:'TeamB',width:'10%',resizable:false,align:'left'">客队</th>
-                    <th data-options="field:'Dish',width:'10%',resizable:false,align:'left'">盘口数据</th>
-                    <th data-options="field:'Venue',width:'10%',resizable:false,align:'left'">比赛地点</th>
-                    <th data-options="field:'MatchTime',width:'10%',resizable:false,align:'left'">比赛时间</th>
-                    <th data-options="field:'MatchState',width:'10%',resizable:false,align:'left'">状态</th>
+                    <th data-options="field:'RaceType',width:'10%',resizable:false,align:'left'">竞彩类型</th>
+                    <th data-options="field:'level',width:'10%',resizable:false,align:'left'">星数</th>
+                    <th data-options="field:'Price',width:'10%',resizable:false,align:'left'">价格</th>
+                    <th data-options="field:'Integral',width:'10%',resizable:false,align:'left'">积分</th>
+                    <th data-options="field:'SendType',width:'10%',resizable:false,align:'left'">推送类型</th>
+                    <th data-options="field:'State',width:'10%',resizable:false,align:'left'">状态</th>
+                    <th data-options="field:'Match',width:'10%',resizable:false,align:'left'">比赛</th>
                     <th data-options="field:'CreateTime',width:'10%',resizable:false,align:'left'">创建时间</th>
                     <th data-options="field:'Operator',width:'10%',resizable:false,align:'left'">操作人</th>
                     <th data-options="field:'Id',width:'15%',formatter:Update">操作</th>

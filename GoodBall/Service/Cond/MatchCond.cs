@@ -11,5 +11,9 @@ namespace Service.Cond
         public DateTime? StartDate { get; set; }
 
         public DateTime? EndDate { get; set; }
+
+        public string TeamA { get; set; }
+
+        public string TeamB { get; set; }
     }
 }

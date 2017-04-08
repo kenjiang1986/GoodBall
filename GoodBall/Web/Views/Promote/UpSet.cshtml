@@ -1,0 +1,188 @@
+﻿@{
+    Layout = "~/Views/Shared/_Page.cshtml";
+}
+
+<script src="~/Scripts/Ueditor/ueditor.config.js"></script>
+<script src="~/Scripts/Ueditor/ueditor.all.min.js"></script>
+<script src="~/Scripts/Ueditor/lang/zh-cn/zh-cn.js"></script>
+<script>
+    var ue = UE.getEditor('container');
+
+
+    var id = "@Request.QueryString["Id"]";
+    $(function() {
+        if (id > 0) {
+            loadTips.showLoading();
+            BaseHelper.loadform("form1", "/Promote/GetPromote?id=" + id, function (data) {
+                ue.ready(function() {
+                    ue.setContent(data.Content);
+                });
+                loadTips.hideLoadind();
+            });
+        }
+    });
+
+    function Submit() {
+
+        if (!$("#form1").form('validate')) {
+            return false;
+        }
+
+
+        $("#id").val(id);
+        loadTips.showLoading();
+        var url = "/Promote/UpSetPromote";
+        $("#Content").val(ue.getContent());
+        $.ajax({
+            type: "POST",
+            url: url,
+            dataType: "json",
+            async: true,
+            data: $("#form1").serialize(),
+            success: function (data) {
+                loadTips.hideLoadind();
+                alert(data.message);
+                if (data.success) {
+                    parent.Search();
+                    parent.layer.closeAll();
+                }
+            },
+            error: function (data) {
+                BaseHelper.ShowException(data);
+            }
+        });
+    }
+
+    function UploadTitleImage() {
+        var filetype = $("input[name='UpLoad_fileType']:checked").val();
+        $.layer({
+            type: 2,
+            title: '上传报告文件',
+            iframe: { src: '@ViewBag.FileUpLoadUri?ProjectId=' + projectid },
+            area: ['1000px', '500px'],
+            close: function () {//关闭层的时候刷新列表
+                Refresh();
+            }
+        });
+    }
+
+    function ChooseMatch() {
+        BaseHelper.ShowChooseMatchList(true, 'CallBack', "&isprintcomplete=true");
+    }
+
+    function CallBack(matchId, matchName) {
+        layer.closeAll();
+        $("#MatchId").val(matchId);
+        $("#Match").val(matchName);
+    }
+</script>
+
+<form id="form1" class="easyui-doc-form">
+
+    <input type="hidden" id="id" name="id" />
+    <input type="hidden" id="MatchId" name="MatchId" />
+    <input type="hidden" id="Content" name="Content" />
+
+    <table class="easyui-doc-table">
+        <tr>
+            <td class="f-tr md">比赛</td>
+            <td>
+                <input type="text" id="Match" name="Match" class="easyui-doc-textbox" readonly="readonly" style="background-color: #EBEBE4" />
+            </td>
+            <td class="tdpalef" colspan="2"><a href="javascript:void(0)" onclick="ChooseMatch()" class="easyui-linkbutton" data-options="iconCls:'icon-reload'">选择比赛</a></td>
+        </tr>
+        <tr>
+            <td width="100px">
+                推介内容
+            </td>
+            <td>
+                <!-- 加载编辑器的容器 -->
+                <script id="container" type="text/plain" style="width:800px;height:500px;">
+                </script>
+            </td>
+        </tr>
+        <tr>
+            <td>
+                推介类型
+            </td>
+            <td>
+                <select id="RaceType" name="RaceType" class="easyui-doc-select">
+                    <option></option>
+                    @{foreach (var item in ViewBag.RaceType)
+                        {
+                            <option value="@item">@item</option>
+                        }}
+                </select>
+            </td>
+        </tr>
+        <tr>
+            <td>
+                星数
+            </td>
+            <td>
+                <select id="Level" name="Level" class="easyui-doc-select">
+                    <option></option>
+                    <option value="1">1</option>
+                    <option value="2">2</option>
+                    <option value="3">3</option>
+                    <option value="4">4</option>
+                    <option value="5">5</option>
+                </select>
+            </td>
+        </tr>
+        <tr>
+            <td>
+                价格
+            </td>
+            <td>
+                <input type="text" id="Price" name="Price" style="padding-left:5px; line-height:20px;" class="easyui-validatebox textbox" missingmessage="请填写价格" required="true" />
+            </td>
+        </tr>
+        <tr>
+            <td>
+                状态
+            </td>
+            <td>
+                <select id="State" name="State" class="easyui-doc-select">
+                    <option></option>
+                    @{foreach (var item in ViewBag.PromoteState)
+                        {
+                            <option value="@item">@item</option>
+                        }}
+                </select>
+            </td>
+        </tr>
+        <tr>
+            <td>
+                发送类型
+            </td>
+            <td>
+                <select id="SendType" name="SendType" class="easyui-doc-select">
+                    <option></option>
+                    @{foreach (var item in ViewBag.SendType)
+                        {
+                            <option value="@item">@item</option>
+                        }}
+                </select>
+            </td>
+        </tr>
+        <tr>
+            <td>
+                标题图片
+            </td>
+            <td>
+                <img id="TitleImageUrl" width="400" height="300" />
+            </td>
+
+        </tr>
+
+        <tr>
+            <td colspan="2" style="text-align: center;">
+                <a href="javascript:;" class="easyui-linkbutton" iconcls="icon-ok" id="submitform" onclick="Submit()">保存</a>
+            </td>
+        </tr>
+
+    </table>
+
+
+</form>

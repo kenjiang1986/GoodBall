@@ -88,17 +88,6 @@
 
         parent.f_addTab(title, title, url);
     }
-
-    function Add(tid) {
-        var src = "/Company/Add";
-        var title = "添加";
-        if (tid != '') {
-            src += "?tid=" + tid;
-            title = "修改";
-        }
-        parent.f_addTab('公司操作' + tid, '公司' + title, src);
-    }
-
 </script>
 
 <form id="form1" class="easyui-doc-padding">

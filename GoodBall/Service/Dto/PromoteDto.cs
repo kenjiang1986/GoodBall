@@ -11,15 +11,19 @@ namespace Service.Dto
     {
         public long Id { get; set; }
 
+        public long MatchId { get; set; }
+
+        public string Match { get; set; }
+
         /// <summary>
         /// 竞彩类型
         /// </summary>
-        public int RaceType { get; set; }
+        public string RaceType { get; set; }
 
         /// <summary>
         /// 星数
         /// </summary>
-        public int level { get; set; }
+        public int Level { get; set; }
 
         /// <summary>
         /// 推介内容
@@ -34,17 +38,17 @@ namespace Service.Dto
         /// <summary>
         /// 积分
         /// </summary>
-        public int Integral { get; set; }
+        public int  Integral { get; set; }
 
         /// <summary>
         /// 状态（1、中 2、不中）
         /// </summary>
-        public int  State { get; set; }
+        public string  State { get; set; }
 
         /// <summary>
         /// 推送类型(1、让球 2、竞彩 3、足彩310)
         /// </summary>
-        public int SendType { get; set; }
+        public string  SendType { get; set; }
 
         public string Operator { get; set; }
 

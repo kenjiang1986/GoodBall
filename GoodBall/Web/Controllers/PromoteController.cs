@@ -7,6 +7,9 @@ using Helper;
 using Service;
 using Service.Cond;
 using Service.Dto;
+using Helper.Enum;
+using EnumUtils;
+
 
 namespace Web.Controllers
 {
@@ -17,10 +20,20 @@ namespace Web.Controllers
 
         public ActionResult Index()
         {
+            ViewBag.RaceType = EnumHelper.GetValues<RaceTypeEnum>();
             return View();
         }
 
-          public JsonResult UpSetPromote(PromoteDto Promote)
+        public ActionResult UpSet()
+        {
+            ViewBag.RaceType = EnumHelper.GetValues<RaceTypeEnum>();
+            ViewBag.SendType = EnumHelper.GetValues<SendTypeEnum>();
+            ViewBag.PromoteState = EnumHelper.GetValues<PromoteStateEnum>();
+            return View();
+        }
+
+        [ValidateInput(false)]
+        public JsonResult UpSetPromote(PromoteDto Promote)
         {
             return ExceptionCatch.Invoke(() =>
             {
@@ -49,18 +62,9 @@ namespace Web.Controllers
             });
         }
 
-        public JsonResult GetList(string startDate, string endDate, int page, int rows)
+        public JsonResult GetList(PromoteCond cond, int page, int rows)
         {
             int total;
-            var cond = new PromoteCond();
-            if (!string.IsNullOrEmpty(startDate))
-            {
-                cond.StartDate = Convert.ToDateTime(startDate);
-            }
-            if (!string.IsNullOrEmpty(endDate))
-            {
-                cond.EndDate = Convert.ToDateTime(endDate);
-            }
             var result = PromoteService.Instance.GetPromoteListByPage(cond, rows, page, out total);
 
             return Json(new
@@ -74,7 +78,8 @@ namespace Web.Controllers
                     x.Operator,
                     x.RaceType,
                     x.SendType,
-                    x.level,
+                    x.Level,
+                    x.Match,
                     CreateTime = x.CreateTime.ToString(),
                 }),
                 total

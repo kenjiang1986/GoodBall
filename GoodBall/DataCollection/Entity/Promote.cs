@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using Helper.Enum;
 
 namespace DataCollection.Entity
 {
@@ -16,7 +17,7 @@ namespace DataCollection.Entity
         /// <summary>
         /// 竞彩类型
         /// </summary>
-        public int RaceType { get; set; }
+        public RaceTypeEnum RaceType { get; set; }
 
         /// <summary>
         /// 星数
@@ -41,12 +42,12 @@ namespace DataCollection.Entity
         /// <summary>
         /// 状态（1、中 2、不中）
         /// </summary>
-        public int State { get; set; }
+        public PromoteStateEnum State { get; set; }
 
         /// <summary>
-        /// 推送类型(1、让球 2、竞彩 3、足彩310)
+        /// 推送类型
         /// </summary>
-        public int SendType { get; set; }
+        public SendTypeEnum SendType { get; set; }
 
         public string Operator { get; set; }
 

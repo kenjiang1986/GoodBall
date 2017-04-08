@@ -7,6 +7,8 @@ using DataCollection.Entity;
 using Repository;
 using Service.Cond;
 using Service.Dto;
+using Helper.Enum;
+using EnumUtils;
 
 namespace Service
 {
@@ -23,6 +25,10 @@ namespace Service
             {
                 query = query.Where(x => x.CreateTime >= cond.StartDate.Value && x.CreateTime <= cond.StartDate.Value);
             }
+            if (!string.IsNullOrEmpty(cond.RaceType))
+            {
+                query = query.Where(x => x.RaceType.Equals(EnumHelper.Parse<RaceTypeEnum>(cond.RaceType)));
+            }
             query = query.OrderByDescending(x => x.CreateTime);
             return promoteRepository.FindForPaging(size, index, query, out total).ToList().ToListModel<Promote, PromoteDto>();
         }
@@ -35,20 +41,21 @@ namespace Service
         public void AddPromote(PromoteDto dto)
         {
             var entity = dto.ToModel<Promote>();
+            //entity.Match = MatchRepository.Instance.Find(x => x.Id == dto.MatchId).FirstOrDefault();
             promoteRepository.Insert(entity);
         }
 
         public void UpdatePromote(PromoteDto dto)
         {
             var entity = promoteRepository.Find(x => x.Id == dto.Id).FirstOrDefault();
-            entity.RaceType = dto.RaceType;
+            entity.RaceType =  EnumHelper.Parse<RaceTypeEnum>(dto.RaceType);
             entity.Content = dto.Content;
-            entity.level = dto.level;
+            entity.level = dto.Level;
             entity.Integral = dto.Integral;
             entity.Price = dto.Price;
-            entity.State = dto.State;
-            entity.Operator = dto.Operator;
-            entity.SendType = dto.SendType;
+            entity.State = EnumHelper.Parse<PromoteStateEnum>(dto.State);
+            //entity.Operator = dto.Operator;
+            entity.SendType = EnumHelper.Parse<SendTypeEnum>(dto.SendType);
             promoteRepository.Save(entity);
         }
 

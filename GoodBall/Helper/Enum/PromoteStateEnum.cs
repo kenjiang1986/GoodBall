@@ -12,13 +12,20 @@ namespace Helper.Enum
     public enum PromoteStateEnum
     {
         /// <summary>
+        /// 未开始 
+        /// </summary>
+        未开始 = 1,
+
+        /// <summary>
         /// 中
         /// </summary>
-        中 =1,
+        中 =2,
 
         /// <summary>
         /// 不中
         /// </summary>
-        不中 = 2,
+        不中 = 3,
+
+      
     }
 }

@@ -24,7 +24,7 @@ namespace Management.Controllers
 
         public ActionResult UpSet()
         {
-            ViewBag.NewsType = EnumHelper.GetValues<NewsTypeEnum>(); ;
+            ViewBag.NewsType = EnumHelper.GetValues<NewsTypeEnum>();
             return View();
         }
 

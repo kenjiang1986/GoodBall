@@ -239,17 +239,17 @@ var BaseHelper = {
             parent.tab.removeTabItem(tabid);
         parent.f_addTab(tabid, tabid, '/Partial/ProjectView?TID=' + TID);
     },
-    ShowChoseProjectList: function (signselect, callbackMethodName, otherPara, afterCloseAll) {
+    ShowChooseMatchList: function (signselect, callbackMethodName, otherPara, afterCloseAll) {
         if (signselect != true && signselect != false)
             return;
-        var url = '/Layer/ChoseProject?callback=' + callbackMethodName + '&singleselect=' + signselect;
+        var url = '/Layer/ChooseMatch?callback=' + callbackMethodName + '&singleselect=' + signselect;
         if (afterCloseAll == true)
             url += '&notcloseall=true';
         if (otherPara != null && otherPara != "")
             url = url + "&otherPara=" + encodeURIComponent(otherPara);
         $.layer({
             type: 2,
-            title: '选择项目',
+            title: '选择比赛',
             iframe: { src: url },
             area: ['850px', '450px']
         });

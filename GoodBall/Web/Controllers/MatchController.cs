@@ -9,6 +9,9 @@ using Management.Controllers;
 using Service;
 using Service.Cond;
 using Service.Dto;
+using EnumUtils;
+using Helper;
+using Helper.Enum;
 
 namespace Web.Controllers
 {
@@ -24,6 +27,7 @@ namespace Web.Controllers
 
         public ActionResult UpSet()
         {
+            ViewBag.MatchState = EnumHelper.GetValues<MatchStateEnum>();
             return View();
         }
 
@@ -56,18 +60,9 @@ namespace Web.Controllers
             });
         }
 
-        public JsonResult GetList(string startDate, string endDate, int page, int rows)
+        public JsonResult GetList(MatchCond cond, int page, int rows)
         {
             int total;
-            var cond = new MatchCond();
-            if (!string.IsNullOrEmpty(startDate))
-            {
-                cond.StartDate = Convert.ToDateTime(startDate);
-            }
-            if (!string.IsNullOrEmpty(endDate))
-            {
-                cond.EndDate = Convert.ToDateTime(endDate);
-            }
             var result = MatchService.Instance.GetMatchListByPage(cond, rows, page, out total);
 
             return Json(new

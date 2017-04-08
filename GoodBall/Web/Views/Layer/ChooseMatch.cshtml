@@ -1,0 +1,100 @@
+﻿@{
+    Layout = "~/Views/Shared/_Page.cshtml";
+}
+<script type="text/javascript">
+    $("#easyui-rtljs").remove();
+    $("#easyui-rtlcss").remove();
+    $(function () {
+        $("input[type=text]").validatebox();
+        var callback = '@(Request.QueryString["callback"])';
+        var otherPara = '@(Request.QueryString["otherPara"])';
+        var singleselect = '@(Request.QueryString["singleselect"])';
+        var notcloseall = '@(Request.QueryString["notcloseall"])';
+        $(".easyui-doc-textbox,.easyui-doc-select").each(function(i) {
+            this.style.width = "100px";
+        });
+        $("#BtnSearch").click(function() {
+            search();
+        });
+        search();
+        $("#BtnChose").click(function() {
+            chose();
+        });
+
+        function chose() {
+            var rows = $('#DgMatch').datagrid('getSelections');
+            if (rows.length <= 0) {
+                alert("请至少选择1项");
+                return;
+            }
+            var matchId = "";
+            var matchName = "";
+            rows.forEach(function(value, index) {
+                matchId = value.Id;
+                matchName = value.TeamA + "VS" + value.TeamB;
+            });
+            if (callback != null) {
+                var callbackmethod = parent[callback];
+                if (callbackmethod != null && typeof (callbackmethod) == typeof (Function)) {
+                    callbackmethod(matchId, matchName);
+                    /*if (notcloseall && !eval(notcloseall))
+                        alert("确认选中？");
+                        // parent.layer.closeAll();    */
+                }
+            }
+        }
+        function search() {
+            var url = "/Match/GetList?" + $("#form1").serialize();
+            if (otherPara != null && otherPara != "")
+                url += decodeURIComponent(otherPara).replace("&amp;", "&");
+            singleselect = eval(singleselect);
+            $("#DgMatch").datagrid({ url: url, singleSelect: singleselect });
+        }
+
+        singleselect = Boolean(singleselect);
+    })
+</script>
+<form id="form1">
+
+    <div id="toolbarNo">
+        <div class="dialog easyui-filter">
+            <table>
+                <tr>
+                    <td>开始时间:</td>
+                    <td><input type="text" id="StartDate" class="easyui-datetimebox" /></td>
+                    <td>结束时间:</td>
+                    <td><input type="text" id="EndDate" class="easyui-datetimebox" /></td>
+                    <td>
+                        主队名称
+                    </td>
+                    <td><input type="text" id="TeamA" name="TeamA" class="easyui-doc-textbox" /></td>
+                    <td>
+                        客队名称
+                    </td>
+                    <td>
+                        <input type="text" id="TeamB" name="TeamB" class="easyui-doc-textbox" />
+                    </td>
+
+                    <td>
+                        <a href="javascript:;" class="easyui-linkbutton" data-options="iconCls:'icon-search'" id="BtnSearch">查询</a>
+                        <a href="javascript:;" class="easyui-linkbutton" data-options="iconCls:'icon-add'" id="BtnChose">确定选中</a>
+                    </td>
+                </tr>
+            </table>
+        </div>
+    </div>
+    <table id="DgMatch" class="easyui-datagrid" title="" style="width: auto;min-height:390px;"
+           data-options="rownumbers:true,pagination:true,method:'post',pageSize:10,toolbar:'#toolbarNo'">
+        <thead>
+            <tr>
+                <th data-options="field:'TeamA',width:'10%',resizable:false,align:'left'">主队</th>
+                <th data-options="field:'TeamB',width:'10%',resizable:false,align:'left'">客队</th>
+                <th data-options="field:'Dish',width:'10%',resizable:false,align:'left'">盘口数据</th>
+                <th data-options="field:'Venue',width:'10%',resizable:false,align:'left'">比赛地点</th>
+                <th data-options="field:'MatchTime',width:'10%',resizable:false,align:'left'">比赛时间</th>
+                <th data-options="field:'MatchState',width:'10%',resizable:false,align:'left'">状态</th>
+                <th data-options="field:'CreateTime',width:'10%',resizable:false,align:'left'">创建时间</th>
+                <th data-options="field:'Operator',width:'10%',resizable:false,align:'left'">操作人</th>
+            </tr>
+        </thead>
+    </table>
