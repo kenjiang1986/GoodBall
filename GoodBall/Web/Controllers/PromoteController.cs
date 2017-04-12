@@ -62,6 +62,14 @@ namespace Web.Controllers
             });
         }
 
+        public JsonResult SendPromote(long? id)
+        {
+            return ExceptionCatch.Invoke(() =>
+            {
+                PromoteService.Instance.SendPromote(id.Value);
+            });
+        }
+
         public JsonResult GetList(PromoteCond cond, int page, int rows)
         {
             int total;
@@ -80,6 +88,7 @@ namespace Web.Controllers
                     x.SendType,
                     x.Level,
                     x.Match,
+                    x.IsSend,
                     CreateTime = x.CreateTime.ToString(),
                 }),
                 total

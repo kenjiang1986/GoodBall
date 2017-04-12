@@ -56,5 +56,7 @@ namespace DataCollection.Entity
         public virtual Match Match { get; set; }
 
         public long MatchId { get; set; }
+
+        public bool IsSend { get; set; }
     }
 }

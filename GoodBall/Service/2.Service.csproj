@@ -71,6 +71,7 @@
     <Compile Include="RechargeRecordService.cs" />
     <Compile Include="SingModel.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="SmsService.cs" />
     <Compile Include="UserService.cs" />
   </ItemGroup>
   <ItemGroup>
