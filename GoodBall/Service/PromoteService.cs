@@ -67,7 +67,7 @@ namespace Service
         public void SendPromote(long id)
         {
             var promote = promoteRepository.Find(x => x.Id == id).FirstOrDefault();
-            SmsService.SendSms("", promote.Content);
+            new SmsService().SendSms(new SmsRequest());
             promoteRepository.Delete(x => x.Id == id);
         }
     }
