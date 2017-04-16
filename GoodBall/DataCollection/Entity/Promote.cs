@@ -58,5 +58,7 @@ namespace DataCollection.Entity
         public long MatchId { get; set; }
 
         public bool IsSend { get; set; }
+
+        public virtual ICollection<User> UserList { get; set; }
     }
 }

@@ -13,6 +13,11 @@ namespace DataCollection.EntityConfig
         {
             base.ToTable("User");
             base.HasKey(x => x.Id);
+            base.HasMany(x => x.PromoteList).WithMany(x => x.UserList)
+                .Map(x => { x.ToTable("UserPromote");
+                    x.MapLeftKey("UserId");
+                    x.MapRightKey("PromoteId");
+                });
         }
     }
 }

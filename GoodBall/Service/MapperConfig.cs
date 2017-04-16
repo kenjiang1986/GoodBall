@@ -46,7 +46,7 @@ namespace Service
                   .ForMember(x => x.State, x => x.MapFrom(src => src.State.ToString()))
                   .ForMember(x => x.IsSend, x => x.MapFrom(src => src.IsSend ? "是":"否"))
                    .ForMember(x => x.SendType, x => x.MapFrom(src => src.SendType.ToString()))
-                .ForMember(x => x.Match, x => x.MapFrom(src => src.Match.TeamA + "VS" + src.Match.TeamB));
+                .ForMember(x => x.MatchName, x => x.MapFrom(src => src.Match.TeamA + "VS" + src.Match.TeamB));
             AutoMapper.Mapper.CreateMap<PromoteDto, Promote>()
                    .ForMember(x => x.Operator, x => x.MapFrom(src => UserService.GetCurrentUser().UserName))
                 .ForMember(x => x.CreateTime, x => x.MapFrom(src => DateTime.Now))

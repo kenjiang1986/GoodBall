@@ -41,7 +41,7 @@ namespace Service
         public void AddPromote(PromoteDto dto)
         {
             var entity = dto.ToModel<Promote>();
-            //entity.Match = MatchRepository.Instance.Find(x => x.Id == dto.MatchId).FirstOrDefault();
+            entity.IsSend = false;
             promoteRepository.Insert(entity);
         }
 
@@ -67,8 +67,22 @@ namespace Service
         public void SendPromote(long id)
         {
             var promote = promoteRepository.Find(x => x.Id == id).FirstOrDefault();
-            new SmsService().SendSms(new SmsRequest());
-            promoteRepository.Delete(x => x.Id == id);
+
+            if(promote.SendType.Equals(SendTypeEnum.短信))
+            {
+                foreach (var user in promote.UserList)
+                {
+                    SmsService.SendSms(user.Phone, promote.Content);
+                }
+            }
+            else
+            {
+                foreach (var user in promote.UserList)
+                {
+                    SmsService.SendSms(user.Phone, promote.Content);
+                }
+            }
+            promoteRepository.Save(x => x.Id == id, x => new Promote { IsSend = true });
         }
     }
 }

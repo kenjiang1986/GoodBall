@@ -9,11 +9,12 @@ using Service.Cond;
 using Service.Dto;
 using Helper.Enum;
 using EnumUtils;
+using Management.Controllers;
 
 
 namespace Web.Controllers
 {
-    public class PromoteController : Controller
+    public class PromoteController : BaseController
     {
         //
         // GET: /Promote/
@@ -87,7 +88,7 @@ namespace Web.Controllers
                     x.RaceType,
                     x.SendType,
                     x.Level,
-                    x.Match,
+                    x.MatchName,
                     x.IsSend,
                     CreateTime = x.CreateTime.ToString(),
                 }),

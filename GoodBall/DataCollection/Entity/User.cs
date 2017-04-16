@@ -28,6 +28,8 @@ namespace DataCollection.Entity
         public DateTime CreateTime { get; set; }
 
         public string IconUrl { get; set; }
+
+        public virtual ICollection<Promote> PromoteList { get; set; }
     
     }
 }

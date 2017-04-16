@@ -13,7 +13,7 @@ namespace Service.Dto
 
         public long MatchId { get; set; }
 
-        public string Match { get; set; }
+        public string MatchName { get; set; }
 
         /// <summary>
         /// 竞彩类型

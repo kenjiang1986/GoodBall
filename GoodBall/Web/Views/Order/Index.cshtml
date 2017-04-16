@@ -1,0 +1,118 @@
+﻿@{
+    Layout = "~/Views/Shared/_Page.cshtml";
+}
+
+<script>
+    $("#easyui-rtljs").remove();
+    $("#easyui-rtlcss").remove();
+    $(function () {
+        $("input[type=text]").validatebox();
+        Search();
+    });
+
+    function Search() {
+        var tabHeight = $(window).height();
+        var name = encodeURI($("#UserName").val());
+        var validate = $("#form1").form('validate');
+        if (!validate) {
+            return;
+        } else {
+            $("#dg").datagrid({
+                url: "/Order/GetList?"+ $("#form1").serialize(),
+                onLoadError: function (data) {
+                    BaseHelper.ShowException(data);
+                }
+            });
+        }
+    }
+
+    function Update(value, row) {
+        var result = "<a href='javascript:void(0)' onclick='UpSetMatch(\"" + row.Id + "\")'>编辑</a>  ";
+        result += "<a href='javascript:void(0)' onclick='DelMatch(\"" + row.Id + "\")'>删除</a>  ";
+
+        return result;
+
+    }
+
+    function DelMatch(id) {
+
+        $.messager.confirm('温馨提示', '确定要删除订单吗？', function (r) {
+            if (r) {
+                $.ajax({
+                    type: "post",
+                    url: "/Order/DeleteOrder",
+                    data: { id: id },
+                    success: function (data) {
+                        if (data) {
+                            alert("操作成功", "success", function () {
+                                Search();
+                            });
+                        } else {
+                            alert("操作失败", "error");
+                        }
+                    }
+                });
+            }
+        });
+    }
+
+    function UpSetMatch(id) {
+        var url = "/Order/UpSet?id=" + id;
+        var title = '添加比赛';
+        if (id > 0) {
+            title = '修改比赛';
+        }
+
+        $.layer({
+            scrolling: 'auto',
+            type: 2,
+            title: title,
+            iframe: {
+                src: url
+            },
+            area: ['500px', '400px']
+        });
+    }
+</script>
+
+<form id="form1" class="easyui-doc-padding">
+    <div id="toolbar">
+        <div class="easyui-filter">
+            <table>
+                <tr>
+
+                    <td>开始时间:</td>
+                    <td><input type="text" id="StartDate" class="easyui-datetimebox" /></td>
+                    <td>结束时间:</td>
+                    <td><input type="text" id="EndDate" class="easyui-datetimebox" /></td>
+                    <td>
+                        <a href="javascript:;" class="easyui-linkbutton" data-options="iconCls:'icon-search'" onclick="Search()">查询</a>
+                      
+                    </td>
+
+                </tr>
+            </table>
+        </div>
+    </div>
+
+    <div class="easyui-doc-padding">
+        <table id="dg" class="easyui-datagrid" title="" style="width:100%;min-height:350px;"
+               data-options="rownumbers:true,singleSelect:true,pagination:true,method:'post',pageSize:10,toolbar:'#toolbar'">
+            <thead>
+                <tr>
+                    <th data-options="field:'OrderNo',width:'10%',resizable:false,align:'left'">订单编号</th>
+                    <th data-options="field:'Receiver',width:'10%',resizable:false,align:'left'">收件人</th>
+                    <th data-options="field:'Adress',width:'10%',resizable:false,align:'left'">地址</th>
+                    <th data-options="field:'Integral',width:'10%',resizable:false,align:'left'">积分</th>
+                    <th data-options="field:'ContactPhone',width:'10%',resizable:false,align:'left'">联系电话</th>
+                    <th data-options="field:'GoodsName',width:'10%',resizable:false,align:'left'">货物名称</th>
+                    <th data-options="field:'CreateTime',width:'10%',resizable:false,align:'left'">创建时间</th>
+                    <th data-options="field:'Quantity',width:'10%',resizable:false,align:'left'">数量</th>
+                    <th data-options="field:'Id',width:'15%',formatter:Update">操作</th>
+                </tr>
+            </thead>
+        </table>
+
+
+    </div>
+</form>
