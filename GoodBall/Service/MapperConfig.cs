@@ -61,7 +61,7 @@ namespace Service
             AutoMapper.Mapper.CreateMap<RechargeRecordDto, RechargeRecord>();
 
             AutoMapper.Mapper.CreateMap<Goods, GoodsDto>();
-            AutoMapper.Mapper.CreateMap<GoodsDto, Goods>();
+            AutoMapper.Mapper.CreateMap<GoodsDto, Goods>().ForMember(x => x.CreateTime, x => x.MapFrom(src => DateTime.Now));
 
             AutoMapper.Mapper.CreateMap<Order, OrderDto>()
                  .ForMember(x => x.GoodsName, x => x.MapFrom(src => src.Goods.GoodsName))

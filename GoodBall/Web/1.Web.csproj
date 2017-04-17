@@ -826,6 +826,7 @@
     <Content Include="Views\Layer\ChooseMatch.cshtml" />
     <Content Include="Views\Order\Index.cshtml" />
     <Content Include="Views\Goods\Index.cshtml" />
+    <Content Include="Views\Goods\UpSet.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

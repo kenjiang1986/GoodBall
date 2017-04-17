@@ -27,14 +27,14 @@
     }
 
     function Update(value, row) {
-        var result = "<a href='javascript:void(0)' onclick='UpSetMatch(\"" + row.Id + "\")'>编辑</a>  ";
-        result += "<a href='javascript:void(0)' onclick='DelMatch(\"" + row.Id + "\")'>删除</a>  ";
+        var result = "<a href='javascript:void(0)' onclick='UpSetGoods(\"" + row.Id + "\")'>编辑</a>  ";
+        result += "<a href='javascript:void(0)' onclick='DelGoods(\"" + row.Id + "\")'>删除</a>  ";
 
         return result;
 
     }
 
-    function DelMatch(id) {
+    function DelGoods(id) {
 
         $.messager.confirm('温馨提示', '确定要删除货物吗？', function (r) {
             if (r) {
@@ -56,7 +56,7 @@
         });
     }
 
-    function UpSetMatch(id) {
+    function UpSetGoods(id) {
         var url = "/Goods/UpSet?id=" + id;
         var title = '添加货物';
         if (id > 0) {
@@ -85,8 +85,11 @@
                     <td><input type="text" id="GoodsName" class="easyui-doc-textbox"  maxlength="20" /></td>
                     <td>
                         <a href="javascript:;" class="easyui-linkbutton" data-options="iconCls:'icon-search'" onclick="Search()">查询</a>
-
+                        <a id="btnCreate" href="javascript:;" class="l-btn" onclick="UpSetGoods(0)">
+                            <span class="l-btn-left l-btn-icon-left"><span class="l-btn-text">添加</span><span class="l-btn-icon icon-redo">&nbsp;</span></span>
+                        </a>
                     </td>
+
 
                 </tr>
             </table>

@@ -43,8 +43,8 @@ namespace Service
             var entity = goodsRepository.Find(x => x.Id == dto.Id).FirstOrDefault();
             entity.GoodsName = dto.GoodsName;
             entity.GoodsImage = dto.GoodsImage;
-            entity.Quantity = dto.Quantity;
-            entity.Integral = dto.Integral;
+            entity.Quantity = Convert.ToInt32(dto.Quantity);
+            entity.Integral = Convert.ToInt32(dto.Integral);
             goodsRepository.Save(entity);
         }
 

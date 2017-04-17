@@ -20,6 +20,11 @@ namespace Web.Controllers
             return View();
         }
 
+        public ActionResult UpSet()
+        {
+            return View();
+        }
+
         public JsonResult UpSetGoods(GoodsDto Goods)
         {
             return ExceptionCatch.Invoke(() =>

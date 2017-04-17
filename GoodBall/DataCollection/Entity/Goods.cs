@@ -18,12 +18,12 @@ namespace DataCollection.Entity
         /// <summary>
         /// 数量
         /// </summary>
-        public string Quantity { get; set; }
+        public int Quantity { get; set; }
 
         /// <summary>
         /// 积分
         /// </summary>
-        public string Integral { get; set; }
+        public int Integral { get; set; }
 
         public DateTime CreateTime { get; set; }
 
