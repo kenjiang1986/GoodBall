@@ -18,7 +18,7 @@
             return;
         } else {
             $("#dg").datagrid({
-                url: "/Goods/GetList?"+ $("#form1").serialize(),
+                url: "/Goods/GetList?GoodsName=" + $("#GoodsName").val(),
                 onLoadError: function (data) {
                     BaseHelper.ShowException(data);
                 }
@@ -26,16 +26,37 @@
         }
     }
 
+    function Refresh() {
+        layer.closeAll();
+        Search();
+    }
+
     function Update(value, row) {
         var result = "<a href='javascript:void(0)' onclick='UpSetGoods(\"" + row.Id + "\")'>编辑</a>  ";
         result += "<a href='javascript:void(0)' onclick='DelGoods(\"" + row.Id + "\")'>删除</a>  ";
+        result += "<a href='javascript:void(0)' onclick='UpLoadPic(\"" + row.Id + "\")'>上传图片</a>  ";
 
         return result;
 
     }
 
-    function DelGoods(id) {
+    function Image(value, row) {
+        return "<img id='TitleImageUrl' width='200' height='100' src = \"" + row.GoodsImage + "\"/>";
+    }
 
+    function UpLoadPic(id) {
+        $.layer({
+            type: 2,
+            title: '上传图片',
+            iframe: { src: '/Layer/UploadImage?imageType=Goods&id=' + id },
+            area: ['1000px', '500px'],
+            close: function () {//关闭层的时候刷新列表
+
+            }
+        });
+    }
+
+    function DelGoods(id) {
         $.messager.confirm('温馨提示', '确定要删除货物吗？', function (r) {
             if (r) {
                 $.ajax({
@@ -80,7 +101,6 @@
         <div class="easyui-filter">
             <table>
                 <tr>
-
                     <td>货物名称:</td>
                     <td><input type="text" id="GoodsName" class="easyui-doc-textbox"  maxlength="20" /></td>
                     <td>
@@ -89,8 +109,6 @@
                             <span class="l-btn-left l-btn-icon-left"><span class="l-btn-text">添加</span><span class="l-btn-icon icon-redo">&nbsp;</span></span>
                         </a>
                     </td>
-
-
                 </tr>
             </table>
         </div>
@@ -102,6 +120,7 @@
             <thead>
                 <tr>
                     <th data-options="field:'GoodsName',width:'10%',resizable:false,align:'left'">货物名称</th>
+                    <th data-options="field:'GoodsImage',width:'30%',formatter:Image">货物图片</th>
                     <th data-options="field:'Integral',width:'10%',resizable:false,align:'left'">所需积分</th>
                     <th data-options="field:'CreateTime',width:'10%',resizable:false,align:'left'">创建时间</th>
                     <th data-options="field:'Quantity',width:'10%',resizable:false,align:'left'">数量</th>

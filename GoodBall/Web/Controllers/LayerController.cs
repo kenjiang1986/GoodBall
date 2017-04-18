@@ -25,14 +25,20 @@ namespace Web.Controllers
             return View();
         }
 
-        
 
-        public JsonResult Upload()
+
+        public ActionResult Upload()
         {
-            return ExceptionCatch.Invoke(() =>
+            string message = "上传成功";
+            try
             {
                 ProcessRequest(this);
-            });
+            }
+            catch (Exception ex)
+            {
+                message = ex.Message;
+            }
+            return Content("<script>alert(\"" + message + "\");parent.Refresh();</script>", "text/html");
         }
 
 
@@ -97,12 +103,25 @@ namespace Web.Controllers
             }
             file.SaveAs(savePath);
 
-            var newsDto = new NewsDto()
+            switch (imageType)
             {
-                Id = long.Parse(id),
-                TitleImageUrl = RelativelyPath
-            };
-            NewsService.Instance.UpdateNewsImage(newsDto);
+                case "News":
+                     var newsDto = new NewsDto()
+                    {
+                        Id = long.Parse(id),
+                        TitleImageUrl = RelativelyPath
+                    };
+                    NewsService.Instance.UpdateNewsImage(newsDto);
+                    break;
+                case "Goods":
+                    var goodsDto = new GoodsDto()
+                    {
+                        Id = long.Parse(id),
+                        GoodsImage = RelativelyPath
+                    };
+                    GoodsService.Instance.UpdateGoodsImage(goodsDto);
+                    break;
+            }
         }
     }
 }

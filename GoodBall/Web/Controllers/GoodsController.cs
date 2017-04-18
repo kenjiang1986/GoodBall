@@ -67,6 +67,7 @@ namespace Web.Controllers
                     x.GoodsName,
                     x.Integral,
                     x.Quantity,
+                    x.GoodsImage,
                     CreateTime = x.CreateTime.ToString(),
                 }),
                 total

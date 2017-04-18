@@ -21,7 +21,7 @@ namespace Service
             var query = goodsRepository.Source;
             if (!string.IsNullOrEmpty(name))
             {
-                query = query.Where(x => x.GoodsName == name);
+                query = query.Where(x => x.GoodsName.Contains(name));
             }
             query = query.OrderByDescending(x => x.CreateTime);
             return goodsRepository.FindForPaging(size, index, query, out total).ToList().ToListModel<Goods, GoodsDto>();
@@ -40,12 +40,17 @@ namespace Service
 
         public void UpdateGoods(GoodsDto dto)
         {
-            var entity = goodsRepository.Find(x => x.Id == dto.Id).FirstOrDefault();
-            entity.GoodsName = dto.GoodsName;
-            entity.GoodsImage = dto.GoodsImage;
-            entity.Quantity = Convert.ToInt32(dto.Quantity);
-            entity.Integral = Convert.ToInt32(dto.Integral);
-            goodsRepository.Save(entity);
+            goodsRepository.Save(x => x.Id == dto.Id, x => new Goods
+            {
+                GoodsName = dto.GoodsName,
+                Quantity = Convert.ToInt32(dto.Quantity),
+                Integral = Convert.ToInt32(dto.Integral)
+            });
+        }
+
+        public void UpdateGoodsImage(GoodsDto dto)
+        {
+            goodsRepository.Save(x =>x.Id == dto.Id, x => new Goods{GoodsImage = dto.GoodsImage});
         }
 
         public void DeleteGoods(long id)

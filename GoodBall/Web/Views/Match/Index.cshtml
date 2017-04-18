@@ -9,7 +9,7 @@
         $("input[type=text]").validatebox();
         Search();
     });
-
+    
     function Search() {
         var tabHeight = $(window).height();
         var name = encodeURI($("#UserName").val());
@@ -18,7 +18,7 @@
             return;
         } else {
             $("#dg").datagrid({
-                url: "/Match/GetList?"+ $("#form1").serialize(),
+                url: "/Match/GetList?StartDate=" + $("#StartDate").datetimebox('getValue') + "&EndDate=" + $("#EndDate").datetimebox('getValue'),
                 onLoadError: function (data) {
                     BaseHelper.ShowException(data);
                 }
@@ -81,9 +81,9 @@
             <table>
                 <tr>
 
-                    <td>开始时间:</td>
+                    <td>比赛开始时间:</td>
                     <td><input type="text" id="StartDate" class="easyui-datetimebox" /></td>
-                    <td>结束时间:</td>
+                    <td>比赛结束时间:</td>
                     <td><input type="text" id="EndDate" class="easyui-datetimebox"  /></td>
                     <td>
                         <a href="javascript:;" class="easyui-linkbutton" data-options="iconCls:'icon-search'" onclick="Search()">查询</a>

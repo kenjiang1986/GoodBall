@@ -33,6 +33,11 @@
         $("#form1").submit();
     }
 
+    //关闭窗体
+    function CloseWindow() {
+        var index = parent.layer.getFrameIndex(window.name);
+        parent.layer.close(index); //执行关闭
+    }
  
 
 
