@@ -52,6 +52,7 @@
     <Compile Include="EfCondition.cs" />
     <Compile Include="EntityConfig.cs" />
     <Compile Include="Collection.cs" />
+    <Compile Include="EntityConfig\CustomerConfig.cs" />
     <Compile Include="EntityConfig\GoodsConfig.cs" />
     <Compile Include="EntityConfig\MatchConfig.cs" />
     <Compile Include="EntityConfig\NewsConfig.cs" />
@@ -59,6 +60,7 @@
     <Compile Include="EntityConfig\PromoteConfig.cs" />
     <Compile Include="EntityConfig\RechargeRecordConfig.cs" />
     <Compile Include="EntityConfig\UserConfig.cs" />
+    <Compile Include="Entity\Customer.cs" />
     <Compile Include="Entity\Goods.cs" />
     <Compile Include="Entity\Match.cs" />
     <Compile Include="Entity\News.cs" />

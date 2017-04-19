@@ -62,6 +62,7 @@
     <Compile Include="Cond\NewsCond.cs" />
     <Compile Include="Cond\PromoteCond.cs" />
     <Compile Include="API\SmsRequest.cs" />
+    <Compile Include="Dto\CustomerDto.cs" />
     <Compile Include="Dto\GoodsDto.cs" />
     <Compile Include="Dto\MatchDto.cs" />
     <Compile Include="Dto\NewsDto.cs" />
@@ -69,6 +70,7 @@
     <Compile Include="Dto\PromoteDto.cs" />
     <Compile Include="Dto\RechargeRecordDto.cs" />
     <Compile Include="Dto\UserDto.cs" />
+    <Compile Include="CustomerService.cs" />
     <Compile Include="GoodsService.cs" />
     <Compile Include="MapperConfig.cs" />
     <Compile Include="MatchService.cs" />
