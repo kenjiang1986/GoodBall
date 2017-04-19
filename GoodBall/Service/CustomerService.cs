@@ -40,7 +40,7 @@ namespace Service
 
         public void UpdateCustomer(CustomerDto dto)
         {
-            CustomerRepository.Save(x => x.Id == dto.Id, x => new Customer { Answer = dto.Answer });
+            CustomerRepository.Save(x => x.Id == dto.Id, x => new Customer { Answer = dto.Answer, AnswerTime = DateTime.Now });
         }
 
       
