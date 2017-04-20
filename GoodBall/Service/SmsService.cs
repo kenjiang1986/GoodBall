@@ -24,8 +24,9 @@ namespace Service
         public static bool SendSms(string phone, string content)
         {
             bool result = false;
+            //content = "您的验证码是：1234。请不要把验证码泄露给其他人。";
 
-            string postStrTpl = "un={0}&pw={1}&phone={2}&msg={3}&rd=1";
+            string postStrTpl = "account={0}&password={1}&mobile={2}&content={3}";
 
             UTF8Encoding encoding = new UTF8Encoding();
             byte[] postData = encoding.GetBytes(string.Format(postStrTpl, User, Password, phone, content));
@@ -43,6 +44,7 @@ namespace Service
             newStream.Close();
 
             HttpWebResponse myResponse = (HttpWebResponse)myRequest.GetResponse();
+            //String xml = new StreamReader(myResponse.GetResponseStream(), Encoding.UTF8).ReadToEnd();
 
             if (myResponse.StatusCode == HttpStatusCode.OK)
             {
