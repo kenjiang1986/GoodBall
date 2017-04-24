@@ -1,0 +1,48 @@
+﻿@{
+    Layout = "~/Views/Shared/WechatPage.cshtml";
+}
+
+<form id="form1">
+    <div class="loginnew v-transition">
+        <div class="logo"><img src="/static/img/load_logo.892eb35.png"></div>
+        <div class="inputbox">
+            <div class="username">
+                <input id="UserName" name="UserName" class="uid" type="text" placeholder="手机号/用户名"> <span></span>
+            </div><div class="psw">
+                      <input id="Password" name="Password" class="pswin" type="password" placeholder="密码"> <span></span>
+                  </div>
+        </div><div class="btn button button-fill button-danger" onclick="Submit()">登&nbsp;&nbsp;&nbsp;&nbsp;录</div><div class="zw"><i>注册新账号</i> <em>忘记密码？</em></div>
+    </div>
+</form>
+
+    <script>
+
+        function Submit() {
+            var url = "/WechatLogin/Login";
+            $.ajax({
+                type: "POST",
+                url: url,
+                dataType: "json",
+                async: true,
+                data: $("#form1").serialize(),
+                success: function (data) {
+
+                    if (data.success) {
+                        alert("登录成功");
+                        //window.location.href = "/WechatLogin/Login"
+                    }
+                    else {
+                        alert(data.message);
+                    }
+                },
+            });
+        }
+
+    </script>
+
+
+
+
+
+
+

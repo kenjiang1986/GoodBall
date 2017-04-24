@@ -54,8 +54,26 @@ namespace Service
             }
         }
 
+        public void CustomerLogin(string userName, string password)
+        {
+            string md5Password = MD5Helper.MD5Encrypt64(password);
+            var result = userRepository.Find(x => x.UserName == userName && x.Password == md5Password);
+            if (result.Any())
+            {
+                CookieHelper.WriteEncryptCookie(userKey, JsonConvert.SerializeObject(result.FirstOrDefault().ToModel<UserDto>()), DateTime.Now);
+            }
+            else
+            {
+                throw new ServiceException("密码错误");
+            }
+        }
+
         public User AddUser(UserDto user)
         {
+            if (userRepository.Find(x => x.UserName == user.UserName || x.Phone == user.Phone).Any())
+            {
+                throw new ServiceException("用户名或者手机号码已存在");
+            }
             return userRepository.InsertReturnEntity(user.ToModel<User>());
         }
 

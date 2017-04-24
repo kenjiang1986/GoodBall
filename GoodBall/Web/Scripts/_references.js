@@ -256,3 +256,4 @@
 /// <reference path="ueditor/dialogs/wordimage/tangram.js" />
 /// <reference path="ueditor/dialogs/wordimage/wordimage.js" />
 /// <reference path="ueditor/dialogs/internal.js" />
+/// <reference path="dingding-69d77e7276.js" />
