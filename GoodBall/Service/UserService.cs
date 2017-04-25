@@ -11,6 +11,8 @@ using System.Text;
 using System.Threading.Tasks;
 using DataCollection;
 using GoodBall.Dto;
+using System.Web;
+using System.Web.SessionState;
 
 
 namespace Service
@@ -74,6 +76,16 @@ namespace Service
             {
                 throw new ServiceException("用户名或者手机号码已存在");
             }
+            if (HttpContext.Current.Session[user.Code] == null)
+            {
+                throw new ServiceException("验证码无效或者已过期");
+            }
+            if (user.Code != HttpContext.Current.Session[user.Code].ToString())
+            {
+                throw new ServiceException("验证码错误");
+            }
+
+            user.UserName = user.Phone;
             return userRepository.InsertReturnEntity(user.ToModel<User>());
         }
 
@@ -150,6 +162,14 @@ namespace Service
         public UserDto GetUser(long id)
         {
             return userRepository.Find(x => x.Id == id).FirstOrDefault().ToModel<UserDto>();
+        }
+
+        public bool SendSmsCode(string phone)
+        {
+            var code = SmsService.GetPhoneNumber(4, true);
+            HttpContext.Current.Session[phone] = code;
+            HttpContext.Current.Session.Timeout = 1;
+            return SmsService.SendSms(phone, string.Format("您的验证码是：{0}。请不要把验证码泄露给其他人。", code));
         }
 
         public static UserDto GetCurrentUser()

@@ -20,6 +20,8 @@ namespace GoodBall.Dto
 
         public int Balance { get; set; }
 
+        public string Code { get; set; }
+
         /// <summary>
         /// 积分
         /// </summary>

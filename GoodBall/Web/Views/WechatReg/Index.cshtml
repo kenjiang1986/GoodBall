@@ -2,20 +2,20 @@
     Layout = "~/Views/Shared/WechatPage.cshtml";
 }
 
-<form>
+<form id="form1">
     <div class="register v-transition">
         <header class="bar bar-nav">
             <h1 class="title button-fill button-danger">注册</h1>
         </header>
         <div class="inputbox content"><div class="phone">
-                                          <input class="phonenum" type="text" placeholder="请输入手机号"> 
+                                          <input id="phone" name="phone" class="phonenum" type="text" placeholder="请输入手机号"> 
                                           <span onclick="SendCode()" class="nosend button button-danger">发送验证码</span>
                                          <span id="spanReSend" class="asend" style="display:none">60秒后可重发</span>
                                       </div>
         <div class="code">
-                                                <input class="codenum" type="text" placeholder="请输入短信验证码"> <span></span>
+            <input id="code" name="code" class="codenum" type="text" placeholder="请输入短信验证码"> <span></span>
                                             </div><div class="psw">
-                                                      <input class="pswin" type="password" placeholder="请输入密码"> <span></span>
+                                                      <input id="password" name="password" class="pswin" type="password" placeholder="请输入密码"> <span></span>
                                                   </div><div class="psw">
                                                             <input class="pswin" type="password" placeholder="请再次输入密码"> <span></span>
                                                         </div><div onclick="Submit()" class="btn button button-fill button-danger">注&nbsp;&nbsp;&nbsp;&nbsp;册</div></div>

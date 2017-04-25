@@ -15,30 +15,60 @@
     </div>
 </form>
 
-    <script>
-
-        function Submit() {
-            var url = "/WechatLogin/Login";
-            $.ajax({
-                type: "POST",
-                url: url,
-                dataType: "json",
-                async: true,
-                data: $("#form1").serialize(),
-                success: function (data) {
-
-                    if (data.success) {
-                        alert("登录成功");
-                        //window.location.href = "/WechatLogin/Login"
+<script type="text/javascript">
+    (function (Vue, $, api) {
+        var vm = new Vue({
+            el: '#login',
+            data: {
+                loginInfo: {}
+            },
+            methods: {
+                login: function () {
+                    if (!this.loginInfo.userName || !this.loginInfo.pwd) {
+                        return $.toast('账号和密码为必填！');
                     }
-                    else {
-                        alert(data.message);
-                    }
-                },
-            });
-        }
+                    $.showIndicator();
+                    api.login_action().then(function (result) {
+                        this.banners = banners;
+                        $.hideIndicator();
+                    }.bind(this), function (e) {
+                        $.alert(e);
+                        $.hideIndicator();
+                    });
+                }
+            },
+            ready: init(function () {
+                //$.scope().banners$$load();
+            })
+        });
+    })(Vue, Zepto, jQuery.api);
 
-    </script>
+
+
+    function Submit() {
+        var url = "/WechatLogin/Login";
+        $.ajax({
+            type: "POST",
+            url: url,
+            dataType: "json",
+            async: true,
+            data: $("#form1").serialize(),
+            success: function (data) {
+
+                if (data.success) {
+                    alert("登录成功");
+                    //window.location.href = "/WechatLogin/Login"
+                }
+                else {
+                    alert(data.message);
+                }
+            },
+        });
+    }
+
+</script>
+
+
 
 
 

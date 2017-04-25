@@ -257,3 +257,7 @@
 /// <reference path="ueditor/dialogs/wordimage/wordimage.js" />
 /// <reference path="ueditor/dialogs/internal.js" />
 /// <reference path="dingding-69d77e7276.js" />
+/// <reference path="dingding.api.js" />
+/// <reference path="dingding.common.js" />
+/// <reference path="dingding.directive.js" />
+/// <reference path="layer_mobile/layer.js" />

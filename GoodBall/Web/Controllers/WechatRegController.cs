@@ -3,6 +3,9 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Web;
 using System.Web.Mvc;
+using GoodBall.Dto;
+using Helper;
+using Service;
 
 namespace Web.Controllers
 {
@@ -16,5 +19,22 @@ namespace Web.Controllers
             return View();
         }
 
+        [HttpPost]
+        public JsonResult Register(UserDto dto)
+        {
+            return ExceptionCatch.Invoke(() =>
+            {
+                UserService.Instance.AddUser(dto);
+            });
+        }
+
+        [HttpPost]
+        public JsonResult SendCode(string phone)
+        {
+            return ExceptionCatch.Invoke(() =>
+            {
+                UserService.Instance.SendSmsCode(phone);
+            });
+        }
     }
 }
