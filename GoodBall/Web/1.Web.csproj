@@ -138,6 +138,7 @@
     <Compile Include="Controllers\PromoteController.cs" />
     <Compile Include="Controllers\UserController.cs" />
     <Compile Include="Controllers\WechatLoginController.cs" />
+    <Compile Include="Controllers\WechatNewsController.cs" />
     <Compile Include="Controllers\WechatRegController.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
@@ -898,6 +899,9 @@
     <Content Include="Views\WechatLogin\Index.cshtml" />
     <Content Include="Views\Shared\WechatPage.cshtml" />
     <Content Include="Views\WechatReg\Index.cshtml" />
+    <Content Include="Views\WechatNews\News.cshtml" />
+    <Content Include="Views\WechatNews\Share.cshtml" />
+    <Content Include="Views\WechatNews\Gambling.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

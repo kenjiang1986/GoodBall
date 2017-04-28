@@ -76,16 +76,18 @@ namespace Service
             {
                 throw new ServiceException("用户名或者手机号码已存在");
             }
-            if (HttpContext.Current.Session[user.Code] == null)
+            var phoneSession = HttpContext.Current.Session[user.Phone];
+            if (phoneSession == null)
             {
                 throw new ServiceException("验证码无效或者已过期");
             }
-            if (user.Code != HttpContext.Current.Session[user.Code].ToString())
+            if (user.Code != phoneSession.ToString())
             {
                 throw new ServiceException("验证码错误");
             }
 
             user.UserName = user.Phone;
+            user.NickName = user.Phone;
             return userRepository.InsertReturnEntity(user.ToModel<User>());
         }
 

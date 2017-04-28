@@ -1,6 +1,6 @@
 (function (document, $) {
 
-    $.debug = window.location.hostname == 'localhost';
+    $.debug = window.location.hostname == '127.0.0.1';
     /**
      * 基础api生成器
      * @param api 地址
@@ -10,11 +10,11 @@
      */
     $.promiseApi = function (api, params, method) {
         var defer = $.Deferred(),
-            uri = $.debug ? 'http://localhost:3000/' : 'http://m.ddjiadian.com/',
+            uri = $.debug ? 'http://127.0.0.1/' : 'http://m.ddjiadian.com/',
             token = $.debug ? '3eb72Q560BYRrvg9ITkrwyjuHX/FjL7hmTn7e9BuWbZ3J/gB1+e3wPsv3CJHQVlp6VHxJzfpAIDMqGcnDJ4i3EywEa9AUQMfy6kb/RpjBEaHup4E' : '';
 
         $.ajax({
-            url: uri + api + '.php',
+            url: uri + api,
             data: $.extend(params, {
                 access_token: token
             }),
@@ -62,8 +62,8 @@
                 city: city
             });
         },
-        'get_code': function () {
-            return $.promiseApi('shop/hots', {});
+        'get_code': function (phone) {
+            return $.promiseApi('WechatReg/SendCode', { phone: phone }, 'POST');
         },
         /**
          * 获取服务产品

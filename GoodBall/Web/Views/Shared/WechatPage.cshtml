@@ -18,13 +18,7 @@
     <!-- inject:css -->
     <link href="~/Content/css/dingding.icon.css" rel="stylesheet" />
     <link href="~/Content/css/dingding.main.css" rel="stylesheet" />
-   <!-- endinject -->
-</head>
-<body>
-    <div>
-        <input type="hidden" id="IsSearch" name="IsSearch" value="0" />
-        @RenderBody()
-    </div>
+    <!-- endinject -->
     <script type='text/javascript' src='//g.alicdn.com/sj/lib/zepto/zepto.min.js'></script>
     <script type="text/javascript">$.config = { router: false };</script>
     <script type='text/javascript' src='//g.alicdn.com/msui/sm/0.6.2/js/sm.min.js'></script>
@@ -38,6 +32,13 @@
     <script src="~/Scripts/dingding.common.js"></script>
     <script src="~/Scripts/dingding.directive.js"></script>
     <!-- endinject -->
+</head>
+<body>
+    <div>
+        <input type="hidden" id="IsSearch" name="IsSearch" value="0" />
+        @RenderBody()
+    </div>
+   
 </body>
 </html>
 
