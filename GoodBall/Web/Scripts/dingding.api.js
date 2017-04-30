@@ -62,6 +62,13 @@
                 city: city
             });
         },
+        //注册
+        'reg_action': function (regInfo) {
+            return $.promiseApi('WechatReg/Register', {
+                dto: regInfo
+            });
+        },
+        //获取验证码
         'get_code': function (phone) {
             return $.promiseApi('WechatReg/SendCode', { phone: phone }, 'POST');
         },
