@@ -15,9 +15,10 @@
 
         $.ajax({
             url: uri + api,
-            data: $.extend(params, {
-                access_token: token
-            }),
+            //data: $.extend(params, {
+            //    access_token: token
+            //}),
+            data: params,
             type: method ? method : "GET",
             dataType: 'JSON',
             cache: false,
@@ -65,12 +66,26 @@
         //注册
         'reg_action': function (regInfo) {
             return $.promiseApi('WechatReg/Register', {
-                dto: regInfo
-            });
+                phone: regInfo.phone,
+                password: regInfo.password,
+                code: regInfo.code,
+
+            }, 'POST');
         },
         //获取验证码
         'get_code': function (phone) {
             return $.promiseApi('WechatReg/SendCode', { phone: phone }, 'POST');
+        },
+        //获取新闻列表 
+        'get_newslist': function (newsType) {
+            return $.promiseApi('News/GetList', {
+                title: '',
+                startDate: '',
+                endDate: '',
+                newsType: newsType,
+                page: 1,
+                rows: 1000,
+            });
         },
         /**
          * 获取服务产品

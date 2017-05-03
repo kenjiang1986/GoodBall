@@ -58,8 +58,9 @@
                     //    return $.toast('请输入正确的验证码');
                     //}
                     $.showIndicator();
-                    var dto = jQuery.parseJSON('{"Phone":' + regInfo.phone + '"Password":' + regInfo.pwd + '"Code":' + regInfo.code + '}');
-                    api.reg_action(regInfo).then(function (result) {
+                    var txt = '{"phone":"' + regInfo.phone + '","password":"' + regInfo.pwd + '","code":"' + regInfo.code + '"}';
+                    var dto = JSON.parse(txt);
+                    api.reg_action(dto).then(function (result) {
                         this.banners = banners;
                         $.hideIndicator();
                     }.bind(this), function (e) {

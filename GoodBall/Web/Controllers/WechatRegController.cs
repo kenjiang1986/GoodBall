@@ -20,11 +20,17 @@ namespace Web.Controllers
         }
 
         [HttpPost]
-        public JsonResult Register(UserDto dto)
+        public JsonResult Register(UserDto user)
         {
+            //var user = new UserDto()
+            //{
+            //    Phone = phone,
+            //    Password = password,
+            //    Code = code
+            //};
             return ExceptionCatch.Invoke(() =>
             {
-                UserService.Instance.AddUser(dto);
+                UserService.Instance.AddUser(user);
             });
         }
 
