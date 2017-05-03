@@ -10,7 +10,7 @@
      */
     $.promiseApi = function (api, params, method) {
         var defer = $.Deferred(),
-            uri = $.debug ? 'http://127.0.0.1/' : 'http://m.ddjiadian.com/',
+            uri = $.debug ? 'http://127.0.0.1:9090/' : 'http://m.ddjiadian.com/',
             token = $.debug ? '3eb72Q560BYRrvg9ITkrwyjuHX/FjL7hmTn7e9BuWbZ3J/gB1+e3wPsv3CJHQVlp6VHxJzfpAIDMqGcnDJ4i3EywEa9AUQMfy6kb/RpjBEaHup4E' : '';
 
         $.ajax({
@@ -78,13 +78,8 @@
         },
         //获取新闻列表 
         'get_newslist': function (newsType) {
-            return $.promiseApi('News/GetList', {
-                title: '',
-                startDate: '',
-                endDate: '',
+            return $.promiseApi('WechatNews/GetList', {
                 newsType: newsType,
-                page: 1,
-                rows: 1000,
             });
         },
         /**

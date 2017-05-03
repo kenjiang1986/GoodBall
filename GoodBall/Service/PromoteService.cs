@@ -27,7 +27,7 @@ namespace Service
             }
             if (!string.IsNullOrEmpty(cond.RaceType))
             {
-                query = query.Where(x => x.RaceType.Equals(EnumHelper.Parse<RaceTypeEnum>(cond.RaceType)));
+                query = query.Where(x => x.RaceType.ToString() == cond.RaceType);
             }
             query = query.OrderByDescending(x => x.CreateTime);
             return promoteRepository.FindForPaging(size, index, query, out total).ToList().ToListModel<Promote, PromoteDto>();

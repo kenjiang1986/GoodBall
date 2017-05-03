@@ -22,8 +22,7 @@ namespace Service
             var query = newsRepository.Source;
             if (!string.IsNullOrEmpty(cond.NewsType))
             {
-                var newsType = (NewsTypeEnum)Convert.ToInt32(cond.NewsType);
-                query = query.Where(x => x.NewsType.Equals(newsType));
+                query = query.Where(x => x.NewsType.ToString() == cond.NewsType);
             }
             if (!string.IsNullOrEmpty(cond.Title))
             {

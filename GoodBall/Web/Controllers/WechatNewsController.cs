@@ -3,6 +3,8 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Web;
 using System.Web.Mvc;
+using Service;
+using Service.Cond;
 
 namespace Web.Controllers
 {
@@ -17,6 +19,8 @@ namespace Web.Controllers
         /// <returns></returns>
         public ActionResult News()
         {
+            //int total;
+            //ViewBag.NewsList = NewsService.Instance.GetNewsListByPage(new NewsCond() { NewsType = "即时新闻" }, 1000, 1, out total);
             return View();
         }
 
@@ -38,6 +42,28 @@ namespace Web.Controllers
         public ActionResult Gambling()
         {
             return View();
+        }
+
+        public JsonResult GetList(string newsType)
+        {
+            int total;
+            var result = NewsService.Instance.GetNewsListByPage(new NewsCond() { NewsType = newsType}, 1000, 1, out total);
+
+            return Json(new
+            {
+                data = result.Select(x => new
+                {
+                    x.Id,
+                    x.Title,
+                    x.Source,
+                    x.Content,
+                    x.Operator,
+                    x.NewsType,
+                    x.TitleImageUrl,
+                    CreateTime = x.CreateTime.ToString(),
+                }),
+                status = 200
+            }, JsonRequestBehavior.AllowGet);
         }
 
     }
