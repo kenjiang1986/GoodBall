@@ -5,6 +5,7 @@ using System.Web;
 using System.Web.Mvc;
 using Service;
 using Service.Cond;
+using Service.API;
 
 namespace Web.Controllers
 {
@@ -51,7 +52,7 @@ namespace Web.Controllers
             int total;
             var result = NewsService.Instance.GetNewsListByPage(new NewsCond() { NewsType = newsType}, 1000, 1, out total);
 
-            return Json(new
+            return Json(new WechatResponse()
             {
                 data = result.Select(x => new
                 {
@@ -63,9 +64,14 @@ namespace Web.Controllers
                     x.NewsType,
                     x.TitleImageUrl,
                     CreateTime = x.CreateTime.ToString(),
-                }),
-                status = 200
+                })
             }, JsonRequestBehavior.AllowGet);
+        }
+
+        public JsonResult GetNews(long id)
+        {
+            var response = new WechatResponse() { data = NewsService.Instance.GetNews(id) };
+            return Json(response, JsonRequestBehavior.AllowGet);
         }
 
     }

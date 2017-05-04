@@ -1,0 +1,109 @@
+﻿@{
+    Layout = "~/Views/Shared/WechatPage.cshtml";
+}
+
+
+
+    <div class="page" id="userCenter">
+        <header class="bar bar-nav">
+            <h1 class="title button-fill button-danger">用户中心</h1>
+        </header>
+        <div class="account content">
+            <div class="list-block">
+                <ul>
+                    <li class="item-content">
+                        <div class="item-inner">
+                            <div class="item-title">头像</div>
+                            <div class="item-media">
+                                <div class="file">
+                                    <img style="width:40px; height:40px; border-radius: 50%" src="http://www.6383.com/Public/hbt/niu-default-head/default_diagram_12.png">
+                                    <input type="file" accept="image/*">
+                                </div>
+                            </div>
+                        </div>
+                    </li>
+                    <li class="item-content item-link">
+                        <div class="item-inner">
+                            <div class="item-title">用户名</div>
+                            <div class="item-after">HBVIPDCHDEJSNNDHSHD</div>
+                        </div>
+                    </li>
+                    <li class="item-content item-link" v-on:click="modifyPhone()">
+                        <div class="item-inner">
+                            <div class="item-title">手机号</div>
+                            <div class="item-after">1388888888888</div>
+                        </div>
+                    </li>
+                    <li class="item-content item-link">
+                        <div class="item-inner">
+                            <div class="item-title label">用户名</div>
+                            <div class="item-input">
+                                <input type="text" value="ervin">
+                            </div>
+                        </div>
+                    </li>
+                </ul>
+            </div>
+            <div class="content-block">
+                <a v-on:click="address$$submit()" class="button button-fill button-big button-danger">
+                    确定
+                </a>
+            </div>
+            <div class="weui_cells_form" id="dialog" style="display:none" style="padding:10px;">
+                <div class="cell-header">
+                    <h2 style="text-align: center;font-size: .8rem;font-weight: normal;padding: 1rem;">为了你的账号安全和方便找回密码，请绑定手机号码</h2>
+                </div>
+                <div class="weui_cell_bd weui_cell_primary" style="padding: 10px 15px;border-bottom:1px solid #ccc">
+                    <input class="weui_input" spellcheck="false" type="text" pattern="[0-9]*" placeholder="请输入手机号码" style="border:none">
+                    <button class="button button-danger" style="vertical-align:middle; margin-left:5px;float:right" slot="right"> 获取验证码 </button>
+                    <button class="weui_btn weui_btn_disabled weui_btn_mini weui_btn_default" style="vertical-align: middle; margin-left: 5px; display: none;" slot="right" disabled=""> <span>30</span>秒后重发  </button>
+                </div>
+                <div class="weui_cell_bd weui_cell_primary" style="padding: 10px 15px;">
+                    <input class="weui_input" spellcheck="false" type="text" placeholder="请输入验证码" style="border:none">
+                </div>
+            </div>
+            <div class="bar bar-footer">
+                <button class="button button-block button-big button-light">退出登录</button>
+            </div>
+        </div>
+    </div>
+  
+    <script type="text/javascript">
+(function (Vue, $, api) {
+    window.vm = new Vue({
+        el: '#userCenter',
+        data: {
+            tabs: [
+                {icon: 'icon shouye', text: '首页', href: 'index.html'},
+                {icon: 'icon dingdan', text: '订单', href: 'order.html'},
+                {icon: 'icon wode', text: '我的', active: true, href: 'profile.html'}
+            ],
+            profile: {}
+        },
+        methods: {
+            profile$$load: function () {
+                $.showIndicator();
+                api.profile().then(function (data) {
+                    console.log(data);
+                    this.profile = data;
+                    $.hideIndicator();
+                }.bind(this), function (msg) {
+                    $.hideIndicator();
+                    $.alert(msg);
+                });
+            },
+            modifyPhone:function(){
+                layer.open({
+                  type: 1,
+                  anim: 'up',
+                  style: 'width:85%;border-radius:4px;-webkit-animation-duration: .5s; animation-duration: .5s;',
+                  content:$("#dialog").html(),
+                  btn: ['确认', '取消']
+                })
+            }
+        },
+        ready: init(function () {
+            $.scope().profile$$load();
+        })
+    });
+})(Vue, Zepto, jQuery.api);</script>

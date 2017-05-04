@@ -59,6 +59,7 @@
   <ItemGroup>
     <Compile Include="API\ApiModelResponseResult.cs" />
     <Compile Include="API\BaseClientService.cs" />
+    <Compile Include="API\WechatResponse.cs" />
     <Compile Include="Cond\MatchCond.cs" />
     <Compile Include="Cond\NewsCond.cs" />
     <Compile Include="Cond\PromoteCond.cs" />

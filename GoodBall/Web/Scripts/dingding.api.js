@@ -82,6 +82,12 @@
                 newsType: newsType,
             });
         },
+        //获取新闻详细
+        'get_newsdetail': function (id) {
+            return $.promiseApi('WechatNews/GetNews', {
+                id: id,
+            });
+        },
         /**
          * 获取服务产品
          * @param sid int 1 保养， 2 维修， 3 套餐， 4 安装 5 空调
