@@ -899,6 +899,7 @@
     <Content Include="Views\WechatNews\News.cshtml" />
     <Content Include="Views\WechatNews\Share.cshtml" />
     <Content Include="Views\WechatNews\Gambling.cshtml" />
+    <Content Include="Views\WechatNews\NewsDetail.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

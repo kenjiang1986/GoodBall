@@ -19,11 +19,13 @@ namespace Web.Controllers
         /// <returns></returns>
         public ActionResult News()
         {
-            //int total;
-            //ViewBag.NewsList = NewsService.Instance.GetNewsListByPage(new NewsCond() { NewsType = "即时新闻" }, 1000, 1, out total);
             return View();
         }
 
+        public ActionResult NewsDetail()
+        {
+            return View();
+        }
 
         /// <summary>
         /// 好波分享 
