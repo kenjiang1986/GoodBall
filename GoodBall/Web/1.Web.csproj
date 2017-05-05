@@ -140,6 +140,7 @@
     <Compile Include="Controllers\WechatLoginController.cs" />
     <Compile Include="Controllers\WechatNewsController.cs" />
     <Compile Include="Controllers\WechatRegController.cs" />
+    <Compile Include="Controllers\WechatShopController.cs" />
     <Compile Include="Controllers\WechatUserController.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
@@ -902,6 +903,7 @@
     <Content Include="Views\WechatNews\Gambling.cshtml" />
     <Content Include="Views\WechatNews\NewsDetail.cshtml" />
     <Content Include="Views\WechatUser\Index.cshtml" />
+    <Content Include="Views\WechatShop\Index.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

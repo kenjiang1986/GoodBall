@@ -1,0 +1,133 @@
+﻿@{
+    Layout = "~/Views/Shared/WechatPage.cshtml";
+}
+
+<div class="products-page content page" id="products">
+    <div class="banner">
+        <img src="../images/exchange_top_bg.png">
+    </div>
+    <div class="">
+        <div class="content-block-title">您共有<b class="text-danger">0</b>积分</div>
+        <div class="content-block">
+            <div class="products-item col-50">
+                <div class="product-box">
+                    <div class="tit">
+                        <img src="http://www.ffok.cn/Upload/Product/M840x840_20140724163642463_28652.jpg" />
+                        <p>曼联主场短袖球衣532849-624大童款</p>
+                    </div>
+                    <div class="txt">
+                        <span><em>3000</em>积分</span>
+                        <a v-on:click="products$$exchange()" class="button button-fill button-danger">点击兑换</a>
+                    </div>
+                </div>
+            </div>
+            <div class="products-item col-50">
+                <div class="product-box">
+                    <div class="tit">
+                        <img src="http://www.ffok.cn/Upload/Product/M705x705_20150828172655969_24204.jpg" />
+                        <p>曼联主场短袖球衣611031-624</p>
+                    </div>
+                    <div class="txt">
+                        <span><em>3000</em>积分</span>
+                        <a href="#" class="button button-fill button-danger">点击兑换</a>
+                    </div>
+                </div>
+            </div>
+            <div class="products-item col-50">
+                <div class="product-box">
+                    <div class="tit">
+                        <img src="http://www.ffok.cn/Upload/Product/M840x840_20140724163642463_28652.jpg" />
+                        <p>曼联主场短袖球衣532849-624大童款</p>
+                    </div>
+                    <div class="txt">
+                        <span><em>3000</em>积分</span>
+                        <a href="#" class="button button-fill button-danger">点击兑换</a>
+                    </div>
+                </div>
+            </div>
+            <div class="products-item col-50">
+                <div class="product-box">
+                    <div class="tit">
+                        <img src="http://www.ffok.cn/Upload/Product/M705x705_20150828172655969_24204.jpg" />
+                        <p>曼联主场短袖球衣611031-624</p>
+                    </div>
+                    <div class="txt">
+                        <span><em>3000</em>积分</span>
+                        <a href="#" class="button button-fill button-danger">点击兑换</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+<script type="text/javascript">
+    (function (Vue, $, api) {
+        window.vm = new Vue({
+            el: '#products',
+            data: {},
+            methods: {
+                products$$load: function (callback) {
+                    //$.showIndicator();
+                    api.shop_products(this.page, getParam('cats'), this.filter).then(function (products) {
+                        this.products = this.products.concat(products);
+                        this.loading = false;
+                        $.hideIndicator();
+                        (callback || function () {
+                        })(products);
+                    }.bind(this), function (err) {
+                        this.loading = false;
+                        $.hideIndicator();
+                        $.alert(err);
+                        (callback || function () {
+                        })();
+                    });
+                },
+                products$$refresh: function () {
+                    this.page = 1;
+                    this.products = [];
+                    this.products$$load(function () {
+                        $.pullToRefreshDone('.pull-to-refresh-content');
+                    });
+                },
+                products$$infinite: function () {
+                    /*this.products$$load(function (products) {
+                        if (products.length >= 30) {
+                            this.page++;
+                        } else {
+                            $.detachInfiniteScroll($('.infinite-scroll'));
+                            $('.infinite-scroll-preloader').remove();
+                        }
+                        Vue.nextTick(function () {
+                            $.refreshScroller();
+                        })
+                    });*/
+                },
+                products$$exchange: function () {
+                    $.confirm('确定兑换?', function () {
+                        $.alert('兑换成功');
+                    });
+                }
+            },
+            watch: {
+                'filter': function () {
+                    this.products$$refresh();
+                }
+            },
+            ready: init(function () {
+                $.scope().products$$infinite();
+                $(document).on('refresh', '.pull-to-refresh-content', function () {
+                    // 如果正在加载，则退出
+                    if ($.scope().loading) return;
+                    $.scope().products$$refresh();
+                });
+                $(document).on('infinite', '.infinite-scroll-bottom', function () {
+                    // 如果正在加载，则退出
+                    if ($.scope().loading) return;
+                    $.scope().products$$infinite();
+                });
+            })
+        });
+    })(Vue, Zepto, jQuery.api);
+</script>
