@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using Helper.Enum;
 
 namespace DataCollection.Entity
 {
@@ -28,7 +29,9 @@ namespace DataCollection.Entity
         /// <summary>
         /// 积分
         /// </summary>
-        public string Integral { get; set; }
+        public int Integral { get; set; }
+
+        public OrderStateEnum State { get; set; }
 
         public string ContactPhone { get; set; }
 

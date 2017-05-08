@@ -32,7 +32,9 @@ namespace Service.Dto
 
         public string ContactPhone { get; set; }
 
-       
+        public string  State { get; set; }
+
+
         public string CreateTime { get; set; }
 
         /// <summary>

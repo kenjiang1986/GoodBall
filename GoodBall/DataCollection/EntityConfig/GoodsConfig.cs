@@ -12,6 +12,7 @@ namespace DataCollection.EntityConfig
         internal GoodsConfig()
         {
             base.ToTable("Goods");
+            base.Property(x => x.GoodsImage).HasMaxLength(200);
             base.HasKey(x => x.Id);
         }
     }

@@ -56,10 +56,14 @@ namespace Web.Controllers
                 PostCode = postCode,
                 GoodsId = goodsId
             };
-            return ExceptionCatch.Invoke(() =>
+           
+            OrderService.Instance.AddOrder(order);
+            
+
+            return Json(new WechatResponse()
             {
-                OrderService.Instance.AddOrder(order);
-            });
+                data = "兑换成功"
+            }, JsonRequestBehavior.AllowGet);
         }
 
     }

@@ -8,6 +8,8 @@ using Helper;
 using Repository;
 using Service.Cond;
 using Service.Dto;
+using Helper.Enum;
+
 
 namespace Service
 {
@@ -49,7 +51,15 @@ namespace Service
                 throw new ServiceException("此商品库存不足");
             }
             var entity = dto.ToModel<Order>();
-            orderRepository.Insert(entity);
+            entity.Integral = goods.Integral;
+            entity.OrderNo = OrderHelper.GetOrderNo();
+            entity.State = OrderStateEnum.未发货;
+            goods.Quantity = goods.Quantity - Convert.ToInt32(dto.Quantity);
+            orderRepository.Transaction(() =>
+            {
+                orderRepository.Insert(entity);
+                GoodsRepository.Instance.Save(goods);
+            });
         }
 
         public void UpdateOrder(OrderDto dto)

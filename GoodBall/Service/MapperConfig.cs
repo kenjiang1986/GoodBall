@@ -69,7 +69,8 @@ namespace Service
                  .ForMember(x => x.GoodsName, x => x.MapFrom(src => src.Goods.GoodsName))
                 .ForMember(x => x.GoodsImage, x => x.MapFrom(src => src.Goods.GoodsImage));
             AutoMapper.Mapper.CreateMap<OrderDto, Order>()
-                .ForMember(x => x.OrderNo, x => x.MapFrom(src => OrderHelper.GetOrderNo()));
+                .ForMember(x => x.OrderNo, x => x.MapFrom(src => OrderHelper.GetOrderNo()))
+                .ForMember(x => x.CreateTime, x => x.MapFrom(src => DateTime.Now));
 
         }
 
