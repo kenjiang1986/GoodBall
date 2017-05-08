@@ -3,6 +3,10 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Web;
 using System.Web.Mvc;
+using Helper;
+using Service;
+using Service.API;
+using Service.Dto;
 
 namespace Web.Controllers
 {
@@ -13,7 +17,49 @@ namespace Web.Controllers
 
         public ActionResult Index()
         {
+            ViewBag.UserIntegral = UserService.GetCurrentUser() == null ? 0 : UserService.GetCurrentUser().Integral;
             return View();
+        }
+
+        public ActionResult Cash()
+        {
+            return View();
+        }
+
+        public JsonResult GetProductList()
+        {
+            int total;
+            var result = GoodsService.Instance.GetGoodsListByPage(string.Empty, 1000, 1, out total);
+
+            return Json(new WechatResponse()
+            {
+                data = result.Select(x => new
+                {
+                    x.Id,
+                    x.GoodsName,
+                    x.GoodsImage,
+                    x.Integral,
+                    x.Quantity,
+                })
+            }, JsonRequestBehavior.AllowGet);
+        }
+
+        [HttpPost]
+        public JsonResult AddOrder(string qty, string contactor, string mobile, string doorplate, string postCode, long goodsId)
+        {
+            var order = new OrderDto()
+            {
+                ContactPhone = mobile,
+                Quantity = qty,
+                Adress = doorplate,
+                Receiver = contactor,
+                PostCode = postCode,
+                GoodsId = goodsId
+            };
+            return ExceptionCatch.Invoke(() =>
+            {
+                OrderService.Instance.AddOrder(order);
+            });
         }
 
     }

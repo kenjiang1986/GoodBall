@@ -49,5 +49,9 @@ namespace Service.Dto
         /// 货物图片
         /// </summary>
         public string GoodsImage { get; set; }
+
+        public string PostCode { get; set; }
+
+        public long GoodsId { get; set; }
     }
 }

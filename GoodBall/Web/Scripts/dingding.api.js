@@ -140,15 +140,15 @@
          * @param doorplate 门牌号
          * @returns {*}
          */
-        'add_addr': function (contactor, mobile, city, dist, detail, doorplate) {
-            return $.promiseApi('add_addr', {
+        'add_addr': function (qty,contactor, mobile, postcode, doorplate, goodsid) {
+            return $.promiseApi('WechatShop/AddOrder', {
+                qty: qty,
                 contactor: contactor,
                 mobile: mobile,
-                city: city,
-                dist: dist,
-                detail: detail,
-                doorplate: doorplate
-            });
+                postcode: postcode,
+                doorplate: doorplate,
+                goodsid: goodsid
+            },'POST');
         },
         /**
          * 更新地址
@@ -278,11 +278,8 @@
          * @param filter
          * @returns {*}
          */
-        'shop_products': function (page, category_id, filter) {
-            return $.promiseApi('shop/products', {
-                page: page,
-                category_id: category_id,
-                filter: filter
+        'shop_products': function () {
+            return $.promiseApi('WechatShop/GetProductList', {
             });
         },
         /**

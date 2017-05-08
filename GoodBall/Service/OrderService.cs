@@ -4,6 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using DataCollection.Entity;
+using Helper;
 using Repository;
 using Service.Cond;
 using Service.Dto;
@@ -38,6 +39,15 @@ namespace Service
 
         public void AddOrder(OrderDto dto)
         {
+            var goods = GoodsRepository.Instance.Find(x => x.Id == dto.GoodsId).FirstOrDefault();
+            if (goods == null)
+            {
+                throw new ServiceException("不存在此商品");
+            }
+            if (Convert.ToInt32(dto.Quantity) > goods.Quantity)
+            {
+                throw new ServiceException("此商品库存不足");
+            }
             var entity = dto.ToModel<Order>();
             orderRepository.Insert(entity);
         }

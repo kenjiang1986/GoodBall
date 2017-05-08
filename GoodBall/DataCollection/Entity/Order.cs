@@ -32,8 +32,12 @@ namespace DataCollection.Entity
 
         public string ContactPhone { get; set; }
 
+        public string PostCode { get; set; }
+
 
         public DateTime CreateTime { get; set; }
+
+        public long GoodsId { get; set; }
 
         public virtual Goods Goods { get; set; }
 

@@ -96,6 +96,9 @@ img {
       #product .swiper-container-horizontal .swiper-pagination .swiper-pagination-bullet.swiper-pagination-bullet-active {
         background: #06c1ae; }
 
+.content {
+  overflow: auto !important; }
+
 /*登录*/
 .loginnew {
   width: 100%; }
@@ -111,33 +114,15 @@ img {
   width: 90%;
   margin: 1.5rem auto 1rem; }
 
-.loginnew .inputbox .username .uid {
+.loginnew .inputbox .username .uid, .loginnew .inputbox .psw .pswin, .register .inputbox .phone .phonenum, .register .inputbox .code .codenum, .register .inputbox .psw .pswin {
   margin-top: .5rem;
   margin-left: 1.75rem;
   width: 70%;
   display: inline-block;
-  background: #f8f8f8;
+  background: transparent;
   border: 0; }
 
-.loginnew .inputbox .username span {
-  display: inline-block;
-  width: .9rem;
-  height: .9rem;
-  background: url();
-  background-size: cover;
-  float: right;
-  margin-right: .4rem;
-  margin-top: .45rem; }
-
-.loginnew .inputbox .psw .pswin {
-  margin-top: .5rem;
-  margin-left: 1.75rem;
-  width: 70%;
-  display: inline-block;
-  background: #f8f8f8;
-  border: 0; }
-
-.loginnew .inputbox .psw span {
+.loginnew .inputbox .username span, .loginnew .inputbox .psw span {
   display: inline-block;
   width: .9rem;
   height: .9rem;
@@ -205,14 +190,6 @@ img {
   background-size: 1rem;
   position: relative; }
 
-.register .inputbox .phone .phonenum {
-  margin-top: .5rem;
-  margin-left: 1.75rem;
-  width: 70%;
-  display: inline-block;
-  background: #f8f8f8;
-  border: 0; }
-
 .register .inputbox .phone .asend, .register .inputbox .phone .nosend {
   display: inline-block;
   position: absolute;
@@ -222,14 +199,6 @@ img {
   color: #999;
   border: 1px solid #999;
   border-radius: .25rem; }
-
-.register .inputbox .code .codenum {
-  margin-top: .5rem;
-  margin-left: 1.75rem;
-  width: 70%;
-  display: inline-block;
-  background: #f8f8f8;
-  border: 0; }
 
 .register .inputbox .code span {
   display: inline-block;
@@ -244,14 +213,6 @@ img {
   width: 100%;
   height: 1.9rem;
   border-bottom: 1px solid #ddd; }
-
-.register .inputbox .psw .pswin {
-  margin-top: .5rem;
-  margin-left: 1.75rem;
-  width: 70%;
-  display: inline-block;
-  background: #f8f8f8;
-  border: 0; }
 
 /*index.html*/
 .release-btn {
@@ -505,6 +466,9 @@ img {
   vertical-align: middle; }
 
 /*news*/
+.news {
+  padding: .3rem; }
+
 .news-list .item-content {
   position: relative;
   padding: .75rem 0 .5rem 6rem;

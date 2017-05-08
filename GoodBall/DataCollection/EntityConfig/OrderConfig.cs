@@ -13,7 +13,7 @@ namespace DataCollection.EntityConfig
         {
             base.ToTable("Order");
             base.HasKey(x => x.Id);
-            base.HasRequired(x => x.Goods).WithRequiredDependent().Map(x => x.MapKey("GoodsId"));
+            base.HasRequired(x => x.Goods).WithOptional().Map(x => x.MapKey("GoodsId"));
         }
     }
 }

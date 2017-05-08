@@ -1,0 +1,128 @@
+﻿@{
+    Layout = "~/Views/Shared/WechatPage.cshtml";
+}
+
+<div class="page" id="address-form">
+    <header class="bar bar-nav">
+        <h1 class="title button-fill button-danger">商品兑换信息</h1>
+    </header>
+    <div class="content">
+        <div class="list-block">
+            <ul>
+                <li>
+                    <div class="item-content">
+                        <div class="item-inner">
+                            <div class="item-title label">数量:</div>
+                            <div class="item-input">
+                                <input type="text" v-model="address.qty" placeholder="输入需要兑换的产品数量">
+                            </div>
+                        </div>
+                    </div>
+                </li>
+                <li>
+                    <div class="item-content">
+                        <div class="item-inner">
+                            <div class="item-title label">收件人:</div>
+                            <div class="item-input">
+                                <input type="text" v-model="address.contactor" placeholder="输入您的姓名">
+                            </div>
+                        </div>
+                    </div>
+                </li>
+                <li>
+                    <div class="item-content">
+                        <div class="item-inner">
+                            <div class="item-title label">手机号码:</div>
+                            <div class="item-input">
+                                <input type="tel" v-model="address.mobile" placeholder="输入您的手机号码">
+                            </div>
+                        </div>
+                    </div>
+                </li>
+                <li>
+                    <div class="item-content">
+                        <div class="item-inner">
+                            <div class="item-title label">详细地址</div>
+                            <div class="item-input">
+                                <input type="text" v-model="address.doorplate" placeholder="输入详细联系地址">
+                            </div>
+                        </div>
+                    </div>
+                </li>
+                <li>
+                    <div class="item-content">
+                        <div class="item-inner">
+                            <div class="item-title label">邮政编号:</div>
+                            <div class="item-input">
+                                <input type="text" v-model="address.mCode" placeholder="输入邮政编号如：510000">
+                            </div>
+                        </div>
+                    </div>
+                </li>
+            </ul>
+        </div>
+        <div class="content-block">
+            <a v-on:click="address$$submit()" class="button button-fill button-big button-danger">
+                确定
+            </a>
+        </div>
+    </div>
+</div>
+
+
+<script type="text/javascript">
+    (function (Vue, $, api) {
+        window.vm = new Vue({
+            el: '#address-form',
+            data: {
+                address: {},
+                dists: []
+            },
+            methods: {
+                address$$submit: function () {
+                    var self = this;
+                    if (!this.address.contactor || !this.address.mobile || !this.address.doorplate || !this.address.qty) {
+                        return $.toast('请输入完整的收件信息');
+                    } else {
+                        $.showIndicator();
+                        api.add_addr(self.address.qty,
+                                self.address.contactor,
+                              self.address.mobile,
+                              self.address.mCode,
+                              self.address.doorplate,
+                              getParam('id')).then(function () {
+                                  $.hideIndicator();
+                                  alert('兑换成功');
+                              }, function (msg) {
+                                  alert(msg);
+                              })
+                        //confirm('确定兑换?', function () {
+                        //    api.add_addr(self.address.qty,
+                        //        self.address.contactor,
+                        //      self.address.mobile,
+                        //      self.address.mCode,
+                        //      self.address.doorplate,
+                        //      getParam('id')).then(function () {
+                        //          $.hideIndicator();
+                        //          alert('兑换成功');
+                        //      }, function (msg) {
+                        //          alert(msg);
+                        //      })
+
+                        //});
+
+                    }
+                }
+            },
+            ready: init(function () {
+                //$.scope().address$$load(1);
+                //$("#city-picker").cityPicker({
+                //    toolbarTemplate: '<header class="bar bar-nav">\
+                //<button class="button button-link pull-right close-picker">确定</button>\
+                //<h1 class="title">选择收货地址</h1>\
+                //</header>'
+                //});
+            })
+        });
+    })(Vue, Zepto, jQuery.api);
+</script>
