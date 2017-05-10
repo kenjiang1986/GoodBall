@@ -28,6 +28,17 @@ namespace Helper
             );
         }
 
+        public static JsonResult WechatInvoke(Action action)
+        {
+            return WechatInvoke
+            (
+                () =>
+                {
+                    action();
+                }
+            );
+        }
+
         /// <summary>
         /// 返回类型{message=messageConvert(),success=true/false,data=funData()}
         /// </summary>
@@ -36,7 +47,7 @@ namespace Helper
         /// <param name="funData"></param>
         /// <param name="messageConvert"></param>
         /// <returns></returns>
-        public static JsonResult Invoke<TResult>(Func<TResult> funData, Func<TResult, string> messageConvert)
+        private static JsonResult Invoke<TResult>(Func<TResult> funData, Func<TResult, string> messageConvert)
         {
             string message = null;
             bool success = true;
@@ -62,6 +73,36 @@ namespace Helper
             }
             var json = new JsonResult();
             json.Data = new { success, message, data };
+            json.JsonRequestBehavior = JsonRequestBehavior.AllowGet;
+            return json;
+        }
+
+        private static JsonResult WechatInvoke<TResult>(Func<TResult> funData)
+        {
+            string message = null;
+            bool success = true;
+            object data = null;
+            try
+            {
+                TResult receive = funData();
+                data = receive;
+                //message = messageConvert(receive);
+            }
+            catch (Exception ex)
+            {
+                
+                if (ex is ServiceException)
+                {
+                    data = ex.Message;
+                }
+                else
+                {
+                    data = "操作失败！";
+                    LogHelper.Error("操作失败", ex);
+                }
+            }
+            var json = new JsonResult();
+            json.Data = new { status = 200,  data };
             json.JsonRequestBehavior = JsonRequestBehavior.AllowGet;
             return json;
         }

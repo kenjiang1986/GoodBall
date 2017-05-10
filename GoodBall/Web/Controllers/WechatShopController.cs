@@ -10,7 +10,7 @@ using Service.Dto;
 
 namespace Web.Controllers
 {
-    public class WechatShopController : Controller
+    public class WechatShopController : WechatBaseController
     {
         //
         // GET: /WechatShop/

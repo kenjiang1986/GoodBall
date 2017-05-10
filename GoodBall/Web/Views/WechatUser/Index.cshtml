@@ -25,20 +25,20 @@
                     <li class="item-content item-link">
                         <div class="item-inner">
                             <div class="item-title">用户名</div>
-                            <div class="item-after">HBVIPDCHDEJSNNDHSHD</div>
+                            <div class="item-after" v-text="profile.UserName"></div>
                         </div>
                     </li>
                     <li class="item-content item-link" v-on:click="modifyPhone()">
                         <div class="item-inner">
-                            <div class="item-title">手机号</div>
-                            <div class="item-after">1388888888888</div>
+                            <div class="item-title">手机号码</div>
+                            <div class="item-after" v-text="profile.Phone"></div>
                         </div>
                     </li>
                     <li class="item-content item-link">
                         <div class="item-inner">
-                            <div class="item-title label">用户名</div>
+                            <div class="item-title label">昵称</div>
                             <div class="item-input">
-                                <input type="text" value="ervin">
+                                <input type="text" v-text="profile.NickName">
                             </div>
                         </div>
                     </li>

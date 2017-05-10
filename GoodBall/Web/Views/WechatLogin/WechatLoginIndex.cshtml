@@ -1,0 +1,63 @@
+﻿@{
+    Layout = "~/Views/Shared/WechatPage.cshtml";
+}
+
+<div class="loginnew v-transition page" id="login">
+    <div class="logo">
+        <img src="/static/img/load_logo.892eb35.png">
+    </div>
+    <div class="inputbox">
+        <div class="username">
+            <input class="uid" type="text" placeholder="手机号/用户名" v-model="loginInfo.userName" required>
+            <span></span>
+        </div>
+        <div class="psw">
+            <input class="pswin" type="password" placeholder="密码" v-model="loginInfo.pwd" required>
+            <span></span>
+        </div>
+    </div>
+    <div class="btn button button-fill button-danger" v-on:click="login()">登&nbsp;&nbsp;&nbsp;&nbsp;录</div>
+    <div class="zw">
+        <a href="/reg.html"><i>注册新账号</i></a>
+        <em>忘记密码？</em>
+    </div>
+
+
+
+    <script type="text/javascript">
+        (function (Vue, $, api) {
+            var vm = new Vue({
+                el: '#login',
+                data: {
+                    loginInfo: {}
+                },
+                methods: {
+                    login: function () {
+                        if (!this.loginInfo.userName || !this.loginInfo.pwd) {
+                            return $.toast('账号和密码为必填！');
+                        }
+                        $.showIndicator();
+                        api.login_action(this.loginInfo).then(function (result) {
+                            $.hideIndicator();
+                            window.location.href = "/WechatUser/Index";
+                        }.bind(this), function (e) {
+                            alert(e);
+                            $.hideIndicator();
+                        });
+                    }
+                },
+                ready: init(function () {
+                    //$.scope().banners$$load();
+                })
+            });
+        })(Vue, Zepto, jQuery.api);
+    </script>
+
+
+
+
+
+
+
+
+

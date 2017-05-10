@@ -5,15 +5,13 @@ using System.Web;
 using System.Web.Mvc;
 using Helper;
 using Service;
+using Service.API;
 
 namespace Web.Controllers
 {
     public class WechatLoginController : Controller
     {
-        //
-        // GET: /WechatLogin/
-
-        public ActionResult Index()
+        public ActionResult WechatLoginIndex()
         {
             return View();
         }
@@ -21,10 +19,17 @@ namespace Web.Controllers
         [HttpPost]
         public JsonResult Login(string userName, string password)
         {
-            return ExceptionCatch.Invoke(() =>
+            return ExceptionCatch.WechatInvoke(() =>
             {
                 UserService.Instance.CustomerLogin(userName, password);
             });
+        }
+
+        [HttpPost]
+        public JsonResult Logout(string userName)
+        {
+            UserService.Instance.CustomerLogout();
+            return Json(new WechatResponse(), JsonRequestBehavior.AllowGet);
         }
 
     }

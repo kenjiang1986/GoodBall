@@ -70,6 +70,11 @@ namespace Service
             }
         }
 
+        public void CustomerLogout()
+        {
+            CookieHelper.RemoveCookie(userKey);
+        }
+
         public User AddUser(UserDto user)
         {
             if (userRepository.Find(x => x.UserName == user.UserName || x.Phone == user.Phone).Any())
@@ -93,15 +98,15 @@ namespace Service
 
         public void UpdateUser(UserDto user)
         {
-            if (userRepository.Find(x => x.UserName == user.UserName).Any())
+            if (userRepository.Find(x => x.UserName == user.UserName && x.Id != user.Id).Any())
             {
                 throw new ServiceException("已存在相同的用户名");
             }
-            if (userRepository.Find(x => x.NickName == user.NickName).Any())
+            if (userRepository.Find(x => x.NickName == user.NickName && x.Id != user.Id).Any())
             {
                 throw new ServiceException("已存在相同的昵称");
             }
-            if (userRepository.Find(x => x.Phone == user.Phone).Any())
+            if (userRepository.Find(x => x.Phone == user.Phone && x.Id != user.Id).Any())
             {
                 throw new ServiceException("已存在相同的电话号码");
             }

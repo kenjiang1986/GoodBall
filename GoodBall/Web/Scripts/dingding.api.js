@@ -58,10 +58,12 @@
          * @param city int
          * @returns {*}
          */
-        'login_action': function (city) {
-            return $.promiseApi('get_weixin_banner', {
-                city: city
-            });
+        //用户登录 
+        'login_action': function (loginInfo) {
+            return $.promiseApi('WechatLogin/Login', {
+                userName: loginInfo.userName,
+                password: loginInfo.pwd,
+            },'POST');
         },
         //注册
         'reg_action': function (regInfo) {
@@ -340,8 +342,9 @@
                 'order_ids': oid
             });
         },
+        //获取用户个人信息
         'profile': function () {
-            return $.promiseApi('get_my_account', {});
+            return $.promiseApi('WechatUser/GetUserInfo', {});
         },
         'comment': function (order_id,sid, star, comment) {
             var url = sid =='5'?  'shop/comment':'add_order_comment';
