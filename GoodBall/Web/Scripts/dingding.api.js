@@ -28,9 +28,8 @@
                 if (r.status == 200) {
                     defer.resolve(r.data);
                 } else {
-                    if (r.status == 10086) {
-                        //授权登录
-                        window.location.href = "/gzh/index.php?origin_url=" + encodeURIComponent(window.location.href);
+                    if (r.status == 222) {
+                        defer.resolve(r.data);
                         return;
                     }
                     defer.reject(r.msg);
@@ -64,6 +63,15 @@
                 userName: loginInfo.userName,
                 password: loginInfo.pwd,
             },'POST');
+        },
+        //用户修改 
+        'user_action': function (profile) {
+            return $.promiseApi('WechatUser/UpdateUser', {
+                id:profile.Id,
+                nickName: profile.NickName,
+                phone: profile.Phone,
+                iconUrl: profile.IconUrl,
+            }, 'POST');
         },
         //注册
         'reg_action': function (regInfo) {

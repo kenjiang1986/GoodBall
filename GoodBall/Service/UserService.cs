@@ -98,6 +98,42 @@ namespace Service
 
         public void UpdateUser(UserDto user)
         {
+            var entity = userRepository.Find(x => x.Id == user.Id).FirstOrDefault();
+            if (entity == null)
+            {
+                throw new ServiceException("不存在当前用户");
+            }
+            if (userRepository.Find(x => x.UserName == user.UserName && x.Id != user.Id).Any())
+            {
+                throw new ServiceException("已存在相同的用户名");
+            }
+            if (userRepository.Find(x => x.NickName == user.NickName && x.Id != user.Id).Any())
+            {
+                throw new ServiceException("已存在相同的昵称");
+            }
+            if (userRepository.Find(x => x.Phone == user.Phone && x.Id != user.Id).Any())
+            {
+                throw new ServiceException("已存在相同的电话号码");
+            }
+          
+            entity.UserName = user.UserName;
+            entity.NickName = user.NickName;
+            entity.Password = user.Password;
+            entity.Password = MD5Helper.MD5Encrypt64(user.Password);
+            entity.Integral = user.Integral;
+            entity.IconUrl = user.IconUrl;
+            
+            userRepository.Save(entity);
+            CookieHelper.RemoveCookie(userKey);
+            CookieHelper.WriteEncryptCookie(userKey, JsonConvert.SerializeObject(entity.ToModel<UserDto>()), DateTime.Now);
+        }
+
+        public void UpdateUserByWechat(UserDto user)
+        {
+            if (!userRepository.Find(x => x.Id == user.Id).Any())
+            {
+                throw new ServiceException("不存在当前用户");
+            }
             if (userRepository.Find(x => x.UserName == user.UserName && x.Id != user.Id).Any())
             {
                 throw new ServiceException("已存在相同的用户名");
@@ -111,19 +147,9 @@ namespace Service
                 throw new ServiceException("已存在相同的电话号码");
             }
 
-            var entity = userRepository.Find(x => x.Id == user.Id).FirstOrDefault();
-            if(entity == null)
-            {
-                throw new ServiceException("不存在当前用户");
-            }
-            entity.UserName = user.UserName;
-            entity.NickName = user.NickName;
-            entity.Password = user.Password;
-            entity.Password = MD5Helper.MD5Encrypt64(user.Password);
-            entity.Integral = user.Integral;
-            entity.IconUrl = user.IconUrl;
-            
-            userRepository.Save(entity);
+            userRepository.Save(x => x.Id == user.Id, x => new User{NickName = user.NickName, Phone = user.Phone, IconUrl = user.IconUrl});
+            CookieHelper.RemoveCookie(userKey);
+            CookieHelper.WriteEncryptCookie(userKey, JsonConvert.SerializeObject(userRepository.Find(x => x.Id == user.Id).FirstOrDefault().ToModel<UserDto>()), DateTime.Now);
         }
 
         public void UpdateUserBalance(long userId, int price)

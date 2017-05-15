@@ -39,7 +39,11 @@
                         $.showIndicator();
                         api.login_action(this.loginInfo).then(function (result) {
                             $.hideIndicator();
-                            window.location.href = "/WechatUser/Index";
+                            if (result == "操作成功") {
+                                window.location.href = "/WechatUser/Index";
+                            } else {
+                                alert(result);
+                            }
                         }.bind(this), function (e) {
                             alert(e);
                             $.hideIndicator();

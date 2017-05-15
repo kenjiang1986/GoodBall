@@ -35,6 +35,7 @@ namespace Helper
                 () =>
                 {
                     action();
+                    return "操作成功";
                 }
             );
         }
@@ -79,32 +80,39 @@ namespace Helper
 
         private static JsonResult WechatInvoke<TResult>(Func<TResult> funData)
         {
-            string message = null;
-            bool success = true;
-            object data = null;
+            var response = new WcResponse();
             try
             {
-                TResult receive = funData();
-                data = receive;
-                //message = messageConvert(receive);
+                response.data = funData();
             }
             catch (Exception ex)
             {
                 
                 if (ex is ServiceException)
                 {
-                    data = ex.Message;
+                    response.data = ex.Message;
                 }
                 else
                 {
-                    data = "操作失败！";
                     LogHelper.Error("操作失败", ex);
                 }
             }
             var json = new JsonResult();
-            json.Data = new { status = 200,  data };
+            json.Data = response;
             json.JsonRequestBehavior = JsonRequestBehavior.AllowGet;
             return json;
         }
+    }
+
+    public class WcResponse
+    {
+        public WcResponse()
+        {
+            status = 200;
+        }
+
+        public int status { get; set; }
+
+        public object data { get; set; }
     }
 }

@@ -16,7 +16,7 @@
                             <div class="item-title">头像</div>
                             <div class="item-media">
                                 <div class="file">
-                                    <img style="width:40px; height:40px; border-radius: 50%" src="http://www.6383.com/Public/hbt/niu-default-head/default_diagram_12.png">
+                                    <img style="width:40px; height:40px; border-radius: 50%" v-bind:src="profile.IconUrl">
                                     <input type="file" accept="image/*">
                                 </div>
                             </div>
@@ -38,7 +38,7 @@
                         <div class="item-inner">
                             <div class="item-title label">昵称</div>
                             <div class="item-input">
-                                <input type="text" v-text="profile.NickName">
+                                <input type="text" v-model="profile.NickName">
                             </div>
                         </div>
                     </li>
@@ -92,13 +92,25 @@
                     $.alert(msg);
                 });
             },
+            address$$submit: function () {
+              
+                $.showIndicator();
+                api.user_action(this.profile).then(function (result) {
+                    $.hideIndicator();
+                    alert(result);
+                }.bind(this), function (e) {
+                    alert(e);
+                    $.hideIndicator();
+                });
+            },
             modifyPhone:function(){
                 layer.open({
                   type: 1,
                   anim: 'up',
                   style: 'width:85%;border-radius:4px;-webkit-animation-duration: .5s; animation-duration: .5s;',
                   content:$("#dialog").html(),
-                  btn: ['确认', '取消']
+                  btn: ['确认', '取消'],
+                  
                 })
             }
         },
