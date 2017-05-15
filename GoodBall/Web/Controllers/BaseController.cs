@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Web;
 using System.Web.Mvc;
+using System.Configuration;
 
 namespace Management.Controllers
 {
@@ -11,7 +12,7 @@ namespace Management.Controllers
     {
         protected override void Initialize(System.Web.Routing.RequestContext requestContext)
         {
-            if(UserService.GetCurrentUser() == null)
+            if(UserService.GetCurrentUser() == null && UserService.GetCurrentUser().UserName == ConfigurationManager.AppSettings["AdminName"])
             {
                 requestContext.HttpContext.Response.Redirect("/Admin/Login");
             }
