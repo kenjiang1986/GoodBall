@@ -50,10 +50,10 @@ namespace Web.Controllers
             });
         }
 
-        public JsonResult GetList(string question, int page, int rows)
+        public JsonResult GetList(string title, int page, int rows)
         {
             int total;
-            var result = CustomerService.Instance.GetCustomerListByPage(question, rows, page, out total);
+            var result = CustomerService.Instance.GetCustomerListByPage(title, rows, page, out total);
 
             return Json(new
             {

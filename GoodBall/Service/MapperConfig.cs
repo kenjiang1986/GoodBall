@@ -72,6 +72,14 @@ namespace Service
                 .ForMember(x => x.OrderNo, x => x.MapFrom(src => OrderHelper.GetOrderNo()))
                 .ForMember(x => x.CreateTime, x => x.MapFrom(src => DateTime.Now));
 
+            AutoMapper.Mapper.CreateMap<Customer, CustomerDto>();
+            AutoMapper.Mapper.CreateMap<CustomerDto, Customer>().ForMember(x => x.CreateTime, x => x.MapFrom(src => DateTime.Now));
+
+            AutoMapper.Mapper.CreateMap<PayAmount, PayAmountDto>();
+            AutoMapper.Mapper.CreateMap<PayAmountDto, PayAmount>()
+                 .ForMember(x => x.CalType, x => x.MapFrom(src => EnumHelper.Parse<CalTypeEnum>(src.CalType)))
+                .ForMember(x => x.CreateTime, x => x.MapFrom(src => DateTime.Now));
+
         }
 
         public static TResult ToModel<TResult>(this object entity)

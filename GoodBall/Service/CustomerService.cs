@@ -42,7 +42,6 @@ namespace Service
         {
             CustomerRepository.Save(x => x.Id == dto.Id, x => new Customer { Answer = dto.Answer, AnswerTime = DateTime.Now });
         }
-
       
         public void DeleteCustomer(long id)
         {

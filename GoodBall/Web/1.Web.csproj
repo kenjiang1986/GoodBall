@@ -128,6 +128,7 @@
   <ItemGroup>
     <Compile Include="Controllers\AdminController.cs" />
     <Compile Include="Controllers\BaseController.cs" />
+    <Compile Include="Controllers\BaseDataController.cs" />
     <Compile Include="Controllers\CustomerController.cs" />
     <Compile Include="Controllers\GoodsController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
@@ -911,6 +912,8 @@
     <Content Include="Views\WechatPromote\PromoteList.cshtml" />
     <Content Include="Views\WechatPromote\PromoteDetail.cshtml" />
     <Content Include="Views\WechatUser\Pay.cshtml" />
+    <Content Include="Views\BaseData\Index.cshtml" />
+    <Content Include="Views\BaseData\UpSet.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

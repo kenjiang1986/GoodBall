@@ -57,6 +57,7 @@
     <Compile Include="EntityConfig\MatchConfig.cs" />
     <Compile Include="EntityConfig\NewsConfig.cs" />
     <Compile Include="EntityConfig\OrderConfig.cs" />
+    <Compile Include="EntityConfig\PayAmountConfig.cs" />
     <Compile Include="EntityConfig\PromoteConfig.cs" />
     <Compile Include="EntityConfig\RechargeRecordConfig.cs" />
     <Compile Include="EntityConfig\UserConfig.cs" />
@@ -65,6 +66,7 @@
     <Compile Include="Entity\Match.cs" />
     <Compile Include="Entity\News.cs" />
     <Compile Include="Entity\Order.cs" />
+    <Compile Include="Entity\PayAmount.cs" />
     <Compile Include="Entity\Promote.cs" />
     <Compile Include="Entity\RechargeRecord.cs" />
     <Compile Include="Entity\User.cs" />

@@ -64,6 +64,7 @@
     <Compile Include="MatchRepository.cs" />
     <Compile Include="NewsRepository.cs" />
     <Compile Include="OrderRepository.cs" />
+    <Compile Include="PayAmountRepository.cs" />
     <Compile Include="PromoteRepository.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="BaseRepository.cs" />

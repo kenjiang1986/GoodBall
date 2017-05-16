@@ -11,12 +11,13 @@
     });
 
     function Search() {
+      
         var validate = $("#form1").form('validate');
         if (!validate) {
             return;
         } else {
             $("#dg").datagrid({
-                url: "/Customer/GetList?title=" + $("#Title").val(),
+                url: "/BaseData/GetList",
                 onLoadError: function (data) {
                     BaseHelper.ShowException(data);
                 }
@@ -29,27 +30,27 @@
         Search();
     }
 
-  
-
     function Update(value, row) {
-        var result = "<a href='javascript:void(0)' onclick='Answer(\"" + row.Id + "\")'>回答</a>  ";
-        result += "<a href='javascript:void(0)' onclick='DeleteCustomer(\"" + row.Id + "\")'>删除</a>  ";
-     
+        var result = "<a href='javascript:void(0)' onclick='UpSetPayAmount(\"" + row.Id + "\")'>编辑</a>  ";
+        result += "<a href='javascript:void(0)' onclick='DelPayAmount(\"" + row.Id + "\")'>删除</a>  ";
+
         return result;
+
     }
 
+ 
+ 
 
-    function DeleteCustomer(id) {
-
-        $.messager.confirm('温馨提示', '确定要删除问题吗？', function (r) {
+    function DelPayAmount(id) {
+        $.messager.confirm('温馨提示', '确定要删除数据吗？', function (r) {
             if (r) {
                 $.ajax({
                     type: "post",
-                    url: "/Customer/DeleteCustomer",
+                    url: "/BaseData/DeletePayAmount",
                     data: { id: id },
-                    success: function(data) {
+                    success: function (data) {
                         if (data) {
-                            alert("操作成功", "success", function() {
+                            alert("操作成功", "success", function () {
                                 Search();
                             });
                         } else {
@@ -61,11 +62,13 @@
         });
     }
 
+    function UpSetPayAmount(id) {
+        var url = "/BaseData/UpSet?id=" + id;
+        var title = '添加';
+        if (id > 0) {
+            title = '修改';
+        }
 
-    function Answer(id) {
-        var url = "/Customer/Answer?id=" + id;
-        var title = '回答'
-    
         $.layer({
             scrolling: 'auto',
             type: 2,
@@ -83,14 +86,12 @@
         <div class="easyui-filter">
             <table>
                 <tr>
-
-                    <td>标题:</td>
-                    <td><input type="text" id="Title" class="easyui-doc-textbox" validtype="Title" maxlength="20" /></td>
+                    
                     <td>
-                        <a href="javascript:;" class="easyui-linkbutton" data-options="iconCls:'icon-search'" onclick="Search()">查询</a>
-                        
+                        <a id="btnCreate" href="javascript:;" class="l-btn" onclick="UpSetPayAmount(0)">
+                            <span class="l-btn-left l-btn-icon-left"><span class="l-btn-text">添加</span><span class="l-btn-icon icon-redo">&nbsp;</span></span>
+                        </a>
                     </td>
-
                 </tr>
             </table>
         </div>
@@ -101,11 +102,10 @@
                data-options="rownumbers:true,singleSelect:true,pagination:true,method:'post',pageSize:10,toolbar:'#toolbar'">
             <thead>
                 <tr>
-                    <th data-options="field:'Question',width:'15%',resizable:false,align:'left'">问题</th>
-                    <th data-options="field:'Answer',width:'30%',resizable:false,align:'left'">回答</th>
+                    <th data-options="field:'BaseAmount',width:'10%',resizable:false,align:'left'">基础金额</th>
+                    <th data-options="field:'CalType',width:'10%',resizable:false,align:'left'">计算类型</th>
+                    <th data-options="field:'GiveAmount',width:'30%',resizable:false,align:'left'">赠送金额</th>
                     <th data-options="field:'CreateTime',width:'10%',resizable:false,align:'left'">创建时间</th>
-                    <th data-options="field:'AnswerTime',width:'10%',resizable:false,align:'left'">回答时间</th>
-
                     <th data-options="field:'Id',width:'15%',formatter:Update">操作</th>
                 </tr>
             </thead>
