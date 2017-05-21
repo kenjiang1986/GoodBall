@@ -12,7 +12,11 @@ namespace Management.Controllers
     {
         protected override void Initialize(System.Web.Routing.RequestContext requestContext)
         {
-            if(UserService.GetCurrentUser() == null && UserService.GetCurrentUser().UserName == ConfigurationManager.AppSettings["AdminName"])
+            if(UserService.GetCurrentUser() == null)
+            {
+                requestContext.HttpContext.Response.Redirect("/Admin/Login");
+            }
+            else if (UserService.GetCurrentUser().UserName != ConfigurationManager.AppSettings["AdminName"])
             {
                 requestContext.HttpContext.Response.Redirect("/Admin/Login");
             }

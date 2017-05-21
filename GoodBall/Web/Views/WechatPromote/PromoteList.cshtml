@@ -5,8 +5,8 @@
 
 <div class="page" id="index">
     <header class="bar bar-nav">
-        <h1 class="title button-fill button-danger">人人竞彩</h1>
-        <a class="release-btn" href="">发布竞彩</a>
+        <h1 class="title button-fill button-danger">专业推介</h1>
+        
     </header>
     <div class="vip content">
         <ul class="expert cls">
@@ -20,153 +20,96 @@
             </li>
             <li><a href="/expert.html"><span class="img"><em><img src="../images/more.png"></em></span><span>更多</span></a></li>
         </ul>
-        <div class="spotDetail">
+        <div class="spotDetail" >
             <div class="list-nav">让球<span class="more">更多</span></div>
-            <ul class="list">
+            <ul class="list" v-for="yq in yangqiu">
                 <li>
                     <div class="tit">
                         <i></i>
-                        <span>欧预选:克罗地亚VS乌克兰</span><span class="publisher">发布者：何辉</span>
+                        <span>比赛：{{yq.MatchName}}</span><span class="publisher">发布者：{{yq.Operator}}</span>
                     </div>
                     <div class="time">
                         <i></i>
-                        <span>开赛时间：2017/3/25 3:45:00</span>
+                        <span>开赛时间：{{yq.MatchTime }}</span>
                     </div>
                     <div class="recommend">
                         <i></i>
-                        <span>推介价格：<em>80</em>V币</span>
+                        <span>推介价格：<em v-text="yq.Price"></em>V币</span>
                         <p><a href="#" class="button button-fill button-danger">购买 </a></p>
                     </div>
-                    <div class="tip">
-                        推荐度
-                        <i class="star"></i>
-                        <i class="star"></i>
-                        <i class="star"></i>
-                        <i class="star"></i>
-                        <i class="star"></i>
-                    </div>
-                </li>
-                <li>
-                    <div class="tit">
-                        <i></i>
-                        <span>欧预选:克罗地亚VS乌克兰</span><span class="publisher">发布者：何辉</span>
-                    </div>
-                    <div class="time">
-                        <i></i>
-                        <span>开赛时间：2017/3/25 3:45:00</span>
-                    </div>
-                    <div class="recommend">
-                        <i></i>
-                        <span>推介价格：<em>80</em>V币</span>
-                        <p><a href="#" class="button button-fill button-danger">购买 </a></p>
-                    </div>
-                    <div class="tip">
-                        推荐度
-                        <i class="star"></i>
-                        <i class="star"></i>
-                        <i class="star"></i>
-                        <i class="star"></i>
-                        <i class="star"></i>
-                    </div>
-                </li>
-                <li>
-                    <div class="tit">
-                        <i></i>
-                        <span>欧预选:克罗地亚VS乌克兰</span><span class="publisher">发布者：何辉</span>
-                    </div>
-                    <div class="time">
-                        <i></i>
-                        <span>开赛时间：2017/3/25 3:45:00</span>
-                    </div>
-                    <div class="recommend">
-                        <i></i>
-                        <span>推介价格：<em>80</em>V币</span>
-                        <p><a href="#" class="button button-fill button-danger">购买 </a></p>
-                    </div>
-                    <div class="tip">
-                        推荐度
-                        <i class="star"></i>
-                        <i class="star"></i>
-                        <i class="star"></i>
-                        <i class="star"></i>
-                        <i class="star"></i>
-                        <i class="star"></i>
-                    </div>
-                </li>
+                    @*<div class="tip" >
+                推荐度
+                <i class='star'></i>
+
+            </div>*@
+                <div class="tip">
+                
+                    {{{yq.LevelStr}}}
+                   
+                </div>
+             
             </ul>
         </div>
         <div class="spotDetail">
+            <div class="list-nav">竞彩<span class="more">更多</span></div>
+            <ul class="list" v-for="yq in jingcai">
+                <li>
+                    <div class="tit">
+                        <i></i>
+                        <span>比赛：{{yq.MatchName}}</span><span class="publisher">发布者：{{yq.Operator}}</span>
+                    </div>
+                    <div class="time">
+                        <i></i>
+                        <span>开赛时间：{{yq.MatchTime }}</span>
+                    </div>
+                    <div class="recommend">
+                        <i></i>
+                        <span>推介价格：<em v-text="yq.Price"></em>V币</span>
+                        <p><a href="#" class="button button-fill button-danger">购买 </a></p>
+                    </div>
+                    @*<div class="tip" >
+                推荐度
+                <i class='star'></i>
+
+            </div>*@
+                    <div class="tip">
+
+                        {{{yq.LevelStr}}}
+
+                    </div>
+
+
+</ul>
+        </div>
+        <div class="spotDetail">
             <div class="list-nav">足彩301<span class="more">更多</span></div>
-            <ul class="list">
+            <ul class="list" v-for="yq in zucai">
                 <li>
                     <div class="tit">
                         <i></i>
-                        <span>欧预选:克罗地亚VS乌克兰</span><span class="publisher">发布者：何辉</span>
+                        <span>比赛：{{yq.MatchName}}</span><span class="publisher">发布者：{{yq.Operator}}</span>
                     </div>
                     <div class="time">
                         <i></i>
-                        <span>开赛时间：2017/3/25 3:45:00</span>
+                        <span>开赛时间：{{yq.MatchTime }}</span>
                     </div>
                     <div class="recommend">
                         <i></i>
-                        <span>推介价格：<em>80</em>V币</span>
+                        <span>推介价格：<em v-text="yq.Price"></em>V币</span>
+                        <p><a href="#" class="button button-fill button-danger">购买 </a></p>
                     </div>
-                    <div class="tip">
+                    @*<div class="tip" >
                         推荐度
-                        <i class="star"></i>
-                        <i class="star"></i>
-                        <i class="star"></i>
-                        <i class="star"></i>
-                        <i class="star"></i>
-                        <i class="star"></i>
-                    </div>
-                </li>
-                <li>
-                    <div class="tit">
-                        <i></i>
-                        <span>欧预选:克罗地亚VS乌克兰</span><span class="publisher">发布者：何辉</span>
-                    </div>
-                    <div class="time">
-                        <i></i>
-                        <span>开赛时间：2017/3/25 3:45:00</span>
-                    </div>
-                    <div class="recommend">
-                        <i></i>
-                        <span>推介价格：<em>80</em>V币</span>
-                    </div>
+                        <i class='star'></i>
+
+                    </div>*@
                     <div class="tip">
-                        推荐度
-                        <i class="star"></i>
-                        <i class="star"></i>
-                        <i class="star"></i>
-                        <i class="star"></i>
-                        <i class="star"></i>
-                        <i class="star"></i>
+
+                        {{{yq.LevelStr}}}
+
                     </div>
-                </li>
-                <li>
-                    <div class="tit">
-                        <i></i>
-                        <span>欧预选:克罗地亚VS乌克兰</span><span class="publisher">发布者：何辉</span>
-                    </div>
-                    <div class="time">
-                        <i></i>
-                        <span>开赛时间：2017/3/25 3:45:00</span>
-                    </div>
-                    <div class="recommend">
-                        <i></i>
-                        <span>推介价格：<em>80</em>V币</span>
-                    </div>
-                    <div class="tip">
-                        推荐度
-                        <i class="star"></i>
-                        <i class="star"></i>
-                        <i class="star"></i>
-                        <i class="star"></i>
-                        <i class="star"></i>
-                        <i class="star"></i>
-                    </div>
-                </li>
+
+
             </ul>
         </div>
     </div>
@@ -194,25 +137,42 @@
                     { icon: 'icon dingdan', text: '订单', href: 'order.html' },
                     { icon: 'icon wode', text: '我的', href: 'profile.html' }
                 ],
-                promotions: []
+                yangqiu: [],
+                jingcai: [],
+                zucai: []
             },
             methods: {
                 banners$$load: function () {
                     //$.showIndicator();
-                    api.get_weixin_banner().then(function (banners) {
-                        this.banners = banners;
+                    //api.get_weixin_banner().then(function (banners) {
+                    //    this.banners = banners;
+                    //    $.hideIndicator();
+                    //}.bind(this), function (e) {
+                    //    $.alert(e);
+                    //    $.hideIndicator();
+                    //});
+                    api.promote('让球').then(function (data) {
+                        this.yangqiu = data;
                         $.hideIndicator();
                     }.bind(this), function (e) {
                         $.alert(e);
                         $.hideIndicator();
                     });
-                    api.get_hot_products().then(function (products) {
-                        this.promotions = products;
+                    api.promote('竞彩').then(function (data) {
+                        this.jingcai = data;
                         $.hideIndicator();
                     }.bind(this), function (e) {
                         $.alert(e);
                         $.hideIndicator();
                     });
+                    api.promote('足彩310').then(function (data) {
+                        this.zucai = data;
+                        $.hideIndicator();
+                    }.bind(this), function (e) {
+                        $.alert(e);
+                        $.hideIndicator();
+                    });
+
                 }
             },
             ready: init(function () {

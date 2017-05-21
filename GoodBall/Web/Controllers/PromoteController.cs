@@ -90,6 +90,7 @@ namespace Web.Controllers
                     x.Level,
                     x.MatchName,
                     x.IsSend,
+                    x.State,
                     CreateTime = x.CreateTime.ToString(),
                 }),
                 total

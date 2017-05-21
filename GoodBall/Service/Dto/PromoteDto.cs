@@ -15,6 +15,8 @@ namespace Service.Dto
 
         public string MatchName { get; set; }
 
+        public string MatchTime { get; set; }
+
         /// <summary>
         /// 竞彩类型
         /// </summary>
