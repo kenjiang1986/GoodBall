@@ -116,3 +116,32 @@
         </dl>
     </div>
 </div>
+
+
+<script type="text/javascript">
+    (function (Vue, $, api) {
+        window.vm = new Vue({
+            el: '#news',
+            data: {
+                user:{},
+                promotes: []
+            },
+            methods: {
+                pageload: function (id) {
+                    //$.showIndicator();
+                    api.getUserPromote(id).then(function (data) {
+                        this.user = data;
+                        this.promotes = data.PromoteList;
+                        $.hideIndicator();
+                    }.bind(this), function (msg) {
+                        $.hideIndicator();
+                        $.alert(msg);
+                    });
+                },
+            },
+            ready: init(function () {
+                $.scope().pageload(window.getParam('id'));
+
+            })
+        });
+    })(Vue, Zepto, jQuery.api);</script>

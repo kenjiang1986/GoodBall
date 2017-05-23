@@ -24,7 +24,8 @@ namespace Service
 
         private static void Init()
         {
-            AutoMapper.Mapper.CreateMap<User, UserDto>();
+            AutoMapper.Mapper.CreateMap<User, UserDto>()
+                .ForMember(x => x.PromoteList, x => x.MapFrom(src => src.PromoteList));
             AutoMapper.Mapper.CreateMap<UserDto, User>()
                  .ForMember(x => x.CreateTime, x => x.MapFrom(src => DateTime.Now))
                 .ForMember(x => x.Password, x => x.MapFrom(src => MD5Helper.MD5Encrypt64(src.Password)));

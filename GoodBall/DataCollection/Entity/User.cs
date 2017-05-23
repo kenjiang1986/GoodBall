@@ -25,6 +25,8 @@ namespace DataCollection.Entity
         /// </summary>
         public int Integral { get; set; }
 
+        public string Remark { get; set; }
+
         public DateTime CreateTime { get; set; }
 
         public string IconUrl { get; set; }

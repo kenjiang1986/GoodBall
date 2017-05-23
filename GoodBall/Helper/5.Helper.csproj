@@ -74,6 +74,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="ConfigHelper.cs" />
     <Compile Include="CookieHelper.cs" />
     <Compile Include="DESEncrypt.cs" />
     <Compile Include="Enum\CalTypeEnum.cs" />

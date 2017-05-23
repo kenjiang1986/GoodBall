@@ -910,7 +910,7 @@
     <Content Include="Views\WechatShop\Index.cshtml" />
     <Content Include="Views\WechatShop\Cash.cshtml" />
     <Content Include="Views\WechatPromote\PromoteList.cshtml" />
-    <Content Include="Views\WechatPromote\PromoteDetail.cshtml" />
+    <Content Include="Views\WechatPromote\UserPromoteDetail.cshtml" />
     <Content Include="Views\WechatUser\Pay.cshtml" />
     <Content Include="Views\BaseData\Index.cshtml" />
     <Content Include="Views\BaseData\UpSet.cshtml" />

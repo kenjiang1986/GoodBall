@@ -19,9 +19,34 @@ namespace Web.Controllers
             return View();
         }
 
-        public ActionResult PromoteDetail()
+        public ActionResult UserPromoteDetail()
         {
             return View();
+        }
+
+        public JsonResult GetUserList()
+        {
+            int total;
+            var result = UserService.Instance.GetUserListByPage("", 5, 1, out total, true);
+            return Json(new WechatResponse()
+            {
+                data = result.Select(x => new
+                {
+                    x.Id,
+                    x.NickName,
+                    x.IconUrl,
+                })
+            }, JsonRequestBehavior.AllowGet);
+        }
+
+        public JsonResult GetUserPromotes(long userId)
+        {
+            int total;
+            var result = UserService.Instance.GetUser(userId);
+            return Json(new WechatResponse()
+            {
+                data = result
+            }, JsonRequestBehavior.AllowGet);
         }
 
         public JsonResult GetPromoteList(string raceType)

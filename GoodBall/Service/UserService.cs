@@ -39,7 +39,7 @@ namespace Service
 
         public void AdminLogin(string userName, string password)
         {
-            if (userName != ConfigurationManager.AppSettings["AdminName"])
+            if (userName != ConfigHelper.GetAdminName())
             {
                 throw new ServiceException("用户名错误");
             }
@@ -181,12 +181,17 @@ namespace Service
             userRepository.Delete(x => x.Id == id);
         }
 
-        public List<UserDto> GetUserListByPage(string userName, int size, int index, out int total)
+        public List<UserDto> GetUserListByPage(string userName, int size, int index, out int total, bool isCustomer = false)
         {
             var query = userRepository.Source;
             if (!string.IsNullOrEmpty(userName))
             {
                 query = query.Where(x => x.UserName.Contains(userName));
+            }
+            if (isCustomer)
+            {
+                var adminName = ConfigHelper.GetAdminName();
+                query = query.Where(x => x.UserName != adminName);
             }
             query = query.OrderByDescending(x => x.CreateTime);
             return userRepository.FindForPaging(size, index, query, out total).ToList().ToListModel<User, UserDto>();

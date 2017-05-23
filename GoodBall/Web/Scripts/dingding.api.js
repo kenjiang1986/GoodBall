@@ -113,11 +113,19 @@
         'profile': function () {
             return $.promiseApi('WechatUser/GetUserInfo', {});
         },
-        //获取推介列表 
+        //获取推介列表    
         'promote': function (raceType) {
             return $.promiseApi('WechatPromote/GetPromoteList', { raceType: raceType });
         },
-     
+        //获取推介用户列表 
+        'getusers': function () {
+            return $.promiseApi('WechatPromote/GetUserList', {});
+        },
+        //获取推介用户列表 
+        'getUserPromotes': function (userId) {
+            return $.promiseApi('WechatPromote/GetUser', { userId: userId });
+        },
+
        
     };
 

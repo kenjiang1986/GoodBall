@@ -9,13 +9,13 @@
         
     </header>
     <div class="vip content">
-        <ul class="expert cls">
-            <li>
-                <a href="javascript:void(0);">
+        <ul class="expert cls" >
+            <li v-for="user in users">
+                <a v-bind:href ="'/WechatPromote/UserPromoteDetail?id='+ user.Id">
                     <span class="img">
-                        <em><img src="http://wx.img.6383.com/ImgServer/Down?id=be9f43a2-0a65-451b-937b-988e194077c6"></em>
+                        <em><img v-bind:src="user.IconUrl"></em>
                     </span>
-                    <span>何辉</span>
+                    <span v-text="user.NickName"></span>
                 </a>
             </li>
             <li><a href="/expert.html"><span class="img"><em><img src="../images/more.png"></em></span><span>更多</span></a></li>
@@ -137,6 +137,7 @@
                     { icon: 'icon dingdan', text: '订单', href: 'order.html' },
                     { icon: 'icon wode', text: '我的', href: 'profile.html' }
                 ],
+                users: [],
                 yangqiu: [],
                 jingcai: [],
                 zucai: []
@@ -151,6 +152,13 @@
                     //    $.alert(e);
                     //    $.hideIndicator();
                     //});
+                    api.getusers().then(function (data) {
+                        this.users = data;
+                        $.hideIndicator();
+                    }.bind(this), function (e) {
+                        $.alert(e);
+                        $.hideIndicator();
+                    });
                     api.promote('让球').then(function (data) {
                         this.yangqiu = data;
                         $.hideIndicator();
