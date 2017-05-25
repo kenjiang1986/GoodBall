@@ -57,5 +57,9 @@ namespace Service.Dto
         public DateTime CreateTime { get; set; }
 
         public string IsSend { get; set; }
+
+        public bool BuyState { get; set; }
+
+        public string Result { get; set; }
     }
 }

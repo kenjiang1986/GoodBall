@@ -44,7 +44,7 @@ namespace DataCollection.Entity
         /// </summary>
         public PromoteStateEnum State { get; set; }
 
-        /// <summary>
+        /// <summary>·
         /// 推送类型
         /// </summary>
         public SendTypeEnum SendType { get; set; }
@@ -58,6 +58,8 @@ namespace DataCollection.Entity
         public long MatchId { get; set; }
 
         public bool IsSend { get; set; }
+
+        public string Result { get; set; }
 
         public virtual ICollection<User> UserList { get; set; }
     }

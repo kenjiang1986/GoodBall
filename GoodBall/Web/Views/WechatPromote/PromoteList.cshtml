@@ -11,7 +11,7 @@
     <div class="vip content">
         <ul class="expert cls" >
             <li v-for="user in users">
-                <a v-bind:href ="'/WechatPromote/UserPromoteDetail?id='+ user.Id">
+                <a v-bind:href ="'/WechatPromote/UserPromoteDetail?userid='+ user.Id">
                     <span class="img">
                         <em><img v-bind:src="user.IconUrl"></em>
                     </span>
@@ -21,18 +21,26 @@
             <li><a href="/expert.html"><span class="img"><em><img src="../images/more.png"></em></span><span>更多</span></a></li>
         </ul>
         <div class="spotDetail" >
-            <div class="list-nav">让球<span class="more">更多</span></div>
+            <div class="list-nav">让球<a href="/WechatPromote/PromoteTypeList?raceType=1"><span class="more">更多</span></a></div>
             <ul class="list" v-for="yq in yangqiu">
                 <li>
                     <div class="tit">
                         <i></i>
                         <span>比赛：{{yq.MatchName}}</span><span class="publisher">发布者：{{yq.Operator}}</span>
                     </div>
-                    <div class="time">
+                <div class="time">
+                    <i></i>
+                    <span>开赛时间：{{yq.MatchTime }}</span>
+                </div>
+                    <div class="recommend" v-if="yq.BuyState">
                         <i></i>
-                        <span>开赛时间：{{yq.MatchTime }}</span>
+                        <span>推介：{{yq.Content }}</span>
                     </div>
-                    <div class="recommend">
+                    <div class="analysis" v-if="yq.BuyState">
+                        <i></i>
+                        <span>分析：{{yq.Result }}</span>
+                    </div>
+                    <div class="recommend" v-show="yq.BuyState">
                         <i></i>
                         <span>推介价格：<em v-text="yq.Price"></em>V币</span>
                         <p><a href="#" class="button button-fill button-danger">购买 </a></p>

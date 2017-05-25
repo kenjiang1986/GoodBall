@@ -19,6 +19,11 @@ namespace Web.Controllers
             return View();
         }
 
+        public ActionResult PromoteTypeList()
+        {
+            return View();
+        }
+
         public ActionResult UserPromoteDetail()
         {
             return View();
@@ -49,10 +54,22 @@ namespace Web.Controllers
             }, JsonRequestBehavior.AllowGet);
         }
 
-        public JsonResult GetPromoteList(string raceType)
+        public JsonResult GetPromoteList(string raceType, int size, int index)
         {
             int total;
-            var result = PromoteService.Instance.GetPromoteListByPage(new PromoteCond() { RaceType = raceType }, 3, 1, out total);
+            switch (raceType)
+            {
+                case "1":
+                    raceType = "让球";
+                    break;
+                case "2":
+                    raceType = "竞彩";
+                    break;
+                case "3":
+                    raceType = "足彩301";
+                    break;
+            }
+            var result = PromoteService.Instance.GetPromoteListByPage(new PromoteCond() { RaceType = raceType }, size, index, out total);
 
             return Json(new WechatResponse()
             {

@@ -45,6 +45,7 @@ namespace Service
                 .ForMember(x => x.NewsType, x => x.MapFrom(src => EnumHelper.Parse<NewsTypeEnum>(src.NewsType)));
 
             AutoMapper.Mapper.CreateMap<Promote, PromoteDto>()
+                 .ForMember(x => x.BuyState, x => x.MapFrom(src => src.UserList.Any(y => y.Id == UserService.GetCurrentUser().Id)))
                  .ForMember(x => x.RaceType, x => x.MapFrom(src => src.RaceType.ToString()))
                   .ForMember(x => x.State, x => x.MapFrom(src => src.State.ToString()))
                   .ForMember(x => x.IsSend, x => x.MapFrom(src => src.IsSend ? "是" : "否"))

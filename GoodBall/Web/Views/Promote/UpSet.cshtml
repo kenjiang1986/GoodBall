@@ -109,10 +109,18 @@
                 <select id="RaceType" name="RaceType" class="easyui-doc-select">
                     <option></option>
                     @{foreach (var item in ViewBag.RaceType)
-                        {
-                            <option value="@item">@item</option>
-                        }}
+                    {
+                        <option value="@item">@item</option>
+                    }}
                 </select>
+            </td>
+        </tr>
+        <tr>
+            <td>
+                推介结果
+            </td>
+            <td>
+                <input type="text" id="Result" name="Result" style="padding-left:5px; line-height:20px;" class="easyui-validatebox textbox" missingmessage="请填写推介结果" required="true" />
             </td>
         </tr>
         <tr>
