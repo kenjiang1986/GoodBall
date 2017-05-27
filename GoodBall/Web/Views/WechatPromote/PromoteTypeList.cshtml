@@ -5,7 +5,7 @@
 
 <div class="page" id="index">
     <header class="bar bar-nav">
-        <h1 class="title button-fill button-danger">{{items[0].RaceType}}</h1>
+        <h1 class="title button-fill button-danger" v-text="raceType"></h1>
 
     </header>
     <div class="vip content">
@@ -21,43 +21,32 @@
                         <i></i>
                         <span>开赛时间：{{yq.MatchTime }}</span>
                     </div>
-                    <div class="recommend" v-if="yq.BuyState">
+                    <div class="recommend" v-if="yq.BuyState==true">
                         <i></i>
-                        <span>推介：{{yq.Content }}</span>
+                        <span>推介：{{{yq.Content }}}</span>
                     </div>
-                    <div class="analysis" v-if="yq.BuyState">
+                    <div class="analysis" v-if="yq.BuyState==true">
                         <i></i>
                         <span>分析：{{yq.Result }}</span>
                     </div>
-                    <div class="recommend" v-show="yq.BuyState">
+                    <div class="recommend" v-if="yq.BuyState==false">
                         <i></i>
                         <span>推介价格：<em v-text="yq.Price"></em>V币</span>
                         <p><a href="#" class="button button-fill button-danger">购买 </a></p>
                     </div>
-                    @*<div class="tip" >
-                    推荐度
-                    <i class='star'></i>
-
-                </div>*@
                     <div class="tip">
 
                         {{{yq.LevelStr}}}
 
                     </div>
+                </li>
 
             </ul>
         </div>
         
         
     </div>
-    <!-- <nav class="bar bar-tab">
-        <a v-bind:href="tab.href"
-           class="tab-item {{tab.active?'active':''}}"
-           v-for="tab in tabs">
-            <i class="{{tab.icon}} {{tab.active?'press':''}}"></i>
-            <span class="tab-label" v-text="tab.text"></span>
-        </a>
-    </nav> -->
+   
 
 </div>
 
@@ -68,12 +57,23 @@
         window.vm = new Vue({
             el: '#index',
             data: {
-                items: []
+                items: [],
+                raceType:{}
             },
             methods: {
                 pageload: function (raceType) {
                     api.promoteAll(raceType).then(function (data) {
                         this.items = data;
+                        if (raceType == 1) {
+                            this.raceType = "专业推介-让球";
+                        }
+                        else if (raceType == 2) {
+                            this.raceType = "专业推介-竞彩";
+                        }
+                        else if (raceType == 3) {
+                            this.raceType = "专业推介-足彩310";
+                        }
+                        
                         $.hideIndicator();
                     }.bind(this), function (e) {
                         $.alert(e);

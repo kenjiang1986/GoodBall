@@ -32,15 +32,15 @@
                     <i></i>
                     <span>开赛时间：{{yq.MatchTime }}</span>
                 </div>
-                    <div class="recommend" v-if="yq.BuyState">
+                    <div class="recommend" v-if="yq.BuyState==true">
                         <i></i>
-                        <span>推介：{{yq.Content }}</span>
+                        <span>推介：{{{yq.Content }}}</span>
                     </div>
-                    <div class="analysis" v-if="yq.BuyState">
+                    <div class="analysis" v-if="yq.BuyState==true">
                         <i></i>
                         <span>分析：{{yq.Result }}</span>
                     </div>
-                    <div class="recommend" v-show="yq.BuyState">
+                    <div class="recommend" v-if="yq.BuyState==false">
                         <i></i>
                         <span>推介价格：<em v-text="yq.Price"></em>V币</span>
                         <p><a href="#" class="button button-fill button-danger">购买 </a></p>
@@ -59,7 +59,7 @@
             </ul>
         </div>
         <div class="spotDetail">
-            <div class="list-nav">竞彩<span class="more">更多</span></div>
+            <div class="list-nav">竞彩<a href="/WechatPromote/PromoteTypeList?raceType=2"><span class="more">更多</span></a></div>
             <ul class="list" v-for="yq in jingcai">
                 <li>
                     <div class="tit">
@@ -90,7 +90,7 @@
 </ul>
         </div>
         <div class="spotDetail">
-            <div class="list-nav">足彩301<span class="more">更多</span></div>
+            <div class="list-nav">足彩301<a href="/WechatPromote/PromoteTypeList?raceType=3"><span class="more">更多</span></a></div>
             <ul class="list" v-for="yq in zucai">
                 <li>
                     <div class="tit">
@@ -104,7 +104,7 @@
                     <div class="recommend">
                         <i></i>
                         <span>推介价格：<em v-text="yq.Price"></em>V币</span>
-                        <p><a href="#" class="button button-fill button-danger">购买 </a></p>
+                        <p><a href="#" v-on:click="buyPromote(yq.Id)" class="button button-fill button-danger">购买 </a></p>
                     </div>
                     @*<div class="tip" >
                         推荐度
@@ -188,7 +188,17 @@
                         $.alert(e);
                         $.hideIndicator();
                     });
+                   
 
+                },
+                buyPromote: function (promoteId) {
+                    api.buyPromote(promoteId).then(function (data) {
+                        alert(data);
+                        $.hideIndicator();
+                    }.bind(this), function (e) {
+                        $.alert(e);
+                        $.hideIndicator();
+                    });
                 }
             },
             ready: init(function () {

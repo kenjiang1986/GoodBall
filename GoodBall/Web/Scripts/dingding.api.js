@@ -129,6 +129,10 @@
         'promoteAll': function (raceType) {
             return $.promiseApi('WechatPromote/GetPromoteList', { raceType: raceType, size: 10000, index: 1 });
         },
+        //购买推介    
+        'buyPromote': function (promoteId) {
+            return $.promiseApi('WechatPromote/BuyPromote', { promoteId: promoteId });
+        },
 
        
     };

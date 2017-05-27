@@ -59,6 +59,13 @@ namespace Service
             promoteRepository.Save(entity);
         }
 
+        public bool BuyPromote(int id)
+        {
+            var promote = promoteRepository.Find(x => x.Id == id).FirstOrDefault();
+            promote.UserList.Add(UserService.GetCurrentUser().ToModel<User>());
+            return promoteRepository.Save(promote);
+        }
+
         public void DeletePromote(long id)
         {
             promoteRepository.Delete(x => x.Id == id);

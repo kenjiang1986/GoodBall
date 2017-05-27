@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Web;
 using System.Web.Mvc;
+using Helper.Enum;
 using Service;
 using Service.Cond;
 using Service.API;
@@ -60,13 +61,13 @@ namespace Web.Controllers
             switch (raceType)
             {
                 case "1":
-                    raceType = "让球";
+                    raceType = RaceTypeEnum.让球.ToString();
                     break;
                 case "2":
-                    raceType = "竞彩";
+                    raceType = RaceTypeEnum.竞彩.ToString();
                     break;
                 case "3":
-                    raceType = "足彩301";
+                    raceType = RaceTypeEnum.足彩310.ToString();
                     break;
             }
             var result = PromoteService.Instance.GetPromoteListByPage(new PromoteCond() { RaceType = raceType }, size, index, out total);
@@ -80,8 +81,20 @@ namespace Web.Controllers
                     x.MatchName,
                     x.MatchTime,
                     x.Operator,
+                    x.BuyState,
+                    x.Content,
+                    x.Result,
                     LevelStr = ComboLevel(x.Level),
                 })
+            }, JsonRequestBehavior.AllowGet);
+        }
+
+
+        public JsonResult BuyPromote(int promoteId)
+        {
+            return Json(new WechatResponse()
+            {
+                data = PromoteService.Instance.BuyPromote(promoteId) ? "购买成功" : "购买失败"
             }, JsonRequestBehavior.AllowGet);
         }
 
