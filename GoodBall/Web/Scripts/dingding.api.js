@@ -133,6 +133,11 @@
         'buyPromote': function (promoteId) {
             return $.promiseApi('WechatPromote/BuyPromote', { promoteId: promoteId });
         },
+        //获取充值金额列表
+        'getPayAmount': function () {
+            return $.promiseApi('WechatPay/GetPayAmounts', { });
+        },
+        
 
        
     };

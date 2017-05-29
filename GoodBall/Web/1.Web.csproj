@@ -141,6 +141,7 @@
     <Compile Include="Controllers\WechatBaseController.cs" />
     <Compile Include="Controllers\WechatLoginController.cs" />
     <Compile Include="Controllers\WechatNewsController.cs" />
+    <Compile Include="Controllers\WechatPayController.cs" />
     <Compile Include="Controllers\WechatPromoteController.cs" />
     <Compile Include="Controllers\WechatRegController.cs" />
     <Compile Include="Controllers\WechatShopController.cs" />
@@ -915,6 +916,7 @@
     <Content Include="Views\BaseData\Index.cshtml" />
     <Content Include="Views\BaseData\UpSet.cshtml" />
     <Content Include="Views\WechatPromote\PromoteTypeList.cshtml" />
+    <Content Include="Views\WechatPay\PayCenter.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
