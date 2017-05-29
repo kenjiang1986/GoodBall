@@ -9,6 +9,7 @@ using Service.Cond;
 using Service.Dto;
 using Helper.Enum;
 using EnumUtils;
+using Helper;
 
 namespace Service
 {
@@ -62,7 +63,20 @@ namespace Service
         public bool BuyPromote(int id)
         {
             var promote = promoteRepository.Find(x => x.Id == id).FirstOrDefault();
-            promote.UserList.Add(UserService.GetCurrentUser().ToModel<User>());
+            var userId = UserService.GetCurrentUser().Id;
+            var user = UserRepository.Instance.Source.FirstOrDefault(x => x.Id == userId);
+            if(user.Balance - promote.Price < 0)
+            {
+                throw new ServiceException("您的余额不足，请充值后再进行购买");
+            }
+            promote.UserList.Add(user);
+            user.Balance = user.Balance - promote.Price;
+
+            promoteRepository.Transaction(() =>
+            {
+                promoteRepository.Save(promote);
+                UserRepository.Instance.Save(user);
+            });
             return promoteRepository.Save(promote);
         }
 

@@ -32,7 +32,7 @@
                     <div class="recommend" v-if="yq.BuyState==false">
                         <i></i>
                         <span>推介价格：<em v-text="yq.Price"></em>V币</span>
-                        <p><a href="#" class="button button-fill button-danger">购买 </a></p>
+                        <p  v-on:click="buyPromote(yq.Id)" ><a href="#" class="button button-fill button-danger">购买 </a></p>
                     </div>
                     <div class="tip">
 

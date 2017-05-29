@@ -7,10 +7,12 @@ using Helper.Enum;
 using Service;
 using Service.Cond;
 using Service.API;
+using Helper;
+
 
 namespace Web.Controllers
 {
-    public class WechatPromoteController : Controller
+    public class WechatPromoteController : WechatBaseController
     {
         //
         // GET: /WechatPromote/
@@ -92,10 +94,10 @@ namespace Web.Controllers
 
         public JsonResult BuyPromote(int promoteId)
         {
-            return Json(new WechatResponse()
+            return ExceptionCatch.WechatInvoke(() =>
             {
-                data = PromoteService.Instance.BuyPromote(promoteId) ? "购买成功" : "购买失败"
-            }, JsonRequestBehavior.AllowGet);
+                PromoteService.Instance.BuyPromote(promoteId);
+            });
         }
 
         private string ComboLevel(int num)

@@ -18,6 +18,9 @@ namespace DataCollection.Entity
 
         public string Phone { get; set; }
 
+        /// <summary>
+        /// 余额
+        /// </summary>
         public int Balance { get; set; }
 
         /// <summary>
