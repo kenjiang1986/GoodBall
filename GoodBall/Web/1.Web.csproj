@@ -917,6 +917,7 @@
     <Content Include="Views\BaseData\UpSet.cshtml" />
     <Content Include="Views\WechatPromote\PromoteTypeList.cshtml" />
     <Content Include="Views\WechatPay\PayCenter.cshtml" />
+    <Content Include="Views\WechatPromote\GameList.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

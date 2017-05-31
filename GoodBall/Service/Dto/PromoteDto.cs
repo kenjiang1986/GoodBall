@@ -61,5 +61,7 @@ namespace Service.Dto
         public bool BuyState { get; set; }
 
         public string Result { get; set; }
+
+        public int PromoteType { get; set; }
     }
 }

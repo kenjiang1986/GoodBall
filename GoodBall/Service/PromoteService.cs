@@ -21,7 +21,7 @@ namespace Service
 
         public List<PromoteDto> GetPromoteListByPage(PromoteCond cond, int size, int index, out int total)
         {
-            var query = promoteRepository.Source;
+            var query = promoteRepository.Source.Where(x => x.PromoteType == cond.PromoteType);
             if (cond.StartDate != null && cond.EndDate != null)
             {
                 query = query.Where(x => x.CreateTime >= cond.StartDate.Value && x.CreateTime <= cond.StartDate.Value);

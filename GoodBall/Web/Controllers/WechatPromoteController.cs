@@ -32,6 +32,11 @@ namespace Web.Controllers
             return View();
         }
 
+        public ActionResult GameList()
+        {
+            return View();
+        }
+
         public JsonResult GetUserList()
         {
             int total;
@@ -57,7 +62,7 @@ namespace Web.Controllers
             }, JsonRequestBehavior.AllowGet);
         }
 
-        public JsonResult GetPromoteList(string raceType, int size, int index)
+        public JsonResult GetPromoteList(string raceType, int promoteType, int size, int index)
         {
             int total;
             switch (raceType)
@@ -72,7 +77,7 @@ namespace Web.Controllers
                     raceType = RaceTypeEnum.足彩310.ToString();
                     break;
             }
-            var result = PromoteService.Instance.GetPromoteListByPage(new PromoteCond() { RaceType = raceType }, size, index, out total);
+            var result = PromoteService.Instance.GetPromoteListByPage(new PromoteCond() { RaceType = raceType,PromoteType = promoteType }, size, index, out total);
 
             return Json(new WechatResponse()
             {
@@ -86,6 +91,7 @@ namespace Web.Controllers
                     x.BuyState,
                     x.Content,
                     x.Result,
+                    x.Integral,
                     LevelStr = ComboLevel(x.Level),
                 })
             }, JsonRequestBehavior.AllowGet);

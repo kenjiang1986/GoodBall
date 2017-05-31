@@ -5,7 +5,7 @@
 
 <div class="page" id="index">
     <header class="bar bar-nav">
-        <h1 class="title button-fill button-danger">专业推介</h1>
+        <h1 class="title button-fill button-danger">人人竞彩</h1>
 
     </header>
     <div class="vip content">
@@ -21,7 +21,7 @@
             <li><a href="/expert.html"><span class="img"><em><img src="../images/more.png"></em></span><span>更多</span></a></li>
         </ul>
         <div class="spotDetail">
-            <div class="list-nav">让球<a href="/WechatPromote/PromoteTypeList?raceType=1&promoteType=1"><span class="more">更多</span></a></div>
+            <div class="list-nav">让球<a href="/WechatPromote/PromoteTypeList?raceType=1&promoteType=2"><span class="more">更多</span></a></div>
             <ul class="list" v-for="yq in yangqiu">
                 <li>
                     <div class="tit">
@@ -42,19 +42,19 @@
                     </div>
                     <div class="recommend" v-if="yq.BuyState==false">
                         <i></i>
-                        <span>推介价格：<em v-text="yq.Price"></em>V币</span>
-                        <p  v-on:click="buyPromote(yq.Id)" ><a href="#" class="button button-fill button-danger">购买 </a></p>
+                        <span>价格：<em v-text="yq.Integral"></em>积分</span>
+                        <p v-on:click="buyPromote(yq.Id)"><a href="#" class="button button-fill button-danger">购买 </a></p>
                     </div>
                     <div class="tip">
 
                         {{{yq.LevelStr}}}
 
                     </div>
-                    </li>
+                </li>
             </ul>
         </div>
         <div class="spotDetail">
-            <div class="list-nav">竞彩<a href="/WechatPromote/PromoteTypeList?raceType=2&promoteType=1"><span class="more">更多</span></a></div>
+            <div class="list-nav">竞彩<a href="/WechatPromote/PromoteTypeList?raceType=2&promoteType=2"><span class="more">更多</span></a></div>
             <ul class="list" v-for="yq in jingcai">
                 <li>
                     <div class="tit">
@@ -75,23 +75,23 @@
                     </div>
                     <div class="recommend" v-if="yq.BuyState==false">
                         <i></i>
-                        <span>推介价格：<em v-text="yq.Price"></em>V币</span>
-                        <p  v-on:click="buyPromote(yq.Id)" ><a href="#" class="button button-fill button-danger">购买 </a></p>
+                        <span>价格：<em v-text="yq.Integral"></em>积分</span>
+                        <p v-on:click="buyPromote(yq.Id)"><a href="#" class="button button-fill button-danger">购买 </a></p>
                     </div>
-                   
+
                     <div class="tip">
 
                         {{{yq.LevelStr}}}
 
                     </div>
-                    </li>
+                </li>
 
             </ul>
         </div>
-       
-   
+
+
         <div class="spotDetail">
-            <div class="list-nav">足彩301<a href="/WechatPromote/PromoteTypeList?raceType=3&promoteType=1"><span class="more">更多</span></a></div>
+            <div class="list-nav">足彩301<a href="/WechatPromote/PromoteTypeList?raceType=3&promoteType=2"><span class="more">更多</span></a></div>
             <ul class="list" v-for="yq in zucai">
                 <li>
                     <div class="tit">
@@ -112,8 +112,8 @@
                     </div>
                     <div class="recommend" v-if="yq.BuyState==false">
                         <i></i>
-                        <span>推介价格：<em v-text="yq.Price"></em>V币</span>
-                        <p  v-on:click="buyPromote(yq.Id)" ><a href="#" class="button button-fill button-danger">购买 </a></p>
+                        <span>价格：<em v-text="yq.Integral"></em>积分</span>
+                        <p v-on:click="buyPromote(yq.Id)"><a href="#" class="button button-fill button-danger">购买 </a></p>
                     </div>
 
                     <div class="tip">
@@ -125,9 +125,9 @@
 
             </ul>
         </div>
-    
-</div>
+
     </div>
+</div>
 
 
 <script type="text/javascript">
@@ -163,28 +163,28 @@
                         $.alert(e);
                         $.hideIndicator();
                     });
-                    api.promote('让球', 1).then(function (data) {
+                    api.promote('让球', 2).then(function (data) {
                         this.yangqiu = data;
                         $.hideIndicator();
                     }.bind(this), function (e) {
                         $.alert(e);
                         $.hideIndicator();
                     });
-                    api.promote('竞彩', 1).then(function (data) {
+                    api.promote('竞彩', 2).then(function (data) {
                         this.jingcai = data;
                         $.hideIndicator();
                     }.bind(this), function (e) {
                         $.alert(e);
                         $.hideIndicator();
                     });
-                    api.promote('足彩310', 1).then(function (data) {
+                    api.promote('足彩310', 2).then(function (data) {
                         this.zucai = data;
                         $.hideIndicator();
                     }.bind(this), function (e) {
                         $.alert(e);
                         $.hideIndicator();
                     });
-                   
+
 
                 },
                 buyPromote: function (promoteId) {

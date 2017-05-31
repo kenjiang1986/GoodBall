@@ -38,6 +38,7 @@ namespace Web.Controllers
         {
             return ExceptionCatch.Invoke(() =>
             {
+                Promote.PromoteType = 1;
                 if (Promote.Id > 0)
                 {
                     PromoteService.Instance.UpdatePromote(Promote);

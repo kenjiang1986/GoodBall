@@ -50,6 +50,12 @@ namespace Service
             {
                 throw new ServiceException("此商品库存不足");
             }
+            var user = UserRepository.Instance.Find(x => x.Id == UserService.GetCurrentUser().Id).FirstOrDefault();
+            if (user.Integral < goods.Integral)
+            {
+                throw new ServiceException("对不起，您的积分暂时不足以兑换此商品，请选择其它商品进行兑换");
+            }
+
             var entity = dto.ToModel<Order>();
             entity.Integral = goods.Integral;
             entity.OrderNo = OrderHelper.GetOrderNo();

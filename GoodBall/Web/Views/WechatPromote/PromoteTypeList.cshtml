@@ -61,8 +61,8 @@
                 raceType:{}
             },
             methods: {
-                pageload: function (raceType) {
-                    api.promoteAll(raceType).then(function (data) {
+                pageload: function (raceType, promoteType) {
+                    api.promoteAll(raceType, promoteType).then(function (data) {
                         this.items = data;
                         if (raceType == 1) {
                             this.raceType = "专业推介-让球";
@@ -84,7 +84,7 @@
                 }
             },
             ready: init(function () {
-                $.scope().pageload(window.getParam('raceType'));
+                $.scope().pageload(window.getParam('raceType'), window.getParam('promoteType'));
             })
         });
     })(Vue, Zepto, jQuery.api);</script>

@@ -49,6 +49,11 @@ namespace DataCollection.Entity
         /// </summary>
         public SendTypeEnum SendType { get; set; }
 
+        /// <summary>
+        /// 推介类型（1、推介 2、人人竞彩）
+        /// </summary>
+        public int PromoteType { get; set; }
+
         public string Operator { get; set; }
 
         public DateTime CreateTime { get; set; }
