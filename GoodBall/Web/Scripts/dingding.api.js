@@ -10,7 +10,7 @@
      */
     $.promiseApi = function (api, params, method) {
         var defer = $.Deferred(),
-            uri = $.debug ? 'http://127.0.0.1/' : 'http://m.ddjiadian.com/',
+            uri = $.debug ? 'http://127.0.0.1/' : 'http://ken19861216.get.vip/',
             token = $.debug ? '3eb72Q560BYRrvg9ITkrwyjuHX/FjL7hmTn7e9BuWbZ3J/gB1+e3wPsv3CJHQVlp6VHxJzfpAIDMqGcnDJ4i3EywEa9AUQMfy6kb/RpjBEaHup4E' : '';
 
         $.ajax({
