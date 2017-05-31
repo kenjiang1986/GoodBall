@@ -35,5 +35,10 @@ namespace Web.Controllers
         {
             return ExceptionCatch.WechatInvoke(() => UserService.Instance.UpdateUserByWechat(new UserDto() { Id = id, NickName = nickName, Phone = phone, IconUrl = iconUrl }));
         }
+
+        public JsonResult Logout()
+        {
+            return ExceptionCatch.WechatInvoke(() => UserService.Instance.CustomerLogout());
+        }
     }
 }

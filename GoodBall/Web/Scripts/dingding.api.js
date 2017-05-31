@@ -73,6 +73,12 @@
                 iconUrl: profile.IconUrl,
             }, 'POST');
         },
+        //用户退出登录  
+        'user_logout': function (userId) {
+            return $.promiseApi('WechatUser/Logout', {
+            }, 'POST');
+        },
+        
         //注册
         'reg_action': function (regInfo) {
             return $.promiseApi('WechatReg/Register', {

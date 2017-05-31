@@ -63,7 +63,7 @@
                 </div>
             </div>
             <div class="bar bar-footer">
-                <button class="button button-block button-big button-light">退出登录</button>
+                <button v-on:click="UserLogout()" class="button button-block button-big button-light">退出登录</button>
             </div>
         </div>
     </div>
@@ -97,6 +97,17 @@
                 $.showIndicator();
                 api.user_action(this.profile).then(function (result) {
                     $.hideIndicator();
+                    alert(result);
+                }.bind(this), function (e) {
+                    alert(e);
+                    $.hideIndicator();
+                });
+            },
+            UserLogout: function () {
+                $.showIndicator();
+                api.user_logout().then(function (result) {
+                    $.hideIndicator();
+                    window.location.href = '/WechatLogin/WechatLoginIndex';
                     alert(result);
                 }.bind(this), function (e) {
                     alert(e);
