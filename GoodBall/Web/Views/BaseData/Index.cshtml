@@ -96,21 +96,34 @@
             </table>
         </div>
     </div>
-
-    <div class="easyui-doc-padding">
-        <table id="dg" class="easyui-datagrid" title="" style="width:100%;min-height:350px;"
-               data-options="rownumbers:true,singleSelect:true,pagination:true,method:'post',pageSize:10,toolbar:'#toolbar'">
-            <thead>
-                <tr>
-                    <th data-options="field:'BaseAmount',width:'10%',resizable:false,align:'left'">基础金额</th>
-                    <th data-options="field:'CalType',width:'10%',resizable:false,align:'left'">计算类型</th>
-                    <th data-options="field:'GiveAmount',width:'30%',resizable:false,align:'left'">赠送金额</th>
-                    <th data-options="field:'CreateTime',width:'10%',resizable:false,align:'left'">创建时间</th>
-                    <th data-options="field:'Id',width:'15%',formatter:Update">操作</th>
-                </tr>
-            </thead>
-        </table>
-
-
-    </div>
-</form>
+    <div class="easyui-tabs" style="margin-bottom: 2px; min-width: 1000px; width: 100%;" id="tabs">
+        <div title="充值金额" class="easyui-doc-padding">
+            <table id="dg" class="easyui-datagrid" title="" style="width:100%;min-height:350px;"
+                   data-options="rownumbers:true,singleSelect:true,pagination:true,method:'post',pageSize:10,toolbar:'#toolbar'">
+                <thead>
+                    <tr>
+                        <th data-options="field:'BaseAmount',width:'10%',resizable:false,align:'left'">基础金额</th>
+                        <th data-options="field:'CalType',width:'10%',resizable:false,align:'left'">计算类型</th>
+                        <th data-options="field:'GiveAmount',width:'30%',resizable:false,align:'left'">赠送金额</th>
+                        <th data-options="field:'CreateTime',width:'10%',resizable:false,align:'left'">创建时间</th>
+                        <th data-options="field:'Id',width:'15%',formatter:Update">操作</th>
+                    </tr>
+                </thead>
+            </table>
+        </div>
+        
+        <div title="退还V币" class="easyui-doc-padding">
+            <table id="dg1" class="easyui-datagrid" title="" style="width:100%;min-height:350px;"
+                   data-options="rownumbers:true,singleSelect:true,pagination:true,method:'post',pageSize:10,toolbar:'#toolbar'">
+                <thead>
+                    <tr>
+                        <th data-options="field:'BaseAmount',width:'10%',resizable:false,align:'left'">基础金额</th>
+                        <th data-options="field:'CalType',width:'10%',resizable:false,align:'left'">计算类型</th>
+                        <th data-options="field:'GiveAmount',width:'30%',resizable:false,align:'left'">赠送金额</th>
+                        <th data-options="field:'CreateTime',width:'10%',resizable:false,align:'left'">创建时间</th>
+                        <th data-options="field:'Id',width:'15%',formatter:Update">操作</th>
+                    </tr>
+                </thead>
+            </table>
+        </div>
+    </div></form>

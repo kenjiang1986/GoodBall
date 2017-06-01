@@ -60,6 +60,7 @@
     <Compile Include="EntityConfig\PayAmountConfig.cs" />
     <Compile Include="EntityConfig\PromoteConfig.cs" />
     <Compile Include="EntityConfig\RechargeRecordConfig.cs" />
+    <Compile Include="EntityConfig\ReturnRuleConfig.cs" />
     <Compile Include="EntityConfig\UserConfig.cs" />
     <Compile Include="Entity\Customer.cs" />
     <Compile Include="Entity\Goods.cs" />
@@ -69,6 +70,7 @@
     <Compile Include="Entity\PayAmount.cs" />
     <Compile Include="Entity\Promote.cs" />
     <Compile Include="Entity\RechargeRecord.cs" />
+    <Compile Include="Entity\ReturnRule.cs" />
     <Compile Include="Entity\User.cs" />
     <Compile Include="ParameterRebinder.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
