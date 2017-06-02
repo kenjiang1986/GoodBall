@@ -43,6 +43,15 @@ namespace Web.Controllers
             });
         }
 
+        public JsonResult UpdateRule(ReturnRuleDto dto)
+        {
+            return ExceptionCatch.Invoke(() =>
+            {
+                PayAmountService.Instance.UpdateReturnRule(dto);
+            });
+        }
+        
+
         public JsonResult DeletePayAmount(long? id)
         {
             return ExceptionCatch.Invoke(() =>
@@ -54,6 +63,12 @@ namespace Web.Controllers
         public JsonResult GetPayAmount(long? id)
         {
             var result = PayAmountService.Instance.GetPayAmount(id.Value);
+            return Json(result, JsonRequestBehavior.AllowGet);
+        }
+
+        public JsonResult GetRule()
+        {
+            var result = PayAmountService.Instance.GetReturnRule();
             return Json(result, JsonRequestBehavior.AllowGet);
         }
 

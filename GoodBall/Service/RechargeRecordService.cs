@@ -21,5 +21,10 @@ namespace Service
             return query.ToList().ToListModel<RechargeRecord, RechargeRecordDto>();
         }
 
+        public void AddRecharge(RechargeRecordDto dto)
+        {
+            var entity = dto.ToModel<RechargeRecord>();
+            rechargeRepository.Insert(entity);
+        }
     }
 }

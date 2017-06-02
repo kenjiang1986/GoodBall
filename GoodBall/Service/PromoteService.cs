@@ -57,7 +57,48 @@ namespace Service
             entity.State = EnumHelper.Parse<PromoteStateEnum>(dto.State);
             //entity.Operator = dto.Operator;
             entity.SendType = EnumHelper.Parse<SendTypeEnum>(dto.SendType);
-            promoteRepository.Save(entity);
+            promoteRepository.Transaction(() =>
+            {
+                promoteRepository.Save(entity);
+                if (entity.State.Equals(PromoteStateEnum.中))
+                {
+                    ReturnPrice(entity.Price, entity.UserList.ToList());
+                    
+                }
+            });
+            
+        }
+
+        /// <summary>
+        /// 退款
+        /// </summary>
+        public void ReturnPrice(int price, IList<User> userList)
+        {
+            var rule = ReturnRuleRepository.Instance.Source.FirstOrDefault();
+            int updatePrice = 0;
+            if (rule != null)
+            {
+                //按百分比退款
+                if (rule.Type == 1)
+                {
+                    updatePrice = price + (int)(price * rule.Numerical);
+                }
+
+                UserRepository.Instance.Save(x => userList.Select(y => y.UserName).Contains(x.UserName), x => new User { Balance = updatePrice });
+                foreach (var user in userList)
+                {
+                        RechargeRecordService.Instance.AddRecharge
+                        (
+                            new RechargeRecordDto()
+                            {
+                                Price = updatePrice,
+                                Operator = UserService.GetCurrentUser().UserName,
+                                RechargeUserId = user.Id,
+                                Remark = string.Format("推介不中退款{0}V币", updatePrice)
+                            }
+                        );
+                }
+            }
         }
 
         public bool BuyPromote(int id)

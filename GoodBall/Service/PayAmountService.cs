@@ -14,6 +14,7 @@ namespace Service
     public class PayAmountService : SingModel<PayAmountService>
     {
          private static readonly PayAmountRepository payAmountRepository = PayAmountRepository.Instance;
+         private static readonly ReturnRuleRepository returnRuleRepository = ReturnRuleRepository.Instance;
 
          private PayAmountService() { }
 
@@ -44,5 +45,22 @@ namespace Service
          {
              payAmountRepository.Delete(x => x.Id == id);
          }
+
+         public void AddReturnRule(ReturnRuleDto dto)
+         {
+             var entity = dto.ToModel<ReturnRule>();
+             returnRuleRepository.Insert(entity);
+         }
+
+         public void UpdateReturnRule(ReturnRuleDto dto)
+         {
+             returnRuleRepository.Save(x => x.Id == dto.Id, x => new ReturnRule { Numerical = dto.Numerical });
+         }
+
+         public PayAmountDto GetReturnRule()
+         {
+             return payAmountRepository.Source.FirstOrDefault().ToModel<PayAmountDto>();
+         }
+         
     }
 }

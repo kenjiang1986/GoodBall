@@ -112,6 +112,7 @@
     <Compile Include="Dto\PayAmountDto.cs" />
     <Compile Include="Dto\PromoteDto.cs" />
     <Compile Include="Dto\RechargeRecordDto.cs" />
+    <Compile Include="Dto\ReturnRuleDto.cs" />
     <Compile Include="Dto\UserDto.cs" />
     <Compile Include="CustomerService.cs" />
     <Compile Include="GoodsService.cs" />

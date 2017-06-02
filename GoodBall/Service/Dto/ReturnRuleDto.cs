@@ -4,9 +4,9 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace DataCollection.Entity
+namespace Service.Dto
 {
-    public class ReturnRule
+    public class ReturnRuleDto
     {
         public long Id { get; set; }
 

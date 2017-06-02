@@ -7,8 +7,30 @@
     $("#easyui-rtlcss").remove();
     $(function () {
         $("input[type=text]").validatebox();
+        $('#tabs').tabs({
+            border: false,
+            onSelect: function (title, index) {
+                $("input[name='filter']").val("");
+                _searchFn(title);
+            }
+        });
         Search();
     });
+
+    function _search() {
+        var _title = $('#tabs').tabs('getSelected').panel('options').title;
+        if (_title == "充值金额") {
+            Search();
+        } else {
+            
+        }
+    }
+
+   function LoatRule() {
+       BaseHelper.loadform("form1", "/BaseData/GetRule", function (data) {
+           loadTips.hideLoadind();
+       });
+   }
 
     function Search() {
       
@@ -79,6 +101,35 @@
             area: ['500px', '400px']
         });
     }
+
+    function Submit() {
+        if (!$("#form1").form('validate')) {
+            return false;
+        }
+
+
+        $("#id").val(id);
+        loadTips.showLoading();
+        var url = "/BaseData/UpdateRule";
+        $.ajax({
+            type: "POST",
+            url: url,
+            dataType: "json",
+            async: true,
+            data: $("#form1").serialize(),
+            success: function (data) {
+                loadTips.hideLoadind();
+                alert(data.message);
+                if (data.success) {
+                    parent.Search();
+                    parent.layer.closeAll();
+                }
+            },
+            error: function (data) {
+                BaseHelper.ShowException(data);
+            }
+        });
+    }
 </script>
 
 <form id="form1" class="easyui-doc-padding">
@@ -112,18 +163,24 @@
             </table>
         </div>
         
+        <input type="hidden" id="id" name="id" />
         <div title="退还V币" class="easyui-doc-padding">
-            <table id="dg1" class="easyui-datagrid" title="" style="width:100%;min-height:350px;"
-                   data-options="rownumbers:true,singleSelect:true,pagination:true,method:'post',pageSize:10,toolbar:'#toolbar'">
-                <thead>
-                    <tr>
-                        <th data-options="field:'BaseAmount',width:'10%',resizable:false,align:'left'">基础金额</th>
-                        <th data-options="field:'CalType',width:'10%',resizable:false,align:'left'">计算类型</th>
-                        <th data-options="field:'GiveAmount',width:'30%',resizable:false,align:'left'">赠送金额</th>
-                        <th data-options="field:'CreateTime',width:'10%',resizable:false,align:'left'">创建时间</th>
-                        <th data-options="field:'Id',width:'15%',formatter:Update">操作</th>
-                    </tr>
-                </thead>
+            <table class="easyui-doc-table">
+                <tr>
+                    <td>
+                        退还比例
+                    </td>
+                    <td>
+                        <input type="text" id="Numerical" name="Numerical" style="padding-left:5px; line-height:20px;" class="easyui-validatebox textbox" required="true" />%
+                    </td>
+                </tr>
+           
+                <tr>
+                    <td colspan="2" style="text-align: center;">
+                        <a href="javascript:;" class="easyui-linkbutton" iconcls="icon-ok" id="submitform" onclick="Submit()">保存</a>
+                    </td>
+                </tr>
+
             </table>
         </div>
     </div></form>

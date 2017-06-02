@@ -62,8 +62,8 @@ namespace Service
 
 
 
-            AutoMapper.Mapper.CreateMap<RechargeRecord, RechargeRecordDto>().ForMember(x => x.RechargeUser, x => x.MapFrom(src => src.RechargeUser.UserName)); 
-            AutoMapper.Mapper.CreateMap<RechargeRecordDto, RechargeRecord>();
+            AutoMapper.Mapper.CreateMap<RechargeRecord, RechargeRecordDto>().ForMember(x => x.RechargeUser, x => x.MapFrom(src => src.RechargeUser.UserName));
+            AutoMapper.Mapper.CreateMap<RechargeRecordDto, RechargeRecord>().ForMember(x => x.CreateTime, x => x.MapFrom(src => DateTime.Now));
 
             AutoMapper.Mapper.CreateMap<Goods, GoodsDto>();
             AutoMapper.Mapper.CreateMap<GoodsDto, Goods>().ForMember(x => x.CreateTime, x => x.MapFrom(src => DateTime.Now));
