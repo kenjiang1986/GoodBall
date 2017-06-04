@@ -63,5 +63,10 @@ namespace Service.Dto
         public string Result { get; set; }
 
         public int PromoteType { get; set; }
+
+        /// <summary>
+        /// 是否退费 
+        /// </summary>
+        public string IsReturn { get; set; }
     }
 }

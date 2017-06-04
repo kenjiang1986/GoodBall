@@ -24,8 +24,8 @@ namespace Service.Dto
 
         public string CreateTime { get; set; }
 
-        public string RechargeUser { get; set; }
+        public long UserId { get; set; }
 
-        public long RechargeUserId { get; set; }
+        public string UserName { get; set; }
     }
 }

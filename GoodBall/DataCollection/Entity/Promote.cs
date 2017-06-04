@@ -64,6 +64,11 @@ namespace DataCollection.Entity
 
         public bool IsSend { get; set; }
 
+        /// <summary>
+        /// 是否退费 
+        /// </summary>
+        public bool IsReturn { get; set; }
+
         public string Result { get; set; }
 
         public virtual ICollection<User> UserList { get; set; }

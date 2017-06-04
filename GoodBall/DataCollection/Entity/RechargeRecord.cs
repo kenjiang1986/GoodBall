@@ -26,6 +26,6 @@ namespace DataCollection.Entity
 
         public long UserId { get; set; }
 
-        public virtual User RechargeUser { get; set; }
+        public string  UserName { get; set; }
     }
 }

@@ -101,7 +101,7 @@ namespace GoodBall.Controllers
                     x.Id,
                     x.Price,
                     x.Operator,
-                    x.RechargeUser,
+                    RechargeUser = x.UserName,
                     x.Remark,
                     CreateTime = x.CreateTime.ToString(),
                    

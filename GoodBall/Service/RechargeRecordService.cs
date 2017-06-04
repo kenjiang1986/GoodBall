@@ -17,7 +17,7 @@ namespace Service
 
         public List<RechargeRecordDto> GetRechargeListByUserId(long userId)
         {
-            var query = rechargeRepository.Source.Include(x => x.RechargeUser).Where(x => x.UserId == userId);
+            var query = rechargeRepository.Source.Where(x => x.UserId == userId);
             return query.ToList().ToListModel<RechargeRecord, RechargeRecordDto>();
         }
 

@@ -93,6 +93,7 @@ namespace Web.Controllers
                     x.MatchName,
                     x.IsSend,
                     x.State,
+                    x.IsReturn,
                     CreateTime = x.CreateTime.ToString(),
                 }),
                 total

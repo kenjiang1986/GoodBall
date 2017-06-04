@@ -59,12 +59,12 @@ namespace Service
             entity.SendType = EnumHelper.Parse<SendTypeEnum>(dto.SendType);
             promoteRepository.Transaction(() =>
             {
-                promoteRepository.Save(entity);
-                if (entity.State.Equals(PromoteStateEnum.中))
+                if (entity.State.Equals(PromoteStateEnum.中) && !entity.IsReturn)
                 {
+                    entity.IsReturn = true;
                     ReturnPrice(entity.Price, entity.UserList.ToList());
-                    
                 }
+                promoteRepository.Save(entity);
             });
             
         }
@@ -91,7 +91,8 @@ namespace Service
                             {
                                 Price = updatePrice,
                                 Operator = UserService.GetCurrentUser().UserName,
-                                RechargeUserId = user.Id,
+                                UserId = user.Id,
+                                UserName = user.UserName,
                                 Remark = string.Format("推介不中退款{0}V币", updatePrice)
                             }
                         );
