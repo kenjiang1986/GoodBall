@@ -18,6 +18,6 @@ namespace DataCollection.Entity
         /// <summary>
         ///  数值
         /// </summary>
-        public double Numerical { get; set; }
+        public decimal Numerical { get; set; }
     }
 }

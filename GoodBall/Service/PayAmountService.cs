@@ -54,12 +54,21 @@ namespace Service
 
          public void UpdateReturnRule(ReturnRuleDto dto)
          {
-             returnRuleRepository.Save(x => x.Id == dto.Id, x => new ReturnRule { Numerical = dto.Numerical });
+            var rule = returnRuleRepository.Source.FirstOrDefault();
+            if(rule == null)
+            {
+                returnRuleRepository.Insert(new ReturnRule() { Type = 1, Numerical = (decimal)dto.Numerical/100 });
+            }
+            else
+            {
+                rule.Numerical = (decimal)dto.Numerical/100;
+                returnRuleRepository.Save(rule);
+            }
          }
 
-         public PayAmountDto GetReturnRule()
+         public ReturnRuleDto GetReturnRule()
          {
-             return payAmountRepository.Source.FirstOrDefault().ToModel<PayAmountDto>();
+             return returnRuleRepository.Source.FirstOrDefault().ToModel<ReturnRuleDto>();
          }
          
     }

@@ -63,7 +63,9 @@ namespace Service
 
 
             AutoMapper.Mapper.CreateMap<RechargeRecord, RechargeRecordDto>().ForMember(x => x.RechargeUser, x => x.MapFrom(src => src.RechargeUser.UserName));
-            AutoMapper.Mapper.CreateMap<RechargeRecordDto, RechargeRecord>().ForMember(x => x.CreateTime, x => x.MapFrom(src => DateTime.Now));
+            AutoMapper.Mapper.CreateMap<RechargeRecordDto, RechargeRecord>()
+                .ForMember(x => x.UserId, x => x.MapFrom(src => src.RechargeUserId))
+                .ForMember(x => x.CreateTime, x => x.MapFrom(src => DateTime.Now));
 
             AutoMapper.Mapper.CreateMap<Goods, GoodsDto>();
             AutoMapper.Mapper.CreateMap<GoodsDto, Goods>().ForMember(x => x.CreateTime, x => x.MapFrom(src => DateTime.Now));
@@ -82,6 +84,8 @@ namespace Service
             AutoMapper.Mapper.CreateMap<PayAmountDto, PayAmount>()
                  .ForMember(x => x.CalType, x => x.MapFrom(src => EnumHelper.Parse<CalTypeEnum>(src.CalType)))
                 .ForMember(x => x.CreateTime, x => x.MapFrom(src => DateTime.Now));
+
+            AutoMapper.Mapper.CreateMap<ReturnRule, ReturnRuleDto>().ForMember(x => x.Numerical, x => x.MapFrom(src => src.Numerical * 100));
 
         }
 

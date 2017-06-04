@@ -75,6 +75,7 @@ namespace Web.Controllers
         public JsonResult GetList(PromoteCond cond, int page, int rows)
         {
             int total;
+            cond.PromoteType = 1;
             var result = PromoteService.Instance.GetPromoteListByPage(cond, rows, page, out total);
 
             return Json(new

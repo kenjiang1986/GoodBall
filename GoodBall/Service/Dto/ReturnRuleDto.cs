@@ -18,6 +18,6 @@ namespace Service.Dto
         /// <summary>
         ///  数值
         /// </summary>
-        public double Numerical { get; set; }
+        public int Numerical { get; set; }
     }
 }

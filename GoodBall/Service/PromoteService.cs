@@ -83,8 +83,6 @@ namespace Service
                 {
                     updatePrice = price + (int)(price * rule.Numerical);
                 }
-
-                UserRepository.Instance.Save(x => userList.Select(y => y.UserName).Contains(x.UserName), x => new User { Balance = updatePrice });
                 foreach (var user in userList)
                 {
                         RechargeRecordService.Instance.AddRecharge
@@ -97,6 +95,8 @@ namespace Service
                                 Remark = string.Format("推介不中退款{0}V币", updatePrice)
                             }
                         );
+                    user.Balance = user.Balance + updatePrice;
+                    UserRepository.Instance.Save(user);
                 }
             }
         }

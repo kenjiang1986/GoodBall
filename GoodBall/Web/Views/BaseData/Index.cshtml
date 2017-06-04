@@ -11,40 +11,47 @@
             border: false,
             onSelect: function (title, index) {
                 $("input[name='filter']").val("");
-                _searchFn(title);
+                _searchFn();
             }
         });
         Search();
     });
 
-    function _search() {
+    function _searchFn() {
         var _title = $('#tabs').tabs('getSelected').panel('options').title;
         if (_title == "充值金额") {
             Search();
         } else {
-            
+            LoadRule();
         }
     }
 
-   function LoatRule() {
-       BaseHelper.loadform("form1", "/BaseData/GetRule", function (data) {
+    function LoadRule() {
+        BaseHelper.loadform("form1", "/BaseData/GetRule", function (data) {
            loadTips.hideLoadind();
        });
    }
 
     function Search() {
       
-        var validate = $("#form1").form('validate');
-        if (!validate) {
-            return;
-        } else {
-            $("#dg").datagrid({
-                url: "/BaseData/GetList",
-                onLoadError: function (data) {
-                    BaseHelper.ShowException(data);
-                }
-            });
-        }
+        $("#dg").datagrid({
+            url: "/BaseData/GetList",
+            onLoadError: function (data) {
+                BaseHelper.ShowException(data);
+            }
+        });
+
+        //var validate = $("#form1").form('validate');
+        //if (!validate) {
+        //    return;
+        //} else {
+        //    $("#dg").datagrid({
+        //        url: "/BaseData/GetList",
+        //        onLoadError: function (data) {
+        //            BaseHelper.ShowException(data);
+        //        }
+        //    });
+        //}
     }
 
     function Refresh() {

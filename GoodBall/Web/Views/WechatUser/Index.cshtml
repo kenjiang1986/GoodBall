@@ -121,7 +121,17 @@
                   style: 'width:85%;border-radius:4px;-webkit-animation-duration: .5s; animation-duration: .5s;',
                   content:$("#dialog").html(),
                   btn: ['确认', '取消'],
-                  
+                  success: function () {
+                      api.user_logout().then(function (result) {
+                          $.hideIndicator();
+                          window.location.href = '/WechatLogin/WechatLoginIndex';
+                          alert(result);
+                      }.bind(this), function (e) {
+                          alert(e);
+                          $.hideIndicator();
+                      });
+                  }
+
                 })
             }
         },

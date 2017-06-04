@@ -7,7 +7,7 @@ using DataCollection.Entity;
 
 namespace DataCollection.EntityConfig
 {
-    public class ReturnRuleConfig : EntityConfig<ReturnRule>
+    internal class ReturnRuleConfig : EntityConfig<ReturnRule>
     {
         internal ReturnRuleConfig()
         {
