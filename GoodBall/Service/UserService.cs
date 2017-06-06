@@ -152,6 +152,22 @@ namespace Service
             CookieHelper.WriteEncryptCookie(userKey, JsonConvert.SerializeObject(userRepository.Find(x => x.Id == user.Id).FirstOrDefault().ToModel<UserDto>()), DateTime.Now);
         }
 
+        public void UpdateUserPhone(UserDto user)
+        {
+            if (!userRepository.Find(x => x.Id == user.Id).Any())
+            {
+                throw new ServiceException("不存在当前用户");
+            }
+            if (userRepository.Find(x => x.Phone == user.Phone && x.Id != user.Id).Any())
+            {
+                throw new ServiceException("已存在相同的电话号码");
+            }
+
+            userRepository.Save(x => x.Id == user.Id, x => new User { Phone = user.Phone });
+            CookieHelper.RemoveCookie(userKey);
+            CookieHelper.WriteEncryptCookie(userKey, JsonConvert.SerializeObject(userRepository.Find(x => x.Id == user.Id).FirstOrDefault().ToModel<UserDto>()), DateTime.Now);
+        }
+
         public void UpdateUserBalance(long userId, int price)
         {
             var entity = userRepository.Find(x => x.Id == userId).FirstOrDefault();

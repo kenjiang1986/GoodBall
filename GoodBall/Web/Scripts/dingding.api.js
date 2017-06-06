@@ -73,6 +73,15 @@
                 iconUrl: profile.IconUrl,
             }, 'POST');
         },
+        //用户修改 
+        'update_phone': function (id,phone,code) {
+            return $.promiseApi('WechatUser/UpdateUserPhone', {
+                id: id,
+                phone: phone,
+                code: code,
+            }, 'POST');
+        },
+        
         //用户退出登录  
         'user_logout': function (userId) {
             return $.promiseApi('WechatUser/Logout', {
