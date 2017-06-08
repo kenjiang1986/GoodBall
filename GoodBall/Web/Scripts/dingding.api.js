@@ -74,11 +74,11 @@
             }, 'POST');
         },
         //用户修改 
-        'update_phone': function (id,phone,code) {
+        'update_phone': function (profile) {
             return $.promiseApi('WechatUser/UpdateUserPhone', {
-                id: id,
-                phone: phone,
-                code: code,
+                id: profile.Id,
+                phone: profile.Phone,
+                code: profile.Code,
             }, 'POST');
         },
         
@@ -133,8 +133,8 @@
             return $.promiseApi('WechatPromote/GetPromoteList', { raceType: raceType, promoteType:promoteType, size: 3, index: 1 });
         },
         //获取推介用户列表 
-        'getusers': function () {
-            return $.promiseApi('WechatPromote/GetUserList', {});
+        'getusers': function (page, index) {
+            return $.promiseApi('WechatPromote/GetUserList', { page: page, index: index });
         },
         //获取推介用户列表 
         'getUserPromotes': function (userId) {

@@ -28,19 +28,19 @@ namespace Web.Controllers
                 Password = password,
                 Code = code
             };
-            return ExceptionCatch.Invoke(() =>
+            return ExceptionCatch.WechatInvoke(() =>
             {
                 UserService.Instance.AddUser(user);
-            });
+            }, "注册成功");
         }
 
         [HttpPost]
         public JsonResult SendCode(string phone)
         {
-            return ExceptionCatch.Invoke(() =>
+            return ExceptionCatch.WechatInvoke(() =>
             {
                 UserService.Instance.SendSmsCode(phone);
-            });
+            },"发送成功");
         }
     }
 }

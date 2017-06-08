@@ -1,4 +1,5 @@
-﻿using Helper;
+﻿using GoodBall.Dto;
+using Helper;
 using System;
 using System.Collections.Generic;
 using System.IO;
@@ -120,6 +121,14 @@ namespace Web.Controllers
                         GoodsImage = RelativelyPath
                     };
                     GoodsService.Instance.UpdateGoodsImage(goodsDto);
+                    break;
+                case "UserIcon":
+                    var userDto = new UserDto()
+                    {
+                        Id = long.Parse(id),
+                        IconUrl = RelativelyPath
+                    };
+                    UserService.Instance.UpdateUser(userDto);
                     break;
             }
         }

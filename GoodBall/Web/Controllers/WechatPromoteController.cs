@@ -37,10 +37,10 @@ namespace Web.Controllers
             return View();
         }
 
-        public JsonResult GetUserList()
+        public JsonResult GetUserList(int page, int index)
         {
             int total;
-            var result = UserService.Instance.GetUserListByPage("", 5, 1, out total, true);
+            var result = UserService.Instance.GetUserListByPage("", page, index, out total, true);
             return Json(new WechatResponse()
             {
                 data = result.Select(x => new

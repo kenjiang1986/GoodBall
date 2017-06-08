@@ -1,0 +1,70 @@
+﻿@{
+    Layout = "~/Views/Shared/WechatPage.cshtml";
+}
+
+
+<div class="page" id="index">
+    <header class="bar bar-nav">
+        <h1 class="title button-fill button-danger">所有用户</h1>
+
+    </header>
+    <div class="vip content">
+        <ul class="expert cls">
+            <li v-for="user in users">
+                <a v-bind:href="'/WechatPromote/UserPromoteDetail?userid='+ user.Id">
+                    <span class="img">
+                        <em><img v-bind:src="user.IconUrl"></em>
+                    </span>
+                    <span v-text="user.NickName"></span>
+                </a>
+            </li>
+            
+        </ul>
+    </div>
+</div>
+
+
+<script type="text/javascript">
+    (function (Vue, $, api) {
+        window.vm = new Vue({
+            el: '#index',
+            data: {
+                banners: [],
+                tabs: [
+                    { icon: 'icon shouye', text: '首页', active: true, href: 'index.html' },
+                    { icon: 'icon dingdan', text: '订单', href: 'order.html' },
+                    { icon: 'icon wode', text: '我的', href: 'profile.html' }
+                ],
+                users: [],
+                yangqiu: [],
+                jingcai: [],
+                zucai: []
+            },
+            methods: {
+                banners$$load: function () {
+                    //$.showIndicator();
+                    //api.get_weixin_banner().then(function (banners) {
+                    //    this.banners = banners;
+                    //    $.hideIndicator();
+                    //}.bind(this), function (e) {
+                    //    $.alert(e);
+                    //    $.hideIndicator();
+                    //});
+                    api.getusers(1000,1).then(function (data) {
+                        this.users = data;
+                        $.hideIndicator();
+                    }.bind(this), function (e) {
+                        $.alert(e);
+                        $.hideIndicator();
+                    });
+                   
+
+
+                }
+                
+            },
+            ready: init(function () {
+                $.scope().banners$$load();
+            })
+        });
+    })(Vue, Zepto, jQuery.api);</script>

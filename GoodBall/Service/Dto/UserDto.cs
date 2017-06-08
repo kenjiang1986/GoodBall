@@ -19,6 +19,8 @@ namespace GoodBall.Dto
 
         public string Phone { get; set; }
 
+        public string NewPhone { get; set; }
+
         public int Balance { get; set; }
 
         public string Code { get; set; }

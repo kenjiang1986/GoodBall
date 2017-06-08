@@ -25,6 +25,11 @@ namespace Web.Controllers
             return View();
         }
 
+        public ActionResult UserList()
+        {
+            return View();
+        }
+
         public JsonResult GetUserInfo()
         {
             var response = new WechatResponse() { data = UserService.GetCurrentUser() };

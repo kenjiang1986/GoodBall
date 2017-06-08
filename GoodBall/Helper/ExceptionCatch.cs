@@ -28,14 +28,14 @@ namespace Helper
             );
         }
 
-        public static JsonResult WechatInvoke(Action action)
+        public static JsonResult WechatInvoke(Action action, string msg = "")
         {
             return WechatInvoke
             (
                 () =>
                 {
                     action();
-                    return "操作成功";
+                    return string.IsNullOrEmpty(msg) ? "操作成功": msg;
                 }
             );
         }
