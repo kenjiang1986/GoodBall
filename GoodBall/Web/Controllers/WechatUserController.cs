@@ -95,14 +95,18 @@ namespace Web.Controllers
 
 
             string Direct = System.IO.Path.GetDirectoryName(savePath);
+            DirectoryInfo dir = null;
             if (!Directory.Exists(Direct))
             {
-                Directory.CreateDirectory(Direct);
+                dir = Directory.CreateDirectory(Direct);
             }
-            if (System.IO.File.Exists(savePath))
+            //先删除文件夹下所有文件
+            FileInfo[] files = dir.GetFiles();
+            foreach (var item in files)
             {
-                System.IO.File.Delete(savePath);
+                System.IO.File.Delete(item.FullName);
             }
+           
             file.SaveAs(savePath);
 
             var userDto = new UserDto()
