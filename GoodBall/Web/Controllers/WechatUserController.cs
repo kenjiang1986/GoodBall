@@ -100,6 +100,10 @@ namespace Web.Controllers
             {
                 dir = Directory.CreateDirectory(Direct);
             }
+            else
+            {
+                dir = new DirectoryInfo(Direct);
+            }
             //先删除文件夹下所有文件
             FileInfo[] files = dir.GetFiles();
             foreach (var item in files)
