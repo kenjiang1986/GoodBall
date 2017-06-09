@@ -39,6 +39,7 @@ namespace Web.Controllers
             {
                 message = ex.Message;
             }
+            
             return Content("<script>alert(\"" + message + "\");parent.Refresh();</script>", "text/html");
         }
 
@@ -121,14 +122,6 @@ namespace Web.Controllers
                         GoodsImage = RelativelyPath
                     };
                     GoodsService.Instance.UpdateGoodsImage(goodsDto);
-                    break;
-                case "UserIcon":
-                    var userDto = new UserDto()
-                    {
-                        Id = long.Parse(id),
-                        IconUrl = RelativelyPath
-                    };
-                    UserService.Instance.UpdateUser(userDto);
                     break;
             }
         }

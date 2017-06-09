@@ -9,9 +9,9 @@ namespace DataCollection.EntityConfig
 {
     internal class UserConfig : EntityConfig<User>
     {
-        internal UserConfig()
+        internal UserConfig() : base(200)
         {
-            base.ToTable("User");
+            base.ToTable("Users");
             base.HasKey(x => x.Id);
             base.HasMany(x => x.PromoteList).WithMany(x => x.UserList)
                 .Map(x => { x.ToTable("UserPromote");
