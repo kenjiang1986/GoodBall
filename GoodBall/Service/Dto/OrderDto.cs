@@ -23,7 +23,7 @@ namespace Service.Dto
         /// <summary>
         /// 地址
         /// </summary>
-        public string Adress { get; set; }
+        public string Address { get; set; }
 
         /// <summary>
         /// 积分

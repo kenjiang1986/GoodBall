@@ -65,7 +65,7 @@ namespace Web.Controllers
             {
                 ContactPhone = mobile,
                 Quantity = qty,
-                Adress = doorplate,
+                Address = doorplate,
                 Receiver = contactor,
                 PostCode = postCode,
                 GoodsId = goodsId

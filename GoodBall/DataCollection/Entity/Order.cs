@@ -24,7 +24,7 @@ namespace DataCollection.Entity
         /// <summary>
         /// 地址
         /// </summary>
-        public string Adress { get; set; }
+        public string Address { get; set; }
 
         /// <summary>
         /// 积分
@@ -46,5 +46,9 @@ namespace DataCollection.Entity
 
         public long UserId { get; set; }
 
+        /// <summary>
+        /// 数量
+        /// </summary>
+        public int Quantity { get; set; }
     }
 }

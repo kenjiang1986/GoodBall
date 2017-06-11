@@ -36,6 +36,19 @@ namespace Web.Controllers
             });
         }
 
+        public JsonResult UpdateOrderState(long id, string  state)
+        {
+            return ExceptionCatch.Invoke(() =>
+            {
+               
+                OrderService.Instance.UpdateOrderState(id, state);
+              
+            });
+        }
+
+
+
+
         public JsonResult GetOrder(long? id)
         {
             var result = OrderService.Instance.GetOrder(id.Value);
@@ -57,15 +70,7 @@ namespace Web.Controllers
 
             return Json(new
             {
-                rows = result.Select(x => new
-                {
-                    x.Id,
-                    x.OrderNo,
-                    x.Integral,
-                    x.Quantity,
-                    x.GoodsName,
-                    CreateTime = x.CreateTime.ToString(),
-                }),
+                rows = result,
                 total
             }, JsonRequestBehavior.AllowGet);
         }

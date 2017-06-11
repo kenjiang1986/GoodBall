@@ -12,29 +12,35 @@
 
         <div class="spotDetail">
 
-            <ul class="list" v-for="yq in yangqiu">
+            <ul class="list" v-for="order in orders">
                 <li>
-                    <div class="tit">
+                    <div>
                         <i></i>
-                        <span>比赛：{{yq.MatchName}}</span><span class="publisher">发布者：{{yq.Operator}}</span>
+                        <span>订单编号：{{order.OrderNo}}</span>
                     </div>
-                    <div class="time">
+                    <div >
                         <i></i>
-                        <span>开赛时间：{{yq.MatchTime }}</span>
+                        <span>货物名称：{{order.GoodsName }}</span>
                     </div>
-                    <div class="recommend" v-if="yq.BuyState==true">
+                    <div>
                         <i></i>
-                        <span>推介：{{{yq.Content }}}</span>
+                        <span>数量：{{order.Quantity }}</span>
                     </div>
-                    <div class="analysis" v-if="yq.BuyState==true">
+                    <div  >
                         <i></i>
-                        <span>分析：{{yq.Result }}</span>
+                        <span>收件人：{{{order.Receiver }}}</span>
                     </div>
-
-                    <div class="tip">
-
-                        {{{yq.LevelStr}}}
-
+                    <div  >
+                        <i></i>
+                        <span>收件人电话：{{{order.ContactPhone }}}</span>
+                    </div>
+                    <div>
+                        <i></i>
+                        <span>地址：{{order.Address }}</span>
+                    </div>
+                    <div>
+                        <i></i>
+                        <span>状态：{{order.State }}</span>
                     </div>
                 </li>
             </ul>
@@ -53,16 +59,13 @@
         window.vm = new Vue({
             el: '#index',
             data: {
-
-                yangqiu: [],
-                promoteType:{}
-
+                orders: []
             },
             methods: {
                 pageload: function (userId) {
                    
                     api.getUserOrders(userId).then(function (data) {
-                        this.yangqiu = data;
+                        this.orders = data;
                         $.hideIndicator();
                     }.bind(this), function (e) {
                         $.alert(e);

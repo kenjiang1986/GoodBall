@@ -27,7 +27,14 @@
     }
 
     function Update(value, row) {
-        var result = "<a href='javascript:void(0)' onclick='UpSetMatch(\"" + row.Id + "\")'>编辑</a>  ";
+        var result = "";
+        if (row.state == "未发货") {
+            result += "<a href='javascript:void(0)' onclick='UpSetMatch(\"" + row.Id + "\",未发货,发货)'>发货</a>  ";
+        }
+        else if (row.state == "已发货") {
+            result += "<a href='javascript:void(0)' onclick='UpdateState(\"" + row.Id + "\",已发货,收货)'>收货</a>  ";
+        }
+        
         result += "<a href='javascript:void(0)' onclick='DelMatch(\"" + row.Id + "\")'>删除</a>  ";
 
         return result;
@@ -56,23 +63,29 @@
         });
     }
 
-    function UpSetMatch(id) {
-        var url = "/Order/UpSet?id=" + id;
-        var title = '添加比赛';
-        if (id > 0) {
-            title = '修改比赛';
-        }
-
-        $.layer({
-            scrolling: 'auto',
-            type: 2,
-            title: title,
-            iframe: {
-                src: url
-            },
-            area: ['500px', '400px']
+    function UpdateState(id, state, msg) {
+        
+        $.messager.confirm('温馨提示', '确定要'+ msg +'吗？', function (r) {
+            if (r) {
+                $.ajax({
+                    type: "post",
+                    url: "/Order/UpdateOrderState",
+                    data: { id: id, state :state },
+                    success: function (data) {
+                        if (data) {
+                            alert("操作成功", "success", function () {
+                                Search();
+                            });
+                        } else {
+                            alert("操作失败", "error");
+                        }
+                    }
+                });
+            }
         });
     }
+
+    
 </script>
 
 <form id="form1" class="easyui-doc-padding">
@@ -102,12 +115,13 @@
                 <tr>
                     <th data-options="field:'OrderNo',width:'10%',resizable:false,align:'left'">订单编号</th>
                     <th data-options="field:'Receiver',width:'10%',resizable:false,align:'left'">收件人</th>
-                    <th data-options="field:'Adress',width:'10%',resizable:false,align:'left'">地址</th>
+                    <th data-options="field:'Address',width:'10%',resizable:false,align:'left'">地址</th>
                     <th data-options="field:'Integral',width:'10%',resizable:false,align:'left'">积分</th>
                     <th data-options="field:'ContactPhone',width:'10%',resizable:false,align:'left'">联系电话</th>
                     <th data-options="field:'GoodsName',width:'10%',resizable:false,align:'left'">货物名称</th>
                     <th data-options="field:'CreateTime',width:'10%',resizable:false,align:'left'">创建时间</th>
                     <th data-options="field:'Quantity',width:'10%',resizable:false,align:'left'">数量</th>
+                    <th data-options="field:'State',width:'10%',resizable:false,align:'left'">状态</th>
                     <th data-options="field:'Id',width:'15%',formatter:Update">操作</th>
                 </tr>
             </thead>

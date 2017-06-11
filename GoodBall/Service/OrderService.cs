@@ -9,6 +9,7 @@ using Repository;
 using Service.Cond;
 using Service.Dto;
 using Helper.Enum;
+using EnumUtils;
 
 
 namespace Service
@@ -36,7 +37,7 @@ namespace Service
 
         public List<OrderDto> GetUserOrderList(long userId)
         {
-            var list = orderRepository.Source.Where(x => x.Id == userId).ToList();
+            var list = orderRepository.Source.Where(x => x.UserId == userId).ToList();
             return list.ToListModel<Order, OrderDto>();
         }
 
@@ -57,7 +58,8 @@ namespace Service
             {
                 throw new ServiceException("此商品库存不足");
             }
-            var user = UserRepository.Instance.Find(x => x.Id == UserService.GetCurrentUser().Id).FirstOrDefault();
+            var userId = UserService.GetCurrentUser().Id;
+            var user = UserRepository.Instance.Find(x => x.Id == userId).FirstOrDefault();
             if (user.Integral < goods.Integral)
             {
                 throw new ServiceException("对不起，您的积分暂时不足以兑换此商品，请选择其它商品进行兑换");
@@ -67,6 +69,7 @@ namespace Service
             entity.Integral = goods.Integral;
             entity.OrderNo = OrderHelper.GetOrderNo();
             entity.State = OrderStateEnum.未发货;
+            entity.UserId = userId;
             goods.Quantity = goods.Quantity - Convert.ToInt32(dto.Quantity);
             orderRepository.Transaction(() =>
             {
@@ -80,8 +83,14 @@ namespace Service
             var entity = orderRepository.Find(x => x.Id == dto.Id).FirstOrDefault();
             entity.Receiver = dto.Receiver;
             entity.ContactPhone = dto.ContactPhone;
-            entity.Adress = dto.Adress;
+            entity.Address = dto.Address;
             orderRepository.Save(entity);
+        }
+
+        public void UpdateOrderState(long id, string state)
+        {
+           
+            orderRepository.Save(x => x.Id == id, x => new Order { State = EnumHelper.Parse<OrderStateEnum>(state) });
         }
 
         public void DeleteOrder(long id)

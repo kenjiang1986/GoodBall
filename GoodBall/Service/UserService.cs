@@ -125,8 +125,7 @@ namespace Service
             entity.IconUrl = user.IconUrl;
             
             userRepository.Save(entity);
-            CookieHelper.RemoveCookie(userKey);
-            CookieHelper.WriteEncryptCookie(userKey, JsonConvert.SerializeObject(entity.ToModel<UserDto>()), DateTime.Now);
+            UpdateUserCookie(user.Id);
         }
 
         public void UpdateUserByWechat(UserDto user)
@@ -149,8 +148,7 @@ namespace Service
             }
 
             userRepository.Save(x => x.Id == user.Id, x => new User{NickName = user.NickName, Phone = user.Phone, IconUrl = user.IconUrl});
-            CookieHelper.RemoveCookie(userKey);
-            CookieHelper.WriteEncryptCookie(userKey, JsonConvert.SerializeObject(userRepository.Find(x => x.Id == user.Id).FirstOrDefault().ToModel<UserDto>()), DateTime.Now);
+            UpdateUserCookie(user.Id);
         }
 
         public void UpdateUserPhone(UserDto user)
@@ -165,8 +163,7 @@ namespace Service
             }
 
             userRepository.Save(x => x.Id == user.Id, x => new User { Phone = user.Phone });
-            CookieHelper.RemoveCookie(userKey);
-            CookieHelper.WriteEncryptCookie(userKey, JsonConvert.SerializeObject(userRepository.Find(x => x.Id == user.Id).FirstOrDefault().ToModel<UserDto>()), DateTime.Now);
+            UpdateUserCookie(user.Id);
         }
 
         public void UpdateUserIcon(UserDto user)
@@ -177,8 +174,7 @@ namespace Service
             }
 
             userRepository.Save(x => x.Id == user.Id, x => new User { IconUrl = user.IconUrl });
-            CookieHelper.RemoveCookie(userKey);
-            CookieHelper.WriteEncryptCookie(userKey, JsonConvert.SerializeObject(userRepository.Find(x => x.Id == user.Id).FirstOrDefault().ToModel<UserDto>()), DateTime.Now);
+            UpdateUserCookie(user.Id);
         }
 
         public void UpdateUserBalance(long userId, int price)
@@ -257,6 +253,16 @@ namespace Service
         {
             var userStr = CookieHelper.GetDecryptCookie(userKey);
             return JsonConvert.DeserializeObject<UserDto>(userStr);
+        }
+
+        private void UpdateUserCookie(long userId)
+        {
+            //如果编辑的是当前登录用户，才更新COOKIE
+            if (userId == GetCurrentUser().Id)
+            {
+                CookieHelper.RemoveCookie(userKey);
+                CookieHelper.WriteEncryptCookie(userKey, JsonConvert.SerializeObject(userRepository.Find(x => x.Id == userId).FirstOrDefault().ToModel<UserDto>()), DateTime.Now);
+            }
         }
     }
 }

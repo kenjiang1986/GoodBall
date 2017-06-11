@@ -156,6 +156,17 @@
         'getUserOrders': function (userId) {
             return $.promiseApi('WechatShop/GetUserOrders', { userId: userId });
         },
+       //添加订单
+        'addOrder': function (qty,contactor, mobile, postcode, doorplate, goodsid) {
+            return $.promiseApi('WechatShop/AddOrder', {
+                qty: qty,
+                contactor: contactor,
+                mobile: mobile,
+                postcode: postcode,
+                doorplate: doorplate,
+                goodsid: goodsid
+            },'POST');
+        },
 
        
     };
