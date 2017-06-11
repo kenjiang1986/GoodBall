@@ -46,5 +46,7 @@ namespace Service.Cond
         public DateTime? EndDate { get; set; }
 
         public int PromoteType { get; set; }
+
+        public long UserId { get; set; }
     }
 }

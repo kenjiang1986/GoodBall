@@ -136,9 +136,9 @@
         'getusers': function (page, index) {
             return $.promiseApi('WechatPromote/GetUserList', { page: page, index: index });
         },
-        //获取推介用户列表 
-        'getUserPromotes': function (userId) {
-            return $.promiseApi('WechatPromote/GetUser', { userId: userId });
+        //获取用户推介列表 
+        'getUserPromotes': function (userId, promoteType) {
+            return $.promiseApi('WechatPromote/GetUserPromotes', { userId: userId, promoteType: promoteType });
         },
         //获取推介列表    
         'promoteAll': function (raceType, promoteType) {
@@ -152,7 +152,10 @@
         'getPayAmount': function () {
             return $.promiseApi('WechatPay/GetPayAmounts', { });
         },
-        
+        //获取用户订单列表 
+        'getUserOrders': function (userId) {
+            return $.promiseApi('WechatShop/GetUserOrders', { userId: userId });
+        },
 
        
     };

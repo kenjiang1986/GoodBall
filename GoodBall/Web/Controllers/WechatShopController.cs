@@ -26,6 +26,20 @@ namespace Web.Controllers
             return View();
         }
 
+        public ActionResult UserOrders()
+        {
+            return View();
+        }
+
+        public JsonResult GetUserOrders(long userId)
+        {
+            var result = OrderService.Instance.GetUserOrderList(userId);
+            return Json(new WechatResponse()
+            {
+                data = result
+            }, JsonRequestBehavior.AllowGet);
+        }
+
         public JsonResult GetProductList()
         {
             int total;

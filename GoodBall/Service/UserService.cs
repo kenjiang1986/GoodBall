@@ -13,6 +13,7 @@ using DataCollection;
 using GoodBall.Dto;
 using System.Web;
 using System.Web.SessionState;
+using Service.Dto;
 
 
 namespace Service
@@ -229,6 +230,20 @@ namespace Service
         {
             return userRepository.Find(x => x.Id == id).FirstOrDefault().ToModel<UserDto>();
         }
+
+        /// <summary>
+        /// 获取用户的推介或者竞彩列表
+        /// </summary>
+        /// <param name="userId"></param>
+        /// <param name="promoteType"></param>
+        /// <returns></returns>
+        public List<PromoteDto> GetUserPromoteList(long userId, int promoteType)
+        {
+            var list = userRepository.Source.Where(x => x.Id == userId).FirstOrDefault().PromoteList.Where(x => x.PromoteType == promoteType).ToList();
+            return list.ToListModel<Promote, PromoteDto>();
+        }
+
+    
 
         public bool SendSmsCode(string phone)
         {

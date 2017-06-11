@@ -56,6 +56,21 @@
                     确定
                 </a>
             </div>
+            <div class="content-block">
+                <a v-bind:href="'/WechatPromote/UserPromoteList?promoteType=1&userId='+ profile.Id" class="button button-fill button-big button-danger">
+                    已购买的推介
+                </a>
+            </div>
+            <div class="content-block">
+                <a v-bind:href="'/WechatPromote/UserPromoteList?promoteType=2&userId='+ profile.Id" class="button button-fill button-big button-danger">
+                    已购买的竞彩
+                </a>
+            </div>
+            <div class="content-block">
+                <a v-bind:href="'/WechatShop/UserOrders?userId='+ profile.Id" class="button button-fill button-big button-danger">
+                    我的订单
+                </a>
+            </div>
             <div class="weui_cells_form" id="dialog" style="display:none" style="padding:10px;">
                 <div class="cell-header">
                     <h2 style="text-align: center;font-size: .8rem;font-weight: normal;padding: 1rem;">为了你的账号安全和方便找回密码，请绑定手机号码</h2>
@@ -80,11 +95,7 @@
     window.vm = new Vue({
         el: '#userCenter',
         data: {
-            tabs: [
-                {icon: 'icon shouye', text: '首页', href: 'index.html'},
-                {icon: 'icon dingdan', text: '订单', href: 'order.html'},
-                {icon: 'icon wode', text: '我的', active: true, href: 'profile.html'}
-            ],
+           
             profile: {}
         },
         methods: {

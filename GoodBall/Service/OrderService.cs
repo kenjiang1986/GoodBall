@@ -34,6 +34,13 @@ namespace Service
             return orderRepository.FindForPaging(size, index, query, out total).ToList().ToListModel<Order, OrderDto>();
         }
 
+        public List<OrderDto> GetUserOrderList(long userId)
+        {
+            var list = orderRepository.Source.Where(x => x.Id == userId).ToList();
+            return list.ToListModel<Order, OrderDto>();
+        }
+
+
         public OrderDto GetOrder(long id)
         {
             return orderRepository.Find(x => x.Id == id).FirstOrDefault().ToModel<OrderDto>();
