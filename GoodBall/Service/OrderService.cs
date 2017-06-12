@@ -70,6 +70,7 @@ namespace Service
             entity.OrderNo = OrderHelper.GetOrderNo();
             entity.State = OrderStateEnum.未发货;
             entity.UserId = userId;
+            //减库存
             goods.Quantity = goods.Quantity - Convert.ToInt32(dto.Quantity);
             orderRepository.Transaction(() =>
             {
@@ -89,7 +90,6 @@ namespace Service
 
         public void UpdateOrderState(long id, string state)
         {
-           
             orderRepository.Save(x => x.Id == id, x => new Order { State = EnumHelper.Parse<OrderStateEnum>(state) });
         }
 

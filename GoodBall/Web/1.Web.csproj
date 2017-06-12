@@ -164,6 +164,7 @@
     <Content Include="Content\css\loadTips\updown.png" />
     <Content Include="Content\css\pageinfo.css" />
     <Content Include="Content\css\picDialog.css" />
+    <Content Include="Content\css\wangEditor.min.css" />
     <Content Include="Content\images\738e91fa-f772-455f-a119-e1bc622b1af0.png" />
     <Content Include="Content\images\addall.png" />
     <Content Include="Content\images\addone.png" />
@@ -870,6 +871,7 @@
     <Content Include="Scripts\Ueditor\ueditor.config.js" />
     <Content Include="Scripts\Ueditor\ueditor.parse.js" />
     <Content Include="Scripts\Ueditor\ueditor.parse.min.js" />
+    <Content Include="Scripts\wangEditor.min.js" />
     <Content Include="Web.config" />
     <Content Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
@@ -921,6 +923,7 @@
     <Content Include="Views\WechatUser\UserList.cshtml" />
     <Content Include="Views\WechatPromote\UserPromoteList.cshtml" />
     <Content Include="Views\WechatShop\UserOrders.cshtml" />
+    <Content Include="Views\WechatPromote\PublishGame.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

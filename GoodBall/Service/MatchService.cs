@@ -31,8 +31,18 @@ namespace Service
             {
                 query = query.Where(x => cond.TeamB.Contains(x.TeamB));
             }
+            if (!string.IsNullOrEmpty(cond.MatchState))
+            {
+                query = query.Where(x => x.MatchState.ToString() == cond.MatchState);
+            }
             query = query.OrderByDescending(x => x.CreateTime);
             return matchRepository.FindForPaging(size, index, query, out total).ToList().ToListModel<Match, MatchDto>();
+        }
+
+        public List<MatchDto> GetMatchList(MatchCond cond)
+        {
+            int total;
+            return GetMatchListByPage(cond, 1000, 1, out total);
         }
 
         public MatchDto GetMatch(long id)

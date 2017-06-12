@@ -28,11 +28,11 @@
 
     function Update(value, row) {
         var result = "";
-        if (row.state == "未发货") {
-            result += "<a href='javascript:void(0)' onclick='UpSetMatch(\"" + row.Id + "\",未发货,发货)'>发货</a>  ";
+        if (row.State == "未发货") {
+            result += "<a href='javascript:void(0)' onclick='UpdateState(\"" + row.Id + "\",\"已发货\",\"发货\")'>发货</a>  ";
         }
-        else if (row.state == "已发货") {
-            result += "<a href='javascript:void(0)' onclick='UpdateState(\"" + row.Id + "\",已发货,收货)'>收货</a>  ";
+        else if (row.State == "已发货") {
+            result += "<a href='javascript:void(0)' onclick='UpdateState(\"" + row.Id + "\",\"已收货\",\"收货\")'>收货</a>  ";
         }
         
         result += "<a href='javascript:void(0)' onclick='DelMatch(\"" + row.Id + "\")'>删除</a>  ";

@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Web;
 using System.Web.Mvc;
+using EnumUtils;
 using Helper.Enum;
 using Service;
 using Service.Cond;
@@ -34,6 +35,13 @@ namespace Web.Controllers
 
         public ActionResult GameList()
         {
+            return View();
+        }
+
+        public ActionResult PublishGame()
+        {
+            ViewBag.RaceType = EnumHelper.GetValues<RaceTypeEnum>();
+            ViewBag.MatchList = MatchService.Instance.GetMatchList(new MatchCond() { MatchState = "未开始" });
             return View();
         }
 
