@@ -40,7 +40,7 @@ namespace Service
 
         public void AdminLogin(string userName, string password)
         {
-            if (userName != ConfigHelper.GetAdminName())
+            if (userName != ConfigHelper.AdminName)
             {
                 throw new ServiceException("用户名错误");
             }
@@ -215,7 +215,7 @@ namespace Service
             }
             if (isCustomer)
             {
-                var adminName = ConfigHelper.GetAdminName();
+                var adminName = ConfigHelper.AdminName;
                 query = query.Where(x => x.UserName != adminName);
             }
             query = query.OrderByDescending(x => x.CreateTime);

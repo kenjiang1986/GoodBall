@@ -66,7 +66,7 @@
                         <div class="item-content">
                             <div class="item-inner">
                                 <div class="item-input">
-                                    <select id="starts" name="starts">
+                                    <select id="Level" name="Level">
                                         <option selected value="1">1</option>
                                         <option value="2">2</option>
                                         <option value="3">3</option>
@@ -121,16 +121,22 @@
                         });
                     },
                     submit: function () {
-                        if (!($("#game").val() == "" || $("#result").val() == "" || $("#price").val() == "")) {
-                            api.addGame().then(function (result) {
-                                $.alert("发布成功")
+                        if (!($("#Match").val() == "" || $("#Result").val() == "" || $("#Price").val() == "")) {
+                            api.addGame($("#Match").val(), editor.txt.html(), $("#RaceType").val(), $("#Result").val(), $("#Level").val(), $("#Price").val()).then(function (result) {
+                                $.alert("发布成功");
                                 $.hideIndicator();
                             }.bind(this), function (e) {
                                 $.alert(e);
                                 $.hideIndicator();
                             });
                         } else {
-                            alert("请填写完整信息")
+                            //alert("请填写完整信息");
+                            layer.open({
+                                content: '请填写完整信息'
+                            , skin: 'msg'
+                            , time: 1 //1秒后自动关闭
+                            });
+
                         }
                     }
                 },
