@@ -127,6 +127,12 @@ namespace Web.Controllers
             return Json(response, JsonRequestBehavior.AllowGet);
         }
 
+        public JsonResult GetUserById(long userId)
+        {
+            var response = new WechatResponse() { data = UserService.Instance.GetUser(userId) };
+            return Json(response, JsonRequestBehavior.AllowGet);
+        }
+
         public JsonResult UpdateUser(int id, string nickName,string phone, string iconUrl)
         {
             return ExceptionCatch.WechatInvoke(() => UserService.Instance.UpdateUserByWechat(new UserDto() { Id = id, NickName = nickName, Phone = phone, IconUrl = iconUrl }));

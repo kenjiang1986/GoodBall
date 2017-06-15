@@ -3,7 +3,7 @@
 }
 
 
-<div class="spotDetail content" id="recommend">
+<div class="spotDetail content page" id="recommend">
     <div class="hd">
         <div class="tit">
             <span v-text="user.NickName"></span>
@@ -126,13 +126,18 @@
             el: '#recommend',
             data: {
                 user: {},
-                promotes: []
+                //promotes: []
             },
             methods: {
-                pageload: function (id) {
-                    //$.showIndicator();
-                    api.getUserPromote(id).then(function (data) {
+                pageload: function (userId) {
+                    api.getUserById(userId).then(function (data) {
                         this.user = data;
+                        $.hideIndicator();
+                    }.bind(this), function (msg) {
+                        $.hideIndicator();
+                        $.alert(msg);
+                    });
+                    api.getUserPromotes(userId,1).then(function (data) {
                         this.promotes = data.PromoteList;
                         $.hideIndicator();
                     }.bind(this), function (msg) {
@@ -142,8 +147,8 @@
                 },
             },
             ready: init(function () {
-                $.scope().pageload(window.getParam('id'));
-
+                $.scope().pageload(window.getParam('userid'));
             })
         });
-    })(Vue, Zepto, jQuery.api);</script>
+    })(Vue, Zepto, jQuery.api);
+</script>

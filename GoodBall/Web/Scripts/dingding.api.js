@@ -128,6 +128,10 @@
         'profile': function () {
             return $.promiseApi('WechatUser/GetUserInfo', {});
         },
+        //获取用户个人信息
+        'getUserById': function (userId) {
+            return $.promiseApi('WechatUser/GetUserById', { userId: userId });
+        },
         //获取推介列表    
         'promote': function (raceType,promoteType) {
             return $.promiseApi('WechatPromote/GetPromoteList', { raceType: raceType, promoteType:promoteType, size: 3, index: 1 });
