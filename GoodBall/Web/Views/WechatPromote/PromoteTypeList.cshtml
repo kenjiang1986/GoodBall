@@ -31,7 +31,14 @@
                     </div>
                     <div class="recommend" v-if="yq.BuyState==false">
                         <i></i>
-                        <span>推介价格：<em v-text="yq.Price"></em>V币</span>
+                        <span v-if="yq.PromoteType==1">
+                            价格：<em>{{yq.Price}}</em>
+                            V币
+                        </span>
+                        <span v-else>
+                            价格：<em>{{yq.Integral}}</em>
+                            积分
+                        </span>
                         <p  v-on:click="buyPromote(yq.Id)" ><a href="#" class="button button-fill button-danger">购买 </a></p>
                     </div>
                     <div class="tip">
@@ -58,10 +65,10 @@
             el: '#index',
             data: {
                 items: [],
-                raceType:{}
             },
             methods: {
                 pageload: function (raceType, promoteType) {
+
                     api.promoteAll(raceType, promoteType).then(function (data) {
                         this.items = data;
                         if (raceType == 1) {
@@ -79,8 +86,19 @@
                         $.alert(e);
                         $.hideIndicator();
                     });
-                   
-
+                },
+                buyPromote: function (promoteId) {
+                    if (!confirm("确定要购买吗？")) {
+                        return false;
+                    }
+                    api.buyPromote(promoteId).then(function (data) {
+                        alert(data);
+                        $.scope().banners$$load();
+                        $.hideIndicator();
+                    }.bind(this), function (e) {
+                        $.alert(e);
+                        $.hideIndicator();
+                    });
                 }
             },
             ready: init(function () {

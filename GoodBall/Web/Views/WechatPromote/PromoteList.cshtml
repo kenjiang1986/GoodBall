@@ -188,11 +188,11 @@
 
                 },
                 buyPromote: function (promoteId) {
-                    if (!confirm("确定要刚买推介吗？")) {
+                    if (!confirm("确定要购买吗？")) {
                         return false;
                     }
                     api.buyPromote(promoteId).then(function (data) {
-                        alert(data);
+                        WechatAlert(data);
                         $.scope().banners$$load();
                         $.hideIndicator();
                     }.bind(this), function (e) {

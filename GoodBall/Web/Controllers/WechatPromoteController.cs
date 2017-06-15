@@ -9,6 +9,7 @@ using Service;
 using Service.Cond;
 using Service.API;
 using Helper;
+using Service.Dto;
 
 
 namespace Web.Controllers
@@ -90,26 +91,47 @@ namespace Web.Controllers
                     break;
             }
             var result = PromoteService.Instance.GetPromoteListByPage(new PromoteCond() { RaceType = raceType,PromoteType = promoteType}, size, index, out total);
-
+            var user = UserService.GetCurrentUser();
             return Json(new WechatResponse()
             {
                 data = result.Select(x => new
                 {
                     x.Id,
                     x.Price,
+                    x.PromoteType,
                     x.MatchName,
                     x.MatchTime,
                     x.Operator,
-                    x.BuyState,
+                    BuyState = user.UserName == x.Operator || x.BuyState,
                     x.Content,
                     x.Result,
                     x.Integral,
                     LevelStr = ComboLevel(x.Level),
+                    
                 })
             }, JsonRequestBehavior.AllowGet);
         }
 
-
+        public JsonResult AddGame(int matchId,string content ,string raceType, string  result,int level,int price)
+        {
+            var dto = new PromoteDto()
+            {
+                MatchId =matchId,
+                Content =content,
+                State = PromoteStateEnum.未开始.ToString(),
+                SendType = SendTypeEnum.短信.ToString(),
+                RaceType =raceType,
+                Result= result,
+                Level = level,
+                Integral =price,
+                PromoteType = 2
+            };
+            return ExceptionCatch.WechatInvoke(() =>
+            {
+                PromoteService.Instance.AddPromote(dto);
+            });
+        }
+        
         public JsonResult BuyPromote(int promoteId)
         {
             return ExceptionCatch.WechatInvoke(() =>

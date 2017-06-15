@@ -37,6 +37,16 @@
     <script src="~/Scripts/wangEditor.min.js"></script>
     @*<script src="~/Scripts/layer.js"></script>*@
     <!-- endinject -->
+    <script type="text/javascript">
+        function WechatAlert(msg) {
+            layer.open({
+                content: msg
+                           , skin: 'msg'
+                           , time: 1 //1秒后自动关闭
+            });
+        }
+
+    </script>
    
 </head>
 <body>

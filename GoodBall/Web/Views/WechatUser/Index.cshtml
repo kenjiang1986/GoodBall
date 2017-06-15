@@ -84,9 +84,10 @@
                     <input v-model="profile.Code" class="weui_input" spellcheck="false" type="text" placeholder="请输入验证码" style="border:none">
                 </div>
             </div>
-            <div class="bar bar-footer">
-                <button v-on:click="UserLogout()" class="button button-block button-big button-light">退出登录</button>
-            </div>
+            @*<div class="bar bar-footer">*@
+            <div class="content-block">
+                    <button v-on:click="UserLogout()" class="button button-block button-big button-light">退出登录</button>
+                </div>
         </div>
     </div>
 

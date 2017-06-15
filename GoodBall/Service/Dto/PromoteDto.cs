@@ -43,7 +43,7 @@ namespace Service.Dto
         public int  Integral { get; set; }
 
         /// <summary>
-        /// 状态（1、中 2、不中）
+        /// 状态（1、未开始 2、中 3、不中）
         /// </summary>
         public string  State { get; set; }
 

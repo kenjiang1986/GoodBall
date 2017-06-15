@@ -167,6 +167,17 @@
                 goodsid: goodsid
             },'POST');
         },
+        //添加竞彩
+        'addGame': function (match,content , raceType, result, level, price) {
+            return $.promiseApi('WechatPromote/AddGame', {
+                matchId: match,
+                content: content,
+                raceType: raceType,
+                result: result,
+                level: level,
+                price: price
+            }, 'POST');
+        },
 
        
     };
