@@ -16,107 +16,43 @@
             <img v-bind:src="user.IconUrl">
         </div>
     </div>
-    @*<div class="list ">
-            <div class="noBuy">
+    <div class="spotDetail">
+        @*<div class="list-nav">让球<a href="/WechatPromote/PromoteTypeList?raceType=1&promoteType=1"><span class="more">更多</span></a></div>*@
+        <ul class="list" v-for="yq in promotes">
+            <li>
+                <div class="tit">
+                    <i></i>
+                    <span>比赛：{{yq.MatchName}}</span><span class="publisher">发布者：{{yq.Operator}}</span>
+                </div>
+                <div class="time">
+                    <i></i>
+                    <span>开赛时间：{{yq.MatchTime }}</span>
+                </div>
+                <div class="time">
+                    <i></i>
+                    <span>推介类型：{{yq.RaceType }}</span>
+                </div>
+                <div class="recommend" v-if="yq.BuyState==true">
+                    <i></i>
+                    <span>推介：{{{yq.Content }}}</span>
+                </div>
+                <div class="analysis" v-if="yq.BuyState==true">
+                    <i></i>
+                    <span>分析：{{yq.Result }}</span>
+                </div>
+                <div class="recommend" v-if="yq.BuyState==false">
+                    <i></i>
+                    <span>推介价格：<em v-text="yq.Price"></em>V币</span>
+                    <p v-on:click="buyPromote(yq.Id)"><a href="#" class="button button-fill button-danger">购买 </a></p>
+                </div>
                 <div class="tip">
-                    推荐度
-                    <i class="star"></i>
-                    <i class="star"></i>
-                    <i class="star"></i>
-                    <i class="star"></i>
-                    <i class="star"></i>
-                    <i class="star"></i>
-                    <i class="sj"></i>
+
+                    {{{yq.LevelStr}}}
+
                 </div>
-                <div class="txt">
-                    <b class="time">2017/3/27 02:45&nbsp;&nbsp;开赛</b>
-                    <em>正在发布中...</em>
-                </div>
-                <a href="javascript:void(0);" class="btn">购买</a>
-                <a href="javascript:void(0);" class="btn" style="display: none;">购买</a>
-            </div>
-            <dl>
-                <dt style="text-align: center">
-                    2017/3/25 3:45:00&nbsp;&nbsp;&nbsp;&nbsp;
-                    <i class="right"></i>
-                </dt>
-                <dd>
-                    <ul>
-                        <li class="tit">
-                            <i>
-                            </i>
-                            <span>欧预选:克罗地亚VS乌克兰</span>
-                        </li>
-                        <li class="time">
-                            <i>
-                            </i>
-                            <span>开赛时间：2017/3/25 3:45:00</span>
-                        </li>
-                        <li class="recommend">
-                            <i>
-                            </i>
-                            <span>推介：克罗地亚(-1)</span>
-                        </li>
-                        <li class="analysis">
-                            <i>
-                            </i>分析：克罗地亚阵容实力在乌克兰之上，本仗有望取得一场胜仗
-                        </li>
-                    </ul>
-                </dd>
-            </dl>
-            <dl>
-                <dt style="text-align: center">2017/3/24 7:30:00&nbsp;&nbsp;&nbsp;&nbsp;</dt>
-                <dd>
-                    <ul>
-                        <li class="tit">
-                            <i>
-                            </i>
-                            <span>南美预:阿根廷VS智利</span>
-                        </li>
-                        <li class="time">
-                            <i>
-                            </i>
-                            <span>开赛时间：2017/3/24 7:30:00</span>
-                        </li>
-                        <li class="recommend">
-                            <i>
-                            </i>
-                            <span>推介：阿根廷(-1.25)</span>
-                        </li>
-                        <li class="analysis">
-                            <i>
-                            </i>分析：阿根廷最近面对智利都占不了多少便宜，不过本仗坐镇主场的情况下，有望取胜
-                        </li>
-                    </ul>
-                </dd>
-            </dl>
-            <dl>
-                <dt style="text-align: center">2017/3/24 7:30:00&nbsp;&nbsp;&nbsp;&nbsp;</dt>
-                <dd>
-                    <ul>
-                        <li class="tit">
-                            <i>
-                            </i>
-                            <span>南美预:阿根廷VS智利</span>
-                        </li>
-                        <li class="time">
-                            <i>
-                            </i>
-                            <span>开赛时间：2017/3/24 7:30:00</span>
-                        </li>
-                        <li class="recommend">
-                            <i>
-                            </i>
-                            <span>推介：阿根廷(-1.25)</span>
-                        </li>
-                        <li class="analysis">
-                            <i>
-                            </i>分析：阿根廷最近面对智利都占不了多少便宜，不过本仗坐镇主场的情况下，有望取胜
-                        </li>
-                    </ul>
-                </dd>
-            </dl>
-        </div>*@
+            </li>
+        </ul>
+    </div>
 </div>
 
 
@@ -126,7 +62,7 @@
             el: '#recommend',
             data: {
                 user: {},
-                //promotes: []
+                promotes: []
             },
             methods: {
                 pageload: function (userId) {
@@ -137,14 +73,27 @@
                         $.hideIndicator();
                         $.alert(msg);
                     });
-                    api.getUserPromotes(userId,1).then(function (data) {
-                        this.promotes = data.PromoteList;
+                    api.getUserPublishPromotes(userId, 1).then(function (data) {
+                        this.promotes = data;
                         $.hideIndicator();
                     }.bind(this), function (msg) {
                         $.hideIndicator();
                         $.alert(msg);
                     });
                 },
+                buyPromote: function (promoteId) {
+                    if (!confirm("确定要购买吗？")) {
+                        return false;
+                    }
+                    api.buyPromote(promoteId).then(function (data) {
+                        WechatAlert(data);
+                        $.scope().pageload();
+                        $.hideIndicator();
+                    }.bind(this), function (e) {
+                        $.alert(e);
+                        $.hideIndicator();
+                    });
+                }
             },
             ready: init(function () {
                 $.scope().pageload(window.getParam('userid'));

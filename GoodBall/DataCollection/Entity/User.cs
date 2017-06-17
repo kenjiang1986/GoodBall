@@ -34,6 +34,8 @@ namespace DataCollection.Entity
 
         public string IconUrl { get; set; }
 
+        public bool IsAdmin { get; set; }
+
         public virtual ICollection<Promote> PromoteList { get; set; }
     
     }

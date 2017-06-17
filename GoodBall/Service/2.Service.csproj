@@ -115,6 +115,7 @@
     <Compile Include="Dto\ReturnRuleDto.cs" />
     <Compile Include="Dto\UserDto.cs" />
     <Compile Include="CustomerService.cs" />
+    <Compile Include="Dto\WechatPromoteDto.cs" />
     <Compile Include="GoodsService.cs" />
     <Compile Include="MapperConfig.cs" />
     <Compile Include="MatchService.cs" />

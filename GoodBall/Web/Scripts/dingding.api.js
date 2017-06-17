@@ -144,6 +144,11 @@
         'getUserPromotes': function (userId, promoteType) {
             return $.promiseApi('WechatPromote/GetUserPromotes', { userId: userId, promoteType: promoteType });
         },
+        //获取用户发布推介列表 
+        'getUserPublishPromotes': function (userId, promoteType) {
+            return $.promiseApi('WechatPromote/GetUserPublishPromotes', { userId: userId, promoteType: promoteType });
+        },
+        
         //获取推介列表    
         'promoteAll': function (raceType, promoteType) {
             return $.promiseApi('WechatPromote/GetPromoteList', { raceType: raceType, promoteType: promoteType, size: 10000, index: 1 });

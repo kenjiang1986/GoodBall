@@ -156,11 +156,11 @@ namespace Service
                     SmsService.SendSms(user.Phone, promote.Content);
                 }
             }
-            else
+            else if (promote.SendType.Equals(SendTypeEnum.微信))
             {
                 foreach (var user in promote.UserList)
                 {
-                    SmsService.SendSms(user.Phone, promote.Content);
+                    WechatService.SendPromoteMessage(new WechatPromoteDto());
                 }
             }
             promoteRepository.Save(x => x.Id == id, x => new Promote { IsSend = true });

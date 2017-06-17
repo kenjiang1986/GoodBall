@@ -97,6 +97,15 @@ namespace Service
             return userRepository.InsertReturnEntity(user.ToModel<User>());
         }
 
+        public User AddAdminUser(UserDto user)
+        {
+            if (userRepository.Find(x => x.UserName == user.UserName || x.Phone == user.Phone).Any())
+            {
+                throw new ServiceException("用户名或者手机号码已存在");
+            }
+            return userRepository.InsertReturnEntity(user.ToModel<User>());
+        }
+
         public void UpdateUser(UserDto user)
         {
             var entity = userRepository.Find(x => x.Id == user.Id).FirstOrDefault();
@@ -122,7 +131,8 @@ namespace Service
             entity.Password = user.Password;
             entity.Password = MD5Helper.MD5Encrypt64(user.Password);
             entity.Integral = user.Integral;
-            entity.IconUrl = user.IconUrl;
+            entity.IsAdmin = user.IsAdmin;
+            entity.Remark = user.Remark;
             
             userRepository.Save(entity);
             UpdateUserCookie(user.Id);
@@ -192,8 +202,6 @@ namespace Service
             rechargeRecord.Price = price;
             rechargeRecord.UserId = userId;
 
-
-
             userRepository.Transaction(()=>
             {
                 userRepository.Save(entity);
@@ -239,7 +247,20 @@ namespace Service
             return list.ToListModel<Promote, PromoteDto>();
         }
 
-    
+        /// <summary>
+        /// 获取用户的推介或者竞彩列表
+        /// </summary>
+        /// <param name="userId"></param>
+        /// <param name="promoteType"></param>
+        /// <returns></returns>
+        public List<PromoteDto> GetUserPublishList(long userId, int promoteType)
+        {
+            var user = userRepository.Find(x => x.Id == userId).FirstOrDefault();
+            var list =
+                PromoteRepository.Instance.Find(x => x.Operator == user.UserName && x.PromoteType == promoteType)
+                    .ToList();
+            return list.ToListModel<Promote, PromoteDto>();
+        }
 
         public bool SendSmsCode(string phone)
         {

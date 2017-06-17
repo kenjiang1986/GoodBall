@@ -27,6 +27,8 @@ namespace GoodBall.Dto
 
         public string Remark { get; set; }
 
+        public bool IsAdmin { get; set; }
+
 
         /// <summary>
         /// 积分

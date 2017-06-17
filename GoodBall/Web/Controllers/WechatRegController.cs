@@ -26,7 +26,8 @@ namespace Web.Controllers
             {
                 Phone = phone,
                 Password = password,
-                Code = code
+                Code = code,
+                IsAdmin = true
             };
             return ExceptionCatch.WechatInvoke(() =>
             {

@@ -66,7 +66,28 @@ namespace Web.Controllers
             }, JsonRequestBehavior.AllowGet);
         }
 
+        /// <summary>
+        /// 获取用户的推介或者竞彩列表
+        /// </summary>
+        /// <param name="userId"></param>
+        /// <param name="promoteType"></param>
+        /// <returns></returns>
         public JsonResult GetUserPromotes(long userId, int promoteType)
+        {
+            var result = UserService.Instance.GetUserPromoteList(userId, promoteType);
+            return Json(new WechatResponse()
+            {
+                data = result
+            }, JsonRequestBehavior.AllowGet);
+        }
+
+        /// <summary>
+        /// 获取用户发布的推介或者竞彩列表
+        /// </summary>
+        /// <param name="userId"></param>
+        /// <param name="promoteType"></param>
+        /// <returns></returns>
+        public JsonResult GetUserPublishPromotes(long userId, int promoteType)
         {
             var result = UserService.Instance.GetUserPromoteList(userId, promoteType);
             return Json(new WechatResponse()

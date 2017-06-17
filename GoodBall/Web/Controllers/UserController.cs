@@ -46,7 +46,9 @@ namespace GoodBall.Controllers
                     x.Integral,
                     x.Balance,
                     CreateTime = x.CreateTime.ToString(),
-                    x.Phone
+                    x.Phone,
+                    x.IconUrl,
+                    IsAdmin = x.IsAdmin ? "是" : "否"
                 }),
                 total
             }, JsonRequestBehavior.AllowGet);
@@ -62,7 +64,15 @@ namespace GoodBall.Controllers
         {
             return ExceptionCatch.Invoke(() =>
             {
-                UserService.Instance.UpdateUser(user);
+                if (user.Id > 0)
+                {
+                    UserService.Instance.UpdateUser(user);
+                }
+                else
+                {
+                    user.IsAdmin = true;
+                    UserService.Instance.AddAdminUser(user);
+                }
             });
         }
 

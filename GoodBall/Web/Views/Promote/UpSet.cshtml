@@ -85,6 +85,19 @@
 
     <table class="easyui-doc-table">
         <tr>
+            <td>
+                发布者
+            </td>
+            <td>
+                <select id="Operator" name="Operator" class="easyui-doc-select">
+                    <option></option>
+                    @{foreach (var item in ViewBag.UserList)
+                    {
+                        <option value="@item">@item</option>
+                    }}
+                </select>
+            </td>
+<tr>
             <td class="f-tr md">比赛</td>
             <td>
                 <input type="text" id="Match" name="Match" class="easyui-doc-textbox" readonly="readonly" style="background-color: #EBEBE4" />
@@ -154,9 +167,9 @@
                 <select id="State" name="State" class="easyui-doc-select">
                     <option></option>
                     @{foreach (var item in ViewBag.PromoteState)
-                        {
-                            <option value="@item">@item</option>
-                        }}
+                    {
+                        <option value="@item">@item</option>
+                    }}
                 </select>
             </td>
         </tr>
@@ -168,14 +181,14 @@
                 <select id="SendType" name="SendType" class="easyui-doc-select">
                     <option></option>
                     @{foreach (var item in ViewBag.SendType)
-                        {
-                            <option value="@item">@item</option>
-                        }}
+                    {
+                        <option value="@item">@item</option>
+                    }}
                 </select>
             </td>
         </tr>
       
-        </tr>
+      
 
         <tr>
             <td colspan="2" style="text-align: center;">

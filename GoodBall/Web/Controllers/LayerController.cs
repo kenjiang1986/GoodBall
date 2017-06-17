@@ -123,6 +123,14 @@ namespace Web.Controllers
                     };
                     GoodsService.Instance.UpdateGoodsImage(goodsDto);
                     break;
+                case "User":
+                    var userDto = new UserDto()
+                    {
+                        Id = long.Parse(id),
+                        IconUrl = RelativelyPath
+                    };
+                    UserService.Instance.UpdateUserIcon(userDto);
+                    break;
             }
         }
     }

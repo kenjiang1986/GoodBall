@@ -43,8 +43,25 @@
         var result = "<a href='javascript:void(0)' onclick='UpdateUser(\"" + row.Id + "\")'>编辑</a>  ";
         result += "<a href='javascript:void(0)' onclick='DelUser(\"" + row.Id + "\",\")'>删除</a>  ";
         result += "<a href='javascript:void(0)'  onclick='GivingPrice(\"" + row.Id + "\")'>赠送V币</a>  ";
+        result += "<a href='javascript:void(0)' onclick='UpLoadPic(\"" + row.Id + "\")'>上传图片</a>  ";
         return result;
 
+    }
+
+    function Image(value, row) {
+        return "<img id='TitleImageUrl' width='100' height='50' src = \"" + row.IconUrl + "\"/>";
+    }
+
+    function UpLoadPic(id) {
+        $.layer({
+            type: 2,
+            title: '上传图片',
+            iframe: { src: '/Layer/UploadImage?imageType=User&id=' + id },
+            area: ['1000px', '500px'],
+            close: function () {//关闭层的时候刷新列表
+
+            }
+        });
     }
 
     function DelUser(id) {
@@ -70,11 +87,17 @@
     }
 
     function UpdateUser(id) {
+        if (id > 0) {
+            var title = '修改用户';
+        } 
+        else {
+            var title = '添加用户';
+        }
         var url = "/User/Update?id=" + id;
         $.layer({
             scrolling: 'auto',
             type: 2,
-            title: '修改用户信息',
+            title: title,
             iframe: {
                 src: url
             },
@@ -105,7 +128,10 @@
 
                     <td>用户名称:</td>
                     <td><input type="text" id="UserName" class="easyui-doc-textbox" validtype="companyCode" maxlength="20" /></td>
-                    <td><a href="javascript:;" class="easyui-linkbutton" data-options="iconCls:'icon-search'" onclick="Search()">查询</a></td>
+                    <td><a href="javascript:;" class="easyui-linkbutton" data-options="iconCls:'icon-search'" onclick="Search()">查询</a>
+                        <a id="btnCreate" href="javascript:;" class="l-btn" onclick="UpdateUser(0)">
+                            <span class="l-btn-left l-btn-icon-left"><span class="l-btn-text">添加</span><span class="l-btn-icon icon-redo">&nbsp;</span></span>
+                        </a></td>
                 </tr>
             </table>
         </div>
@@ -118,6 +144,8 @@
                 <tr>
                     <th data-options="field:'UserName',width:'5%',resizable:false,align:'left'">用户名称</th>
                     <th data-options="field:'NickName',width:'5%',resizable:false,align:'left'">昵称</th>
+                    <th data-options="field:'IsAdmin',width:'5%',resizable:false,align:'left'">是否后台用户</th>
+                    <th data-options="field:'IconUrl',width:'30%',formatter:Image">用户头像</th>
                     <th data-options="field:'Phone',width:'10%',resizable:false,align:'left'">电话</th>
                     <th data-options="field:'Balance',width:'5%',resizable:false,align:'left'">用户余额</th>
                     <th data-options="field:'Integral',width:'5%',resizable:false,align:'left'">用户积分</th>
