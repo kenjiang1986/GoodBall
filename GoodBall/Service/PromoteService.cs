@@ -55,7 +55,7 @@ namespace Service
             entity.Integral = dto.Integral;
             entity.Price = dto.Price;
             entity.State = EnumHelper.Parse<PromoteStateEnum>(dto.State);
-            //entity.Operator = dto.Operator;
+            entity.Operator = dto.Operator;
             entity.SendType = EnumHelper.Parse<SendTypeEnum>(dto.SendType);
             promoteRepository.Transaction(() =>
             {

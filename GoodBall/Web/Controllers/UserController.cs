@@ -34,7 +34,7 @@ namespace GoodBall.Controllers
         public JsonResult GetUserList(string userName, int page, int rows)
         {
             int total;
-            var result = UserService.Instance.GetUserListByPage(userName, rows, page, out total);
+            var result = UserService.Instance.GetUserListByPage(userName, null, rows, page, out total);
 
             return Json(new
             {

@@ -214,20 +214,27 @@ namespace Service
             userRepository.Delete(x => x.Id == id);
         }
 
-        public List<UserDto> GetUserListByPage(string userName, int size, int index, out int total, bool isCustomer = false)
+        public List<UserDto> GetUserListByPage(string userName, bool? isAdmin, int size, int index, out int total)
         {
             var query = userRepository.Source;
             if (!string.IsNullOrEmpty(userName))
             {
                 query = query.Where(x => x.UserName.Contains(userName));
             }
-            if (isCustomer)
+            if (isAdmin.HasValue)
             {
-                var adminName = ConfigHelper.AdminName;
-                query = query.Where(x => x.UserName != adminName);
+                query = query.Where(x => x.IsAdmin == isAdmin.Value);
             }
+            
+
             query = query.OrderByDescending(x => x.CreateTime);
             return userRepository.FindForPaging(size, index, query, out total).ToList().ToListModel<User, UserDto>();
+        }
+
+        public List<UserDto> GetUserList(bool isAdmin)
+        {
+            var query = userRepository.Source.Where(x => x.IsAdmin == isAdmin);
+            return query.OrderByDescending(x => x.UserName).ToList().ToListModel<User, UserDto>();
         }
 
         public UserDto GetUser(long id)

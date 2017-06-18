@@ -55,7 +55,6 @@ namespace Service
                 .ForMember(x => x.MatchTime, x => x.MapFrom(src => src.Match.MatchTime))
              .ForMember(x => x.MatchName, x => x.MapFrom(src => src.Match.TeamA + "VS" + src.Match.TeamB));
             AutoMapper.Mapper.CreateMap<PromoteDto, Promote>()
-                   .ForMember(x => x.Operator, x => x.MapFrom(src => UserService.GetCurrentUser().UserName))
                 .ForMember(x => x.CreateTime, x => x.MapFrom(src => DateTime.Now))
                 .ForMember(x => x.RaceType, x => x.MapFrom(src => EnumHelper.Parse<RaceTypeEnum>(src.RaceType)))
                   .ForMember(x => x.State, x => x.MapFrom(src => EnumHelper.Parse<PromoteStateEnum>(src.State)))

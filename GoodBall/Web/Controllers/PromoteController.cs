@@ -27,6 +27,7 @@ namespace Web.Controllers
 
         public ActionResult UpSet()
         {
+            ViewBag.UserList = UserService.Instance.GetUserList(true);
             ViewBag.RaceType = EnumHelper.GetValues<RaceTypeEnum>();
             ViewBag.SendType = EnumHelper.GetValues<SendTypeEnum>();
             ViewBag.PromoteState = EnumHelper.GetValues<PromoteStateEnum>();

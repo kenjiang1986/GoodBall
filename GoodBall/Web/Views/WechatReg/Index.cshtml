@@ -10,9 +10,9 @@
     </header>
     <div class="inputbox content">
         <div class="phone">
-            <input class="phonenum" type="text" placeholder="请输入手机号" v-model="regInfo.phone">
-            <span class="nosend button button-danger" v-on:click="getCode(regInfo.phone)">发送验证码</span>
-            <span class="asend" style="display: none;">60秒后可重发</span>
+            <input  class="phonenum" type="text" placeholder="请输入手机号" v-model="regInfo.phone">
+            <span id="sendCode"  class="nosend button button-danger" v-on:click="getCode(regInfo.phone)">发送验证码</span>
+            <span id="sendTime" class="asend" style="display:none;"></span>
         </div>
         <div class="code">
             <input class="codenum" type="text" placeholder="请输入短信验证码" v-model="regInfo.code">
@@ -72,13 +72,16 @@
                 getCode: function (phone) {
                     api.get_code(phone).then(function (result) {
                         //this.banners = banners;
-                        alert(result);
+                        $("#sendCode").hide();
+                        $("#sendTime").show();
+                        i = self.setInterval("countdown()", 1000);
+                        WechatAlert(result);
                         $.hideIndicator();
                     }.bind(this), function (e) {
                         alert(e);
                         $.hideIndicator();
                     });
-                }
+                },
             },
             ready: init(function () {
                 //$.scope().banners$$load();
@@ -86,46 +89,19 @@
         });
     })(Vue, Zepto, jQuery.api);
 
-    function Submit() {
-        var url = "/WechatReg/Register";
-        $.ajax({
-            type: "POST",
-            url: url,
-            dataType: "json",
-            async: true,
-            data: $("#form1").serialize(),
-            success: function (data) {
-
-                if (data.success) {
-                    alert("注册成功");
-                    //window.location.href = "/WechatLogin/Login"
-                }
-                else {
-                    alert(data.message);
-                }
-            },
-        });
+    var int = 60;
+    function countdown() {
+        //$("#sendTime").removeAttr("disabled");
+       document.getElementById("sendTime").innerHTML = int + "秒后可重新获取";
+        int--;
+        if (int < 0) {
+            i = window.clearInterval(i)//结束  
+            int = 60; //重新赋值  
+            $("#sendCode").show();
+            $("#sendTime").hide();
+            //$("#sendCode").removeAttr("disabled").html("重新获取校验码");//将按钮可用  
+        }
     }
 
-    function SendCode() {
-        var url = "/WechatReg/SendCode";
-        $.ajax({
-            type: "POST",
-            url: url,
-            dataType: "json",
-            async: true,
-            data: $("#form1").serialize(),
-            success: function (data) {
-
-                if (data.success) {
-                    $("#spanReSend").show();
-                    alert("验证码已经成功发送到手机");
-                    //window.location.href = "/WechatLogin/Login"
-                }
-                else {
-                    alert(data.message);
-                }
-            },
-        });
-    }
+    
 </script>
