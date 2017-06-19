@@ -36,6 +36,8 @@ namespace DataCollection.Entity
 
         public bool IsAdmin { get; set; }
 
+        public string OpenId { get; set; }
+
         public virtual ICollection<Promote> PromoteList { get; set; }
     
     }

@@ -881,7 +881,10 @@
     <Content Include="Scripts\Ueditor\ueditor.parse.js" />
     <Content Include="Scripts\Ueditor\ueditor.parse.min.js" />
     <Content Include="Scripts\wangEditor.min.js" />
-    <Content Include="Web.config" />
+    <Content Include="Views\BaseData\Index.cshtml" />
+    <Content Include="Web.config">
+      <SubType>Designer</SubType>
+    </Content>
     <Content Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </Content>
@@ -924,7 +927,6 @@
     <Content Include="Views\WechatPromote\PromoteList.cshtml" />
     <Content Include="Views\WechatPromote\UserPromoteDetail.cshtml" />
     <Content Include="Views\WechatUser\Pay.cshtml" />
-    <Content Include="Views\BaseData\Index.cshtml" />
     <Content Include="Views\BaseData\UpSet.cshtml" />
     <Content Include="Views\WechatPromote\PromoteTypeList.cshtml" />
     <Content Include="Views\WechatPay\PayCenter.cshtml" />
@@ -958,9 +960,6 @@
       <Project>{c580e740-6150-44b7-b696-0f2b927f0fcc}</Project>
       <Name>2.Service</Name>
     </ProjectReference>
-  </ItemGroup>
-  <ItemGroup>
-    <Content Include="Views\BaseData\Home\Index.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="Content\plug-in\ligerui\skins\icons\新建 Microsoft Office Excel 工作表.xlsx" />

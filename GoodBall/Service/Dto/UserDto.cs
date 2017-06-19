@@ -30,6 +30,8 @@ namespace GoodBall.Dto
         public bool IsAdmin { get; set; }
 
 
+        public string OpenId { get; set; }
+
         /// <summary>
         /// 积分
         /// </summary>

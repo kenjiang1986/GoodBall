@@ -63,7 +63,10 @@ namespace Service
             var result = userRepository.Find(x => x.UserName == userName && x.Password == md5Password);
             if (result.Any())
             {
-                CookieHelper.WriteEncryptCookie(userKey, JsonConvert.SerializeObject(result.FirstOrDefault().ToModel<UserDto>()), DateTime.Now);
+                var user = result.FirstOrDefault();
+                user.OpenId = CookieHelper.GetCookie("OpenId");
+                CookieHelper.WriteEncryptCookie(userKey, JsonConvert.SerializeObject(user.ToModel<UserDto>()), DateTime.Now);
+                userRepository.Save(user);
             }
             else
             {
