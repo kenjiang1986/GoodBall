@@ -137,8 +137,8 @@
             return $.promiseApi('WechatPromote/GetPromoteList', { raceType: raceType, promoteType:promoteType, size: 3, index: 1 });
         },
         //获取推介用户列表 
-        'getusers': function (page, index) {
-            return $.promiseApi('WechatPromote/GetUserList', { page: page, index: index });
+        'getusers': function (page, index, isAdmin) {
+            return $.promiseApi('WechatPromote/GetUserList', { page: page, index: index, isAdmin : isAdmin  });
         },
         //获取用户推介列表 
         'getUserPromotes': function (userId, promoteType) {

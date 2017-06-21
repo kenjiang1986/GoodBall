@@ -113,12 +113,12 @@
                         var editor = new E('#editor')
                         // 或者 var editor = new E( document.getElementById('#editor') )
                         editor.create();
-                        api.get_exinfo().then(function (result) {
-                            $.hideIndicator();
-                        }.bind(this), function (e) {
-                            $.alert(e);
-                            $.hideIndicator();
-                        });
+                        //api.get_exinfo().then(function (result) {
+                        //    $.hideIndicator();
+                        //}.bind(this), function (e) {
+                        //    $.alert(e);
+                        //    $.hideIndicator();
+                        //});
                     },
                     submit: function () {
                         //var E = window.wangEditor

@@ -41,7 +41,7 @@
                 zucai: []
             },
             methods: {
-                banners$$load: function () {
+                banners$$load: function (isAdmin) {
                     //$.showIndicator();
                     //api.get_weixin_banner().then(function (banners) {
                     //    this.banners = banners;
@@ -50,7 +50,7 @@
                     //    $.alert(e);
                     //    $.hideIndicator();
                     //});
-                    api.getusers(1000,1).then(function (data) {
+                    api.getusers(1000,1,isAdmin).then(function (data) {
                         this.users = data;
                         $.hideIndicator();
                     }.bind(this), function (e) {
@@ -64,7 +64,7 @@
                 
             },
             ready: init(function () {
-                $.scope().banners$$load();
+                $.scope().banners$$load(window.getParam('isAdmin'));
             })
         });
     })(Vue, Zepto, jQuery.api);</script>

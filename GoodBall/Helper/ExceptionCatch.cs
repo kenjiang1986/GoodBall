@@ -87,7 +87,6 @@ namespace Helper
             }
             catch (Exception ex)
             {
-                
                 if (ex is ServiceException)
                 {
                     response.data = ex.Message;

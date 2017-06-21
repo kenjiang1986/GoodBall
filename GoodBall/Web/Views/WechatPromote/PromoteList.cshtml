@@ -18,7 +18,7 @@
                     <span v-text="user.NickName"></span>
                 </a>
             </li>
-            <li><a href="/WechatUser/UserList"><span class="img"><em></em></span><span>更多</span></a></li>
+            <li><a href="/WechatUser/UserList?isAdmin=true"><span class="img"><em></em></span><span>更多</span></a></li>
         </ul>
         <div class="spotDetail">
             <div class="list-nav">让球<a href="/WechatPromote/PromoteTypeList?raceType=1&promoteType=1"><span class="more">更多</span></a></div>
@@ -156,7 +156,7 @@
                     //    $.alert(e);
                     //    $.hideIndicator();
                     //});
-                    api.getusers(7,1).then(function (data) {
+                    api.getusers(7,1,true).then(function (data) {
                         this.users = data;
                         $.hideIndicator();
                     }.bind(this), function (e) {
