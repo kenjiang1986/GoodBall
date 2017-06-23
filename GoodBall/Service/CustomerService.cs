@@ -35,6 +35,7 @@ namespace Service
         public void AddCustomer(CustomerDto dto)
         {
             var entity = dto.ToModel<Customer>();
+            entity.AnswerTime = DateTime.Now;
             CustomerRepository.Insert(entity);
         }
 

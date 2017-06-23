@@ -24,5 +24,7 @@ namespace DataCollection.Entity
         public DateTime CreateTime { get; set; }
 
         public DateTime AnswerTime { get; set; }
+
+        public string OpenId { get; set; }
     }
 }

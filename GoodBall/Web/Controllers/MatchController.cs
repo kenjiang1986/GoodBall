@@ -77,6 +77,7 @@ namespace Web.Controllers
                     x.Dish,
                     x.Venue,
                     x.MatchState,
+                    x.MatchResult,
                     CreateTime = x.CreateTime.ToString(),
                 }),
                 total

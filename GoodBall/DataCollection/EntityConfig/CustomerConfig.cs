@@ -13,6 +13,8 @@ namespace DataCollection.EntityConfig
         {
             base.ToTable("Customer");
             base.HasKey(x => x.Id);
+            base.Property(x => x.Question).HasMaxLength(2000);
+            base.Property(x => x.Question).HasMaxLength(2000);
         }
     }
 }

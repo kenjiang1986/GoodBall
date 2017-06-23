@@ -20,7 +20,9 @@ namespace Service
 {
     public class WechatService : MessageHandler<MessageContext<IRequestMessageBase, IResponseMessageBase>>
     {
-         public WechatService(Stream inputStream, PostModel postModel, int maxRecordCount = 0)
+
+        private static string msgContent = string.Format("客服已收到您的消息，将会尽快进行回复，如有紧急问题，请拨打客服电话：{0}", ConfigHelper.CustomerPhone);
+        public WechatService(Stream inputStream, PostModel postModel, int maxRecordCount = 0)
             : base(inputStream, postModel, maxRecordCount)
         {
 
@@ -35,7 +37,7 @@ namespace Service
          public override IResponseMessageBase DefaultResponseMessage(IRequestMessageBase requestMessage)
          {
              var responseMessage = base.CreateResponseMessage<ResponseMessageText>();
-             responseMessage.Content = "本公众号不提供此服务，请迟点再试！";
+             responseMessage.Content = msgContent;
              return responseMessage;
          }
 
@@ -50,8 +52,9 @@ namespace Service
              CustomerService.Instance.AddCustomer(new Dto.CustomerDto()
              {
                  Question = requestMessage.Content,
+                 OpenId = requestMessage.FromUserName
              });
-             responseMessage.Content = "客服已收到您的消息，将会尽快进行回复，如有紧急问题，请拨打客服电话：13570111111";
+             responseMessage.Content = msgContent;
              return responseMessage;
          }
 
@@ -62,15 +65,15 @@ namespace Service
          /// <returns></returns>
          public static SendTemplateMessageResult SendPromoteMessage(WechatPromoteDto request)
          {
-             var templateId = string.Format("{0}", ConfigurationManager.AppSettings["ProjectTemplateId"]);//模板Id
+             var templateId = string.Format("{0}", ConfigurationManager.AppSettings["PromoteTemplateId"]);//模板Id
              var accessToken = AccessTokenContainer.GetAccessToken(ConfigHelper.WeChatAppId);
              var message = new
              {
-                 first = new TemplateDataItem(request.Match, "#000000"),
-                 keyword1 = new TemplateDataItem(request.Result, "#000000"),
-                 //keyword2 = new TemplateDataItem(request.ReportNo, "#000000"),
-                 //keyword3 = new TemplateDataItem(request.ProjectAddress, "#000000"),
-                 //remark = new TemplateDataItem(request.Remark, "#000000")
+                 first = new TemplateDataItem("比赛推介内容：", "#000000"),
+                 keyword1 = new TemplateDataItem(request.MatchTime, "#000000"),
+                 keyword2 = new TemplateDataItem(request.Match, "#000000"),
+                 keyword3 = new TemplateDataItem(request.MatchResult, "#000000"),
+                 remark = new TemplateDataItem(string.Format("推介结果：{0}",request.Result), "#000000")
              };
              var result = TemplateApi.SendTemplateMessage(accessToken, request.OpenId, templateId, "#000000", "", message);
              return result;

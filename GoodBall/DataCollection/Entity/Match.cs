@@ -27,9 +27,11 @@ namespace DataCollection.Entity
         public string Dish { get; set; }
 
         /// <summary>
-        /// 比赛地点
+        /// 比赛地点;
         /// </summary>
         public string  Venue { get; set; }
+
+        public string MatchResult { get; set; }
 
         /// <summary>
         /// 比赛时间

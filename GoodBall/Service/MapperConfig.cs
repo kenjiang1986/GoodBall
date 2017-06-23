@@ -77,7 +77,8 @@ namespace Service
                 .ForMember(x => x.OrderNo, x => x.MapFrom(src => OrderHelper.GetOrderNo()))
                 .ForMember(x => x.CreateTime, x => x.MapFrom(src => DateTime.Now));
 
-            AutoMapper.Mapper.CreateMap<Customer, CustomerDto>();
+            AutoMapper.Mapper.CreateMap<Customer, CustomerDto>()
+                .ForMember(x => x.AnswerTime, x => x.MapFrom(src => src.AnswerTime));
             AutoMapper.Mapper.CreateMap<CustomerDto, Customer>().ForMember(x => x.CreateTime, x => x.MapFrom(src => DateTime.Now));
 
             AutoMapper.Mapper.CreateMap<PayAmount, PayAmountDto>();

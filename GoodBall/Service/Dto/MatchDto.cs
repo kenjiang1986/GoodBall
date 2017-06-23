@@ -42,5 +42,7 @@ namespace Service.Dto
         public string MatchState { get; set; }
 
         public string MatchName { get; set; }
+
+        public string MatchResult { get; set; }
     }
 }

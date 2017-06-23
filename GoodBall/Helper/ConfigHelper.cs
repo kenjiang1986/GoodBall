@@ -22,6 +22,8 @@ namespace Helper
         public static string WeChatEncodingAESKey = ConfigurationManager.AppSettings["WeChatEncodingAESKey"];
 
         public static string AdminName = ConfigurationManager.AppSettings["AdminName"];
+
+        public static string CustomerPhone = ConfigurationManager.AppSettings["CustomerPhone"];
         
         //public static string GetAdminName()
         //{

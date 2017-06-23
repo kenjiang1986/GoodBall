@@ -1,4 +1,6 @@
 ﻿using DataCollection.Entity;
+using EnumUtils;
+using Helper.Enum;
 using Repository;
 using System;
 using System.Collections.Generic;
@@ -64,6 +66,8 @@ namespace Service
             entity.MatchTime = Convert.ToDateTime(dto.MatchTime);
             entity.Dish = dto.Dish;
             entity.Venue = dto.Venue;
+            entity.MatchResult = dto.MatchResult;
+            entity.MatchState = EnumHelper.Parse<MatchStateEnum>(dto.MatchState);
             matchRepository.Save(entity);
         }
 

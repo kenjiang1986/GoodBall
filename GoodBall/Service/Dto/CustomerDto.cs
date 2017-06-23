@@ -23,5 +23,7 @@ namespace Service.Dto
         public string CreateTime { get; set; }
 
         public string AnswerTime { get; set; }
+
+        public string OpenId { get; set; }
     }
 }

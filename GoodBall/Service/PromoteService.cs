@@ -158,9 +158,20 @@ namespace Service
             }
             else if (promote.SendType.Equals(SendTypeEnum.微信))
             {
+                var wechatPromote = new WechatPromoteDto()
+                {
+                    Match =  string.Format("{0}VS{1}", promote.Match.TeamA, promote.Match.TeamB),
+                    MatchTime = promote.Match.MatchTime.ToString(),
+                    Result = promote.Result,
+                    MatchResult = promote.Match.MatchResult
+                };
                 foreach (var user in promote.UserList)
                 {
-                    WechatService.SendPromoteMessage(new WechatPromoteDto());
+                    if (!string.IsNullOrEmpty(user.OpenId))
+                    {
+                        wechatPromote.OpenId = user.OpenId;
+                        WechatService.SendPromoteMessage(wechatPromote);
+                    }
                 }
             }
             promoteRepository.Save(x => x.Id == id, x => new Promote { IsSend = true });

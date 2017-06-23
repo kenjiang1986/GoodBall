@@ -13,5 +13,10 @@ namespace Service.Dto
         public string Match { get; set; }
 
         public string Result { get; set; }
+
+
+        public string MatchTime { get; set; }
+
+        public string MatchResult { get; set; }
     }
 }

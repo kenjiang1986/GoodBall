@@ -5,6 +5,8 @@ using System.Web;
 using System.Web.Http;
 using System.Web.Mvc;
 using System.Web.Routing;
+using Helper;
+using Senparc.Weixin.MP.CommonAPIs;
 
 namespace GoodBall
 {
@@ -19,6 +21,13 @@ namespace GoodBall
             WebApiConfig.Register(GlobalConfiguration.Configuration);
             FilterConfig.RegisterGlobalFilters(GlobalFilters.Filters);
             RouteConfig.RegisterRoutes(RouteTable.Routes);
+
+
+            //日志初始化
+            var path = Server.MapPath("~/log4net.xml");
+            log4net.Config.XmlConfigurator.Configure(new System.IO.FileInfo(path));
+
+            AccessTokenContainer.Register(ConfigHelper.WeChatAppId, ConfigHelper.WeChatSecret);
         }
     }
 }
