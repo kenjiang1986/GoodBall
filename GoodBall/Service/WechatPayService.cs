@@ -99,6 +99,31 @@ namespace Service
             return shareInfo;
         }
 
+        public static void Pay(long amountId)
+        {
+            var amount = PayAmountService.Instance.GetPayAmount(amountId);
+            var user = UserService.GetCurrentUser();
+            UserService.Instance.UpdateUserBalance(user.Id, amount.BaseAmount + amount.GiveAmount);
+        }
+
+        public static string GetOrderNumber()
+        {
+            string Number = DateTime.Now.ToString("yyMMddHHmmss");
+            return Number + Next(1000, 1).ToString();
+        }
+        private static int Next(int numSeeds, int length)
+        {
+            byte[] buffer = new byte[length];
+            System.Security.Cryptography.RNGCryptoServiceProvider Gen = new System.Security.Cryptography.RNGCryptoServiceProvider();
+            Gen.GetBytes(buffer);
+            uint randomResult = 0x0;
+            for (int i = 0; i < length; i++)
+            {
+                randomResult |= ((uint)buffer[i] << ((length - 1 - i) * 8));
+            }
+            return (int)(randomResult % numSeeds);
+        }
+
     }
     
 }

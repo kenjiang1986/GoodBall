@@ -20,6 +20,12 @@ namespace Web.Controllers
            return View();
         }
 
+        public ActionResult PaySuccess(long amountId)
+        {
+            WechatPayService.Pay(amountId);
+            return View();
+        }
+
         public JsonResult GetPayAmounts()
         {
             int total;
@@ -38,7 +44,8 @@ namespace Web.Controllers
 
         public JsonResult Pay(long payAmountId)
         {
-            var result = WechatPayService.PayInfo("", "test", "oBbN2wV9VZ8D_wIqWpzlxJ6IpbtE", "1");
+            var amount = PayAmountService.Instance.GetPayAmount(payAmountId);
+            var result = WechatPayService.PayInfo("", "V币充值", "oBbN2wV9VZ8D_wIqWpzlxJ6IpbtE", ((amount.BaseAmount + amount.GiveAmount) * 100).ToString(), WechatPayService.GetOrderNumber());
             var shareInfo = WechatPayService.GetPayInfo(result.prepay_id);
             return Json(new WechatResponse()
             {

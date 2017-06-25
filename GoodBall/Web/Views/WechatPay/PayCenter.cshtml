@@ -18,7 +18,7 @@
                                     <div class="item-title" v-text="amount.PayAmountText"></div>
                                 </div>
                             </div>
-                            <input type="radio" name="amount" v-bind:value="amount.Id" v-model="amount_mode">
+                            <input type="radio" id="amountId" name="amountId" v-bind:value="amount.Id" v-model="amount.Id">
 
                             <div class="item-media checkbox-item"><i class="icon icon-form-checkbox"></i></div>
                         </label>
@@ -108,13 +108,15 @@
                     case 'weixin':
                         //var oid = window.getParam('id');
                         $.showIndicator();
-                        api.pay(1).then(function (data) {
+                        //alert($("input[name='amountId']:checked").val());
+                        api.pay($("input[name='amountId']:checked").val()).then(function (data) {
                             WeixinJSBridge.invoke('getBrandWCPayRequest', data, function (res) {
                                     $.hideIndicator();
                                     if (res.err_msg == "get_brand_wcpay_request:ok") {
-                                        $.alert('支付成功', function () {
-                                            window.location.href = 'finish.html?id=' + window.getParam('id');
-                                        });
+                                        window.location.href = '/WechatPay/PaySuccess?amountId=' + $("input[name='amountId']:checked").val();
+                                        //$.alert('支付成功', function () {
+                                        //    window.location.href = 'finish.html?id=' + window.getParam('id');
+                                        //});
                                     }
                                 }
                             );

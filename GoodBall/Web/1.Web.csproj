@@ -940,6 +940,7 @@
     <Content Include="Views\WechatPromote\UserPromoteList.cshtml" />
     <Content Include="Views\WechatShop\UserOrders.cshtml" />
     <Content Include="Views\WechatPromote\PublishGame.cshtml" />
+    <Content Include="Views\WechatPay\PaySuccess.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
