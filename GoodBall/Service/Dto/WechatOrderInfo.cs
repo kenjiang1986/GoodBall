@@ -23,16 +23,15 @@ namespace Service.Dto
 
         public string sign { get; set; }
 
-
-
         public string result_code { get; set; }
         public string prepay_id { get; set; }
+        public string err_code { get; set; }
+
+        public string err_code_des { get; set; }
+
+        public string code_url { get; set; }
+
         public string trade_type { get; set; }
 
-       
-
-
-
-        
     }
 }

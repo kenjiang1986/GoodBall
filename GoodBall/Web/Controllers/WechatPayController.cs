@@ -10,7 +10,7 @@ using Service.Dto;
 
 namespace Web.Controllers
 {
-    public class WechatPayController : Controller
+    public class WechatPayController : WechatBaseController
     {
         //
         // GET: /WechatPay/
@@ -44,8 +44,9 @@ namespace Web.Controllers
 
         public JsonResult Pay(long payAmountId)
         {
+            //var result = WechatPayService.PayInfo("", "test", "oBbN2wV9VZ8D_wIqWpzlxJ6IpbtE", " WechatPayService.GetOrderNumber());
             var amount = PayAmountService.Instance.GetPayAmount(payAmountId);
-            var result = WechatPayService.PayInfo("", "V币充值", "oBbN2wV9VZ8D_wIqWpzlxJ6IpbtE", ((amount.BaseAmount + amount.GiveAmount) * 100).ToString(), WechatPayService.GetOrderNumber());
+            var result = WechatPayService.PayInfo("", "V币充值",UserService.GetCurrentUser().OpenId , ((amount.BaseAmount + amount.GiveAmount) * 100).ToString(), WechatPayService.GetOrderNumber());
             var shareInfo = WechatPayService.GetPayInfo(result.prepay_id);
             return Json(new WechatResponse()
             {

@@ -108,22 +108,10 @@ namespace Service
 
         public static string GetOrderNumber()
         {
-            string Number = DateTime.Now.ToString("yyMMddHHmmss");
-            return Number + Next(1000, 1).ToString();
+            byte[] buffer = Guid.NewGuid().ToByteArray();
+            var instanceNo = BitConverter.ToInt64(buffer, 0).ToString();
+            return instanceNo;
         }
-        private static int Next(int numSeeds, int length)
-        {
-            byte[] buffer = new byte[length];
-            System.Security.Cryptography.RNGCryptoServiceProvider Gen = new System.Security.Cryptography.RNGCryptoServiceProvider();
-            Gen.GetBytes(buffer);
-            uint randomResult = 0x0;
-            for (int i = 0; i < length; i++)
-            {
-                randomResult |= ((uint)buffer[i] << ((length - 1 - i) * 8));
-            }
-            return (int)(randomResult % numSeeds);
-        }
-
     }
     
 }
