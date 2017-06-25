@@ -187,6 +187,13 @@
                 price: price
             }, 'POST');
         },
+        //添加竞彩
+        'pay': function (id) {
+            return $.promiseApi('WechatPay/Pay', {
+                payAmountId: id,
+                
+            }, 'POST');
+        },
 
        
     };

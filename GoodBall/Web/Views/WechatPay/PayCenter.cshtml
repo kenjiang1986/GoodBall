@@ -57,6 +57,7 @@
             order: {
                 total_price: 0
             },
+            //payRequest : {},
             amounts: [
                 {
                     key: '500',
@@ -105,9 +106,9 @@
             pay$$payment: function () {
                 switch (this.pay_mode) {
                     case 'weixin':
-                        var oid = window.getParam('id');
+                        //var oid = window.getParam('id');
                         $.showIndicator();
-                        api.wx_pay(oid).then(function (data) {
+                        api.pay(1).then(function (data) {
                             WeixinJSBridge.invoke('getBrandWCPayRequest', data, function (res) {
                                     $.hideIndicator();
                                     if (res.err_msg == "get_brand_wcpay_request:ok") {
@@ -136,4 +137,7 @@
 
         })
     });
-})(Vue, Zepto, jQuery.api);</script>
+})(Vue, Zepto, jQuery.api);
+    
+
+    </script>

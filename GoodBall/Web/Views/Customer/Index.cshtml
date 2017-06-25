@@ -32,7 +32,7 @@
   
 
     function Update(value, row) {
-        var result = "<a href='javascript:void(0)' onclick='Answer(\"" + row.Id + "\")'>回答</a>  ";
+        var result = "<a href='javascript:void(0)' onclick='Answer(\"" + row.Id + "\",\""+ row.OpenId +"\")'>回答</a>  ";
         result += "<a href='javascript:void(0)' onclick='DeleteCustomer(\"" + row.Id + "\")'>删除</a>  ";
      
         return result;
@@ -62,9 +62,9 @@
     }
 
 
-    function Answer(id) {
-        var url = "/Customer/Answer?id=" + id;
-        var title = '回答'
+    function Answer(id, openId) {
+        var url = "/Customer/Answer?id=" + id +"&openId=" + openId;
+        var title = '回答' 
     
         $.layer({
             scrolling: 'auto',

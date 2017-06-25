@@ -59,7 +59,7 @@ namespace Service
          }
 
          /// <summary>
-         /// 发送微信消息
+         /// 发送推介消息
          /// </summary>
          /// <param name="request"></param>
          /// <returns></returns>
@@ -76,6 +76,27 @@ namespace Service
                  remark = new TemplateDataItem(string.Format("推介结果：{0}",request.Result), "#000000")
              };
              var result = TemplateApi.SendTemplateMessage(accessToken, request.OpenId, templateId, "#000000", "", message);
+             return result;
+         }
+
+         /// <summary>
+         /// 发送客服消息
+         /// </summary>
+         /// <param name="request"></param>
+         /// <returns></returns>
+         public static SendTemplateMessageResult SendCustomerMessage(string remark, string openId)
+         {
+             var templateId = string.Format("{0}", ConfigurationManager.AppSettings["CustomerTemplateId"]);//模板Id
+             var accessToken = AccessTokenContainer.GetAccessToken(ConfigHelper.WeChatAppId);
+             var message = new
+             {
+                 first = new TemplateDataItem("问题反馈回复", "#000000"),
+                 keyword1 = new TemplateDataItem("问题", "#000000"),
+                 keyword2 = new TemplateDataItem("客服", "#000000"),
+                 keyword3 = new TemplateDataItem(ConfigHelper.CustomerPhone, "#000000"),
+                 remark = new TemplateDataItem( remark, "#000000")
+             };
+             var result = TemplateApi.SendTemplateMessage(accessToken, openId, templateId, "#000000", "", message);
              return result;
          }
     }

@@ -33,12 +33,16 @@ namespace Web.Controllers
             });
         }
 
-        public JsonResult UpdateCustomer(CustomerDto Customer)
+        public JsonResult UpdateCustomer(CustomerDto customer)
         {
-            return ExceptionCatch.Invoke(() =>
+            return ExceptionCatch.Invoke(() => 
             {
-                CustomerService.Instance.UpdateCustomer(Customer);
-                //todo:发送到微信端 
+                CustomerService.Instance.UpdateCustomer(customer);
+                if (!string.IsNullOrEmpty(customer.OpenId))
+                {
+                    var c = CustomerService.Instance.GetCustomer(customer.Id);
+                    WechatService.SendCustomerMessage(string.Format("问题：{0},回复：{1}", c.Question, customer.Answer), customer.OpenId);
+                }
             });
         }
 
@@ -62,6 +66,7 @@ namespace Web.Controllers
                     x.Id,
                     x.Question,
                     x.Answer,
+                    x.OpenId,
                     AnswerTime = x.AnswerTime.ToString(),
                     CreateTime = x.CreateTime.ToString(),
                 }),

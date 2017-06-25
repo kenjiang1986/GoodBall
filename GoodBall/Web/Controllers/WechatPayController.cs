@@ -3,8 +3,10 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Web;
 using System.Web.Mvc;
+using Helper;
 using Service;
 using Service.API;
+using Service.Dto;
 
 namespace Web.Controllers
 {
@@ -15,7 +17,7 @@ namespace Web.Controllers
 
         public ActionResult PayCenter()
         {
-            return View();
+           return View();
         }
 
         public JsonResult GetPayAmounts()
@@ -33,5 +35,23 @@ namespace Web.Controllers
                 })
             }, JsonRequestBehavior.AllowGet);
         }
+
+        public JsonResult Pay(long payAmountId)
+        {
+            var result = WechatPayService.PayInfo("", "test", "oBbN2wV9VZ8D_wIqWpzlxJ6IpbtE", "1");
+            var shareInfo = WechatPayService.GetPayInfo(result.prepay_id);
+            return Json(new WechatResponse()
+            {
+                data = new
+                {
+                    appId = shareInfo.CorpId,
+                    timeStamp = shareInfo.Timestamp,
+                    nonceStr = shareInfo.Noncestr,
+                    package = shareInfo.Package,
+                    signType = "MD5",
+                    paySign= shareInfo.PaySign
+                }
+            }, JsonRequestBehavior.AllowGet);
+        }
     }
-}
+}  

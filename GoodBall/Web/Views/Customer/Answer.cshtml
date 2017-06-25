@@ -3,6 +3,9 @@
 }
 <script>
     var id = "@Request.QueryString["Id"]";
+    var openId = "@Request.QueryString["openId"]";
+
+
    
     function Submit() {
         if (!$("#form1").form('validate')) {
@@ -11,6 +14,7 @@
 
 
         $("#id").val(id);
+        $("#openId").val(openId);
         loadTips.showLoading();
         var url = "/Customer/UpdateCustomer";
         $.ajax({
@@ -38,6 +42,7 @@
 <form id="form1" class="easyui-doc-form">
 
     <input type="hidden" id="id" name="id" />
+    <input type="hidden" id="openId" name="openId" />
 
     <table class="easyui-doc-table">
         <tr>
@@ -45,7 +50,7 @@
                 回复
             </td>
             <td>
-                <input type="text" id="Answer" name="Answer" style="padding-left:5px; line-height:20px;" class="easyui-validatebox textbox" missingmessage="请填写回复" required="true" />
+                <input id="Answer" name="Answer" style="width:200px;height:200px;" class="easyui-textbox" data-options="multiline:true" required="true" />
             </td>
         </tr>
      
