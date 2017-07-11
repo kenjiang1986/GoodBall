@@ -4,7 +4,7 @@
 
 <div class="products-page content page" id="productlist">
     <div class="banner">
-        <img src="../images/exchange_top_bg.png">
+        积分商城
     </div>
     <div class="">
         <div class="content-block-title">您共有<b class="text-danger">@ViewBag.UserIntegral</b>积分</div>
@@ -14,6 +14,7 @@
                     <div class="tit">
                         <img v-bind:src="product.GoodsImage" />
                         <p v-text="product.GoodsName"></p>
+                       <p> 剩余：{{product.Quantity}}件</p>
                     </div>
                     <div class="txt">
                         <span><em v-text="product.Integral"></em>积分</span>
