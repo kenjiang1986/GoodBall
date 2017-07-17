@@ -30,6 +30,10 @@ namespace Service
             {
                 query = query.Where(x => x.RaceType.ToString() == cond.RaceType);
             }
+            if (cond.IsSend.HasValue)
+            {
+                query = query.Where(x => x.IsSend == cond.IsSend.Value);
+            }
             query = query.OrderByDescending(x => x.CreateTime);
             return promoteRepository.FindForPaging(size, index, query, out total).ToList().ToListModel<Promote, PromoteDto>();
         }
@@ -149,7 +153,7 @@ namespace Service
         {
             var promote = promoteRepository.Find(x => x.Id == id).FirstOrDefault();
 
-            if(promote.SendType.Equals(SendTypeEnum.短信))
+            if (promote.SendType.Equals(SendTypeEnum.短信))
             {
                 foreach (var user in promote.UserList)
                 {
@@ -160,7 +164,7 @@ namespace Service
             {
                 var wechatPromote = new WechatPromoteDto()
                 {
-                    Match =  string.Format("{0}VS{1}", promote.Match.TeamA, promote.Match.TeamB),
+                    Match = string.Format("{0}VS{1}", promote.Match.TeamA, promote.Match.TeamB),
                     MatchTime = promote.Match.MatchTime.ToString(),
                     Result = promote.Result,
                     MatchResult = promote.Match.MatchResult
@@ -174,6 +178,7 @@ namespace Service
                     }
                 }
             }
+
             promoteRepository.Save(x => x.Id == id, x => new Promote { IsSend = true });
         }
     }

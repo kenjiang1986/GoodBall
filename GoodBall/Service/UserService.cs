@@ -202,6 +202,7 @@ namespace Service
             var rechargeRecord = new RechargeRecord();
             rechargeRecord.CreateTime = DateTime.Now;
             rechargeRecord.Operator = GetCurrentUser().UserName;
+            rechargeRecord.UserName = entity.UserName;
             rechargeRecord.Price = price;
             rechargeRecord.UserId = userId;
 

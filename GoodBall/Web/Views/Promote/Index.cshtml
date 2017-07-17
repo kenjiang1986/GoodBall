@@ -29,8 +29,9 @@
     function Update(value, row) {
         var result = "<a href='javascript:void(0)' onclick='UpSetPromote(\"" + row.Id + "\")'>编辑</a>  ";
         result += "<a href='javascript:void(0)' onclick='DelPromote(\"" + row.Id + "\")'>删除</a>  ";
-        result += "<a href='javascript:void(0)' onclick='SendPromote(\"" + row.Id + "\")'>发送</a>  ";
-
+        if (row.IsSend != "是") {
+            result += "<a href='javascript:void(0)' onclick='SendPromote(\"" + row.Id + "\")'>发送</a>  ";
+        }
         return result;
 
     }
@@ -58,18 +59,22 @@
     }
 
     function SendPromote(id) {
-        $.ajax({
-            type: "post",
-            url: "/Promote/SendPromote",
-            data: { id: id },
-            success: function (data) {
-                if (data) {
-                    alert("发送成功", "success", function () {
-                        Search();
-                    });
-                } else {
-                    alert("操作失败", "error");
-                }
+        $.messager.confirm('温馨提示', '确定要发送推介吗？', function (r) {
+            if (r) {
+                $.ajax({
+                    type: "post",
+                    url: "/Promote/SendPromote",
+                    data: { id: id },
+                    success: function (data) {
+                        if (data) {
+                            alert("发送成功", "success", function () {
+                                Search();
+                            });
+                        } else {
+                            alert("操作失败", "error");
+                        }
+                    }
+                });
             }
         });
     }
@@ -97,7 +102,16 @@
                     <td>结束时间:</td>
                     <td><input type="text" id="EndDate" class="easyui-datetimebox" /></td>
                     <td>
-                    <td>竞彩类型:</td>
+                    <td>是否发送:</td>
+                    <td>
+                        <select id="IsSend" name="IsSend" class="easyui-doc-select">
+                            <option></option>
+                            <option value="true">是</option>
+                            <option value="false">否</option>
+                        </select>
+                    </td>
+                    <td>
+<td>竞彩类型:</td>
                     <td><select id="RaceType" name="RaceType" class="easyui-doc-select">
                             <option></option>
                             @{foreach (var item in ViewBag.RaceType)

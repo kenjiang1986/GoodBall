@@ -26,7 +26,7 @@
         methods: {
             pageload: function () {
                 //$.showIndicator();
-                api.get_newslist("博彩趣谈").then(function (data) {
+                api.get_newslist("竞彩趣谈").then(function (data) {
                     this.news = data;
                     $.hideIndicator();
                 }.bind(this), function(msg) {

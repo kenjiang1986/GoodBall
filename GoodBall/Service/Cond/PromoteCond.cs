@@ -48,5 +48,7 @@ namespace Service.Cond
         public int PromoteType { get; set; }
 
         public long UserId { get; set; }
+
+        public bool? IsSend { get; set; }
     }
 }
