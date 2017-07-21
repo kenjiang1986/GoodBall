@@ -148,7 +148,7 @@
             },
             methods: {
                 banners$$load: function () {
-                    //$.showIndicator();
+                    $.showIndicator();
                     //api.get_weixin_banner().then(function (banners) {
                     //    this.banners = banners;
                     //    $.hideIndicator();
@@ -191,6 +191,7 @@
                     if (!confirm("确定要购买吗？")) {
                         return false;
                     }
+                    $.showIndicator();
                     api.buyPromote(promoteId).then(function (data) {
                         WechatAlert(data);
                         $.scope().banners$$load();

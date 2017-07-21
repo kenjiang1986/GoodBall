@@ -190,7 +190,7 @@ namespace Service
             UpdateUserCookie(user.Id);
         }
 
-        public void UpdateUserBalance(long userId, int price)
+        public void UpdateUserBalance(long userId, int price, string rechargeRemark)
         {
             var entity = userRepository.Find(x => x.Id == userId).FirstOrDefault();
             if (entity == null)
@@ -205,6 +205,7 @@ namespace Service
             rechargeRecord.UserName = entity.UserName;
             rechargeRecord.Price = price;
             rechargeRecord.UserId = userId;
+            rechargeRecord.Remark = rechargeRemark;
 
             userRepository.Transaction(()=>
             {

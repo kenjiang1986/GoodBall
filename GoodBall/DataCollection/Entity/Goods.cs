@@ -32,7 +32,9 @@ namespace DataCollection.Entity
         /// </summary>
         public string GoodsImage { get; set; }
 
-
-
+        /// <summary>
+        /// 尺寸
+        /// </summary>
+        public string Size { get; set; }
     }
 }

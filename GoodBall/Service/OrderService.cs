@@ -48,7 +48,7 @@ namespace Service
         }
 
         public void AddOrder(OrderDto dto)
-        {
+            {
             var goods = GoodsRepository.Instance.Find(x => x.Id == dto.GoodsId).FirstOrDefault();
             if (goods == null)
             {
@@ -59,7 +59,11 @@ namespace Service
                 throw new ServiceException("此商品库存不足");
             }
             var userId = UserService.GetCurrentUser().Id;
-            var user = UserRepository.Instance.Find(x => x.Id == userId).FirstOrDefault();
+            var user = UserService.Instance.GetUser(userId);
+            if (user == null)
+            {
+                throw new ServiceException("当前用户未登录，不能完成下单操作");
+            }
             if (user.Integral < goods.Integral)
             {
                 throw new ServiceException("对不起，您的积分暂时不足以兑换此商品，请选择其它商品进行兑换");

@@ -60,6 +60,7 @@
             },
             methods: {
                 pageload: function (userId, promoteType) {
+                    $.showIndicator();
                     if (promoteType == 1) {
                         this.promoteType = "已购买的推介";
                     }

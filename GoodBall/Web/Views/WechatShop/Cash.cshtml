@@ -22,6 +22,27 @@
                 <li>
                     <div class="item-content">
                         <div class="item-inner">
+                            <div class="item-title label">尺码:</div>
+                            <div class="item-input">
+                                @*<select id="Size" name="Size">
+                                    @{foreach (var item in ViewBag.SizeList)
+                                    {
+                                        <option value="@item">@item</option>
+                                    }}
+                                </select>*@
+                                <select v-model="size">
+                                    <option v-for="option in sizeList" v-bind:value="option">
+                                        {{option}}
+                                    </option>
+                                </select>
+                            </div>
+
+                        </div>
+                    </div>
+                </li>
+                <li>
+                    <div class="item-content">
+                        <div class="item-inner">
                             <div class="item-title label">收件人:</div>
                             <div class="item-input">
                                 <input type="text" v-model="address.contactor" placeholder="输入您的姓名">
@@ -76,52 +97,47 @@
             el: '#address-form',
             data: {
                 address: {},
-                dists: []
+                size:'',
+                sizeList:[]
             },
             methods: {
                 address$$submit: function () {
+                    $.showIndicator();
                     var self = this;
-                    if (!this.address.contactor || !this.address.mobile || !this.address.doorplate || !this.address.qty) {
+                    if (!this.address.contactor || !this.address.mobile || !this.address.doorplate || !this.address.qty || this.size =='') {
                         return $.toast('请输入完整的收件信息');
                     } else {
                         $.showIndicator();
                         api.addOrder(self.address.qty,
-                                self.address.contactor,
-                              self.address.mobile,
-                              self.address.mCode,
-                              self.address.doorplate,
-                              getParam('id')).then(function () {
-                                  $.hideIndicator();
-                                  alert('兑换成功');
-                              }, function (msg) {
-                                  alert(msg);
-                              })
-                        //confirm('确定兑换?', function () {
-                        //    api.add_addr(self.address.qty,
-                        //        self.address.contactor,
-                        //      self.address.mobile,
-                        //      self.address.mCode,
-                        //      self.address.doorplate,
-                        //      getParam('id')).then(function () {
-                        //          $.hideIndicator();
-                        //          alert('兑换成功');
-                        //      }, function (msg) {
-                        //          alert(msg);
-                        //      })
-
-                        //});
-
+                            self.address.contactor,
+                            self.address.mobile,
+                            self.address.mCode,
+                            self.address.doorplate,
+                            getParam('id'),
+                            self.address.size
+                            ).then(function(data) {
+                            $.hideIndicator();
+                            WechatAlert(data);
+                        }, function(msg) {
+                            alert(msg);
+                        });
                     }
+                },
+                address$$load: function (id) {
+                    $.showIndicator();
+                    api.getGoodsSize(id).then(function (data) {
+                        this.sizeList = data;
+                        $.hideIndicator();
+                    }.bind(this), function (e) {
+                        $.alert(e);
+                        $.hideIndicator();
+                    });
                 }
             },
             ready: init(function () {
-                //$.scope().address$$load(1);
-                //$("#city-picker").cityPicker({
-                //    toolbarTemplate: '<header class="bar bar-nav">\
-                //<button class="button button-link pull-right close-picker">确定</button>\
-                //<h1 class="title">选择收货地址</h1>\
-                //</header>'
-                //});
+                $.scope().address$$load( getParam('id'));
+               
+
             })
         });
     })(Vue, Zepto, jQuery.api);

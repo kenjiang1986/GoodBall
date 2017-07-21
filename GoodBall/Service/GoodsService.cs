@@ -43,6 +43,7 @@ namespace Service
             goodsRepository.Save(x => x.Id == dto.Id, x => new Goods
             {
                 GoodsName = dto.GoodsName,
+                Size= dto.Size,
                 Quantity = Convert.ToInt32(dto.Quantity),
                 Integral = Convert.ToInt32(dto.Integral)
             });

@@ -31,5 +31,15 @@ namespace Service.Dto
         /// 货物图片
         /// </summary>
         public string GoodsImage { get; set; }
+
+        /// <summary>
+        /// 尺寸
+        /// </summary>
+        public string Size { get; set; }
+
+        /// <summary>
+        /// 尺寸数据
+        /// </summary>
+        public List<string> SizeList { get; set; }
     }
 }

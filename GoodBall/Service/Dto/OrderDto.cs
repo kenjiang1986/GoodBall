@@ -55,5 +55,7 @@ namespace Service.Dto
         public string PostCode { get; set; }
 
         public long GoodsId { get; set; }
+
+        public string Size { get; set; }
     }
 }

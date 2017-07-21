@@ -10,6 +10,7 @@
         }
 
         $("#id").val(id);
+        $("#remark").val("后台赠送用户V币");
         loadTips.showLoading();
         var url = "/User/UpdateUserBalance";
         $.ajax({
@@ -37,6 +38,7 @@
 <form id="form1" class="easyui-doc-form">
 
     <input type="hidden" id="id" name="id" />
+    <input type="hidden" id="remark" name="remark" />
 
     <table class="easyui-doc-table">
         <tr>

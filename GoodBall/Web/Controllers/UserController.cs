@@ -82,11 +82,11 @@ namespace GoodBall.Controllers
         /// <param name="userId"></param>
         /// <param name="price"></param>
         /// <returns></returns>
-        public JsonResult UpdateUserBalance(long? id, int? price)
+        public JsonResult UpdateUserBalance(long? id, int? price, string remark)
         {
             return ExceptionCatch.Invoke(() =>
             {
-                UserService.Instance.UpdateUserBalance(id.Value, price.Value);
+                UserService.Instance.UpdateUserBalance(id.Value, price.Value, remark);
             });
         }
 

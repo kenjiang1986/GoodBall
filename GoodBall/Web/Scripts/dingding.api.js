@@ -166,14 +166,15 @@
             return $.promiseApi('WechatShop/GetUserOrders', { userId: userId });
         },
        //添加订单
-        'addOrder': function (qty,contactor, mobile, postcode, doorplate, goodsid) {
+        'addOrder': function (qty,contactor, mobile, postcode, doorplate, goodsid,size) {
             return $.promiseApi('WechatShop/AddOrder', {
                 qty: qty,
                 contactor: contactor,
                 mobile: mobile,
                 postcode: postcode,
                 doorplate: doorplate,
-                goodsid: goodsid
+                goodsid: goodsid,
+                size: size
             },'POST');
         },
         //添加竞彩
@@ -191,10 +192,15 @@
         'pay': function (id) {
             return $.promiseApi('WechatPay/Pay', {
                 payAmountId: id,
-                
+            });
+        },
+        //获取货物尺码列表 
+        'getGoodsSize': function (id) {
+            return $.promiseApi('WechatShop/GetProductSize', {
+                id: id,
+
             }, 'POST');
         },
-
        
     };
 

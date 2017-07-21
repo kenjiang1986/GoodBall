@@ -54,12 +54,25 @@ namespace Web.Controllers
                     x.GoodsImage,
                     x.Integral,
                     x.Quantity,
+                    Size = "",
+                    x.SizeList
                 })
             }, JsonRequestBehavior.AllowGet);
         }
 
+        public JsonResult GetProductSize(long id)
+        {
+            
+            var result = GoodsService.Instance.GetGoods(id);
+
+            return Json(new WechatResponse()
+            {
+                data = result.SizeList
+            }, JsonRequestBehavior.AllowGet);
+        }
+
         [HttpPost]
-        public JsonResult AddOrder(string qty, string contactor, string mobile, string doorplate, string postCode, long goodsId)
+        public JsonResult AddOrder(string qty, string contactor, string mobile, string doorplate, string postCode, long goodsId, string size)
         {
             var order = new OrderDto()
             {
@@ -68,10 +81,14 @@ namespace Web.Controllers
                 Address = doorplate,
                 Receiver = contactor,
                 PostCode = postCode,
-                GoodsId = goodsId
+                GoodsId = goodsId,
+                Size = size
             };
-           
-            OrderService.Instance.AddOrder(order);
+            
+            return ExceptionCatch.WechatInvoke(() =>
+            {
+                OrderService.Instance.AddOrder(order);
+            }, "兑换成功");
             
 
             return Json(new WechatResponse()

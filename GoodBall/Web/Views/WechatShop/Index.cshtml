@@ -13,12 +13,14 @@
                 <div class="product-box">
                     <div class="tit">
                         <img v-bind:src="product.GoodsImage" />
-                        <p v-text="product.GoodsName"></p>
-                       <p> 剩余：{{product.Quantity}}件</p>
+                        <p>名称：{{product.GoodsName}}</p>
+                      
+                        <p> 剩余：{{product.Quantity}}件</p>
                     </div>
+                  
                     <div class="txt">
                         <span><em v-text="product.Integral"></em>积分</span>
-                        <a v-bind:href="'/WechatShop/Cash?id='+product.Id" class="button button-fill button-danger">点击兑换</a>
+                        <a v-on:click="products$$exchange(product.Id)"  class="button button-fill button-danger">点击兑换</a>
                     </div>
                 </div>
             </div>
@@ -27,17 +29,17 @@
     </div>
 </div>
 
-
+()
 <script type="text/javascript">
     (function (Vue, $, api) {
         window.vm = new Vue({
             el: '#productlist',
             data: {
-                products: []
-            },
+                products: [],
+               },
             methods: {
                 products$$load: function (callback) {
-                    //$.showIndicator();
+                    $.showIndicator();
                     api.shop_products().then(function (products) {
                         this.products = this.products.concat(products);
                         this.loading = false;
@@ -72,10 +74,8 @@
                         })
                     });*/
                 },
-                products$$exchange: function () {
-                    $.confirm('确定兑换?', function () {
-                        $.alert('兑换成功');
-                    });
+                products$$exchange: function (productId) {
+                        window.location.href = "/WechatShop/Cash?id=" + productId;
                 }
             },
             watch: {

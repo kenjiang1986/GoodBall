@@ -63,7 +63,8 @@ namespace Service
             entity.SendType = EnumHelper.Parse<SendTypeEnum>(dto.SendType);
             promoteRepository.Transaction(() =>
             {
-                if (entity.State.Equals(PromoteStateEnum.中) && !entity.IsReturn)
+                //推介不中并且未退费，进行退费操作
+                if (entity.State.Equals(PromoteStateEnum.不中) && !entity.IsReturn)
                 {
                     entity.IsReturn = true;
                     ReturnPrice(entity.Price, entity.UserList.ToList());
@@ -108,6 +109,7 @@ namespace Service
 
         public bool BuyPromote(int id)
         {
+            bool isAddRecord = false;
             var promote = promoteRepository.Find(x => x.Id == id).FirstOrDefault();
             if (promote == null)
             {
@@ -130,6 +132,7 @@ namespace Service
             if (promote.PromoteType == 1)
             {
                 user.Balance = user.Balance - promote.Price;
+                isAddRecord = true;
             }
             else if (promote.PromoteType == 2)
             {
@@ -140,6 +143,21 @@ namespace Service
             {
                 promoteRepository.Save(promote);
                 UserRepository.Instance.Save(user);
+                if (isAddRecord)
+                {
+                    RechargeRecordService.Instance.AddRecharge
+                      (
+                          new RechargeRecordDto()
+                          {
+                              Price = promote.Price,
+                              Operator = UserService.GetCurrentUser().UserName,
+                              UserId = user.Id,
+                              UserName = user.UserName,
+                              Remark = string.Format("购买推介用户余额扣减{0}V币", promote.Price)
+                          }
+                      );
+                }
+               
             });
             return true;
         }

@@ -50,6 +50,8 @@
                     //    $.alert(e);
                     //    $.hideIndicator();
                     //});
+
+
                     api.getusers(1000,1,isAdmin).then(function (data) {
                         this.users = data;
                         $.hideIndicator();

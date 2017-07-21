@@ -86,15 +86,16 @@
                     text: '微信支付',
                     desc: ''
                 },
-                {
-                    key: 'alipay',
-                    text: '支付宝支付',
-                    desc: ''
-                }
+                //{
+                //    key: 'alipay',
+                //    text: '支付宝支付',
+                //    desc: ''
+                //}
             ]
         },
         methods: {
             pay$$load: function () {
+                $.showIndicator();
                 api.getPayAmount().then(function (data) {
                     this.amounts = data;
                     $.hideIndicator();

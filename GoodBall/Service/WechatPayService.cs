@@ -103,7 +103,7 @@ namespace Service
         {
             var amount = PayAmountService.Instance.GetPayAmount(amountId);
             var user = UserService.GetCurrentUser();
-            UserService.Instance.UpdateUserBalance(user.Id, amount.BaseAmount + amount.GiveAmount);
+            UserService.Instance.UpdateUserBalance(user.Id, amount.BaseAmount + amount.GiveAmount, "用户充值V币");
         }
 
         public static string GetOrderNumber()

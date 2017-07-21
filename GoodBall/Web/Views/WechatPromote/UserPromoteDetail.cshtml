@@ -66,6 +66,7 @@
             },
             methods: {
                 pageload: function (userId) {
+                    $.showIndicator();
                     api.getUserById(userId).then(function (data) {
                         this.user = data;
                         $.hideIndicator();
@@ -85,6 +86,7 @@
                     if (!confirm("确定要购买吗？")) {
                         return false;
                     }
+                    $.showIndicator();
                     api.buyPromote(promoteId).then(function (data) {
                         WechatAlert(data);
                         $.scope().pageload();

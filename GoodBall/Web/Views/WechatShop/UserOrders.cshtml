@@ -63,7 +63,7 @@
             },
             methods: {
                 pageload: function (userId) {
-                   
+                    $.showIndicator();
                     api.getUserOrders(userId).then(function (data) {
                         this.orders = data;
                         $.hideIndicator();

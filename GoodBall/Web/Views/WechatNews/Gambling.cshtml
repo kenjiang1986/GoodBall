@@ -25,7 +25,7 @@
         },
         methods: {
             pageload: function () {
-                //$.showIndicator();
+                $.showIndicator();
                 api.get_newslist("竞彩趣谈").then(function (data) {
                     this.news = data;
                     $.hideIndicator();

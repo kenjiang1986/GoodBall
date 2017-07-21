@@ -46,7 +46,7 @@ namespace Web.Controllers
         {
             //var result = WechatPayService.PayInfo("", "test", "oBbN2wV9VZ8D_wIqWpzlxJ6IpbtE", " WechatPayService.GetOrderNumber());
             var amount = PayAmountService.Instance.GetPayAmount(payAmountId);
-            var result = WechatPayService.PayInfo("", "V币充值",UserService.GetCurrentUser().OpenId , ((amount.BaseAmount + amount.GiveAmount) * 100).ToString(), WechatPayService.GetOrderNumber());
+            var result = WechatPayService.PayInfo("", "V币充值",UserService.GetCurrentUser().OpenId , (amount.BaseAmount * 100).ToString(), WechatPayService.GetOrderNumber());
             var shareInfo = WechatPayService.GetPayInfo(result.prepay_id);
             return Json(new WechatResponse()
             {
