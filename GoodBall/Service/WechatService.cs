@@ -37,7 +37,7 @@ namespace Service
          public override IResponseMessageBase DefaultResponseMessage(IRequestMessageBase requestMessage)
          {
              var responseMessage = base.CreateResponseMessage<ResponseMessageText>();
-             responseMessage.Content = msgContent;
+             responseMessage.Content = "公众号即将在8月上旬上线，敬请关注！";
              return responseMessage;
          }
 
