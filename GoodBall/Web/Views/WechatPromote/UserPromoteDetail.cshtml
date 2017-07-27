@@ -66,19 +66,19 @@
             },
             methods: {
                 pageload: function (userId) {
-                    $.showIndicator();
+                    var index = layer.open({type: 2,shadeClose:false});
                     api.getUserById(userId).then(function (data) {
                         this.user = data;
-                        $.hideIndicator();
+                        layer.close(index);
                     }.bind(this), function (msg) {
-                        $.hideIndicator();
+                        layer.close(index);
                         $.alert(msg);
                     });
                     api.getUserPublishPromotes(userId, 1).then(function (data) {
                         this.promotes = data;
-                        $.hideIndicator();
+                        layer.close(index);
                     }.bind(this), function (msg) {
-                        $.hideIndicator();
+                        layer.close(index);
                         $.alert(msg);
                     });
                 },
@@ -86,14 +86,14 @@
                     if (!confirm("确定要购买吗？")) {
                         return false;
                     }
-                    $.showIndicator();
+                    var index = layer.open({type: 2,shadeClose:false});
                     api.buyPromote(promoteId).then(function (data) {
                         WechatAlert(data);
                         $.scope().pageload();
-                        $.hideIndicator();
+                        layer.close(index);
                     }.bind(this), function (e) {
                         $.alert(e);
-                        $.hideIndicator();
+                        layer.close(index);
                     });
                 }
             },

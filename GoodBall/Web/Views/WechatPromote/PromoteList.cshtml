@@ -148,41 +148,41 @@
             },
             methods: {
                 banners$$load: function () {
-                    $.showIndicator();
+                    var index = layer.open({type: 2,shadeClose:false});
                     //api.get_weixin_banner().then(function (banners) {
                     //    this.banners = banners;
-                    //    $.hideIndicator();
+                    //    layer.close(index);
                     //}.bind(this), function (e) {
                     //    $.alert(e);
-                    //    $.hideIndicator();
+                    //    layer.close(index);
                     //});
                     api.getusers(7,1,true).then(function (data) {
                         this.users = data;
-                        $.hideIndicator();
+                        layer.close(index);
                     }.bind(this), function (e) {
                         $.alert(e);
-                        $.hideIndicator();
+                        layer.close(index);
                     });
                     api.promote('让球', 1).then(function (data) {
                         this.yangqiu = data;
-                        $.hideIndicator();
+                        layer.close(index);
                     }.bind(this), function (e) {
                         $.alert(e);
-                        $.hideIndicator();
+                        layer.close(index);
                     });
                     api.promote('竞彩', 1).then(function (data) {
                         this.jingcai = data;
-                        $.hideIndicator();
+                        layer.close(index);
                     }.bind(this), function (e) {
                         $.alert(e);
-                        $.hideIndicator();
+                        layer.close(index);
                     });
                     api.promote('足彩310', 1).then(function (data) {
                         this.zucai = data;
-                        $.hideIndicator();
+                        layer.close(index);
                     }.bind(this), function (e) {
                         $.alert(e);
-                        $.hideIndicator();
+                        layer.close(index);
                     });
                    
 
@@ -191,14 +191,14 @@
                     if (!confirm("确定要购买吗？")) {
                         return false;
                     }
-                    $.showIndicator();
+                    var index = layer.open({type: 2,shadeClose:false});
                     api.buyPromote(promoteId).then(function (data) {
                         WechatAlert(data);
                         $.scope().banners$$load();
-                        $.hideIndicator();
+                        layer.close(index);
                     }.bind(this), function (e) {
                         $.alert(e);
-                        $.hideIndicator();
+                        layer.close(index);
                     });
                 }
             },

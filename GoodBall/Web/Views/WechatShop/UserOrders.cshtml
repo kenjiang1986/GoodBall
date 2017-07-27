@@ -63,13 +63,13 @@
             },
             methods: {
                 pageload: function (userId) {
-                    $.showIndicator();
+                    var index = layer.open({type: 2,shadeClose:false});
                     api.getUserOrders(userId).then(function (data) {
                         this.orders = data;
-                        $.hideIndicator();
+                        layer.close(index);
                     }.bind(this), function (e) {
                         $.alert(e);
-                        $.hideIndicator();
+                        layer.close(index);
                     });
                 }
             },

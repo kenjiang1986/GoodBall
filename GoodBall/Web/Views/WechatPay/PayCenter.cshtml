@@ -86,33 +86,33 @@
                     text: '微信支付',
                     desc: ''
                 },
-                //{
-                //    key: 'alipay',
-                //    text: '支付宝支付',
-                //    desc: ''
-                //}
+                {
+                    key: 'union',
+                    text: '银联支付',
+                    desc: ''
+                }
             ]
         },
         methods: {
             pay$$load: function () {
-                $.showIndicator();
+                var index = layer.open({type: 2,shadeClose:false});
                 api.getPayAmount().then(function (data) {
                     this.amounts = data;
-                    $.hideIndicator();
+                    layer.close(index);
                 }.bind(this), function (e) {
                     $.alert(e);
-                    $.hideIndicator();
+                    layer.close(index);
                 });
             },
             pay$$payment: function () {
                 switch (this.pay_mode) {
                     case 'weixin':
                         //var oid = window.getParam('id');
-                        $.showIndicator();
+                        var index = layer.open({type: 2,shadeClose:false});
                         //alert($("input[name='amountId']:checked").val());
-                        api.pay($("input[name='amountId']:checked").val()).then(function (data) {
+                        api.wechatPay($("input[name='amountId']:checked").val()).then(function (data) {
                             WeixinJSBridge.invoke('getBrandWCPayRequest', data, function (res) {
-                                    $.hideIndicator();
+                                    layer.close(index);
                                     if (res.err_msg == "get_brand_wcpay_request:ok") {
                                         window.location.href = '/WechatPay/PaySuccess?amountId=' + $("input[name='amountId']:checked").val();
                                         //$.alert('支付成功', function () {
@@ -122,12 +122,12 @@
                                 }
                             );
                         }.bind(this), function (msg) {
-                            $.hideIndicator();
+                            layer.close(index);
                             $.alert(msg);
                         });
                         break;
-                    case 'xianxia':
-                        window.location.href = 'finish.html?id=' + window.getParam('id');
+                    case 'union':
+                        window.location.href = '/WechatPay/UnionPayCenter';
                         break;
                     default:
                         $.alert('请选择支付方式');

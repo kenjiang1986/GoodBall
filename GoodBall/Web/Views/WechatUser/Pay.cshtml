@@ -97,10 +97,10 @@
                 switch (this.pay_mode) {
                     case 'weixin':
                         var oid = window.getParam('id');
-                        $.showIndicator();
+                        var index = layer.open({type: 2,shadeClose:false});
                         api.wx_pay(oid).then(function (data) {
                             WeixinJSBridge.invoke('getBrandWCPayRequest', data, function (res) {
-                                    $.hideIndicator();
+                                    layer.close(index);
                                     if (res.err_msg == "get_brand_wcpay_request:ok") {
                                         $.alert('支付成功', function () {
                                             window.location.href = 'finish.html?id=' + window.getParam('id');
@@ -109,7 +109,7 @@
                                 }
                             );
                         }.bind(this), function (msg) {
-                            $.hideIndicator();
+                            layer.close(index);
                             $.alert(msg);
                         });
                         break;

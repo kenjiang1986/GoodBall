@@ -68,7 +68,7 @@
             },
             methods: {
                 pageload: function (raceType, promoteType) {
-                    $.showIndicator();
+                    var index = layer.open({type: 2,shadeClose:false});
                     api.promoteAll(raceType, promoteType).then(function (data) {
                         this.items = data;
                         if (raceType == 1) {
@@ -81,24 +81,24 @@
                             this.raceType = "专业推介-足彩310";
                         }
                         
-                        $.hideIndicator();
+                        layer.close(index);
                     }.bind(this), function (e) {
                         $.alert(e);
-                        $.hideIndicator();
+                        layer.close(index);
                     });
                 },
                 buyPromote: function (promoteId) {
                     if (!confirm("确定要购买吗？")) {
                         return false;
                     }
-                    $.showIndicator();
+                    var index = layer.open({type: 2,shadeClose:false});
                     api.buyPromote(promoteId).then(function (data) {
                         alert(data);
                         $.scope().banners$$load();
-                        $.hideIndicator();
+                        layer.close(index);
                     }.bind(this), function (e) {
                         $.alert(e);
-                        $.hideIndicator();
+                        layer.close(index);
                     });
                 }
             },

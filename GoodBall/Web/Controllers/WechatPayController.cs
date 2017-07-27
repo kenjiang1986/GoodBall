@@ -17,7 +17,13 @@ namespace Web.Controllers
 
         public ActionResult PayCenter()
         {
-           return View();
+            return View();
+        }
+
+        public ActionResult UnionPayCenter()
+        {
+            ViewBag.OutHtml = new MvcHtmlString(UnionPayService.Pay());
+            return View();
         }
 
         public ActionResult PaySuccess(long amountId)
@@ -42,6 +48,11 @@ namespace Web.Controllers
             }, JsonRequestBehavior.AllowGet);
         }
 
+        /// <summary>
+        /// 微信支付
+        /// </summary>
+        /// <param name="payAmountId"></param>
+        /// <returns></returns>
         public JsonResult Pay(long payAmountId)
         {
             //var result = WechatPayService.PayInfo("", "test", "oBbN2wV9VZ8D_wIqWpzlxJ6IpbtE", " WechatPayService.GetOrderNumber());
@@ -58,6 +69,25 @@ namespace Web.Controllers
                     package = shareInfo.Package,
                     signType = "MD5",
                     paySign= shareInfo.PaySign
+                }
+            }, JsonRequestBehavior.AllowGet);
+        }
+
+        /// <summary>
+        /// 银联支付
+        /// </summary>
+        /// <param name="payAmountId"></param>
+        /// <returns></returns>
+        public JsonResult UnionPay(long payAmountId)
+        {
+            var amount = PayAmountService.Instance.GetPayAmount(payAmountId);
+            UnionPayService.Pay();
+           
+            return Json(new WechatResponse()
+            {
+                data = new
+                {
+                   
                 }
             }, JsonRequestBehavior.AllowGet);
         }

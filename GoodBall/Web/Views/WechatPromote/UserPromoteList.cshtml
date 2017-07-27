@@ -60,7 +60,7 @@
             },
             methods: {
                 pageload: function (userId, promoteType) {
-                    $.showIndicator();
+                    var index = layer.open({type: 2,shadeClose:false});
                     if (promoteType == 1) {
                         this.promoteType = "已购买的推介";
                     }
@@ -69,10 +69,10 @@
                     }
                     api.getUserPromotes(userId, promoteType).then(function (data) {
                         this.yangqiu = data;
-                        $.hideIndicator();
+                        layer.close(index);
                     }.bind(this), function (e) {
                         $.alert(e);
-                        $.hideIndicator();
+                        layer.close(index);
                     });
                 }
             },

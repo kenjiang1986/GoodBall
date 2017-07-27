@@ -36,9 +36,9 @@
                         if (!this.loginInfo.userName || !this.loginInfo.pwd) {
                             return $.toast('账号和密码为必填！');
                         }
-                        $.showIndicator();
+                        var index = layer.open({type: 2,shadeClose:false});
                         api.login_action(this.loginInfo).then(function (result) {
-                            $.hideIndicator();
+                            layer.close(index);
                             //window.location.href = "/WechatUser/Index";
                             if (result == "操作成功") {
                                 window.location.href = "/WechatUser/Index";
@@ -47,7 +47,7 @@
                             }
                         }.bind(this), function (e) {
                             alert(e);
-                            $.hideIndicator();
+                            layer.close(index);
                         });
                     }
                 },

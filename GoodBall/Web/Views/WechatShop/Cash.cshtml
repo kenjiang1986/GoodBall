@@ -102,12 +102,12 @@
             },
             methods: {
                 address$$submit: function () {
-                    $.showIndicator();
+                    //var index = layer.open({type: 2,shadeClose:false});
                     var self = this;
                     if (!this.address.contactor || !this.address.mobile || !this.address.doorplate || !this.address.qty || this.size =='') {
                         return $.toast('请输入完整的收件信息');
                     } else {
-                        $.showIndicator();
+                        var index = layer.open({type: 2,shadeClose:false});
                         api.addOrder(self.address.qty,
                             self.address.contactor,
                             self.address.mobile,
@@ -116,7 +116,7 @@
                             getParam('id'),
                             self.address.size
                             ).then(function(data) {
-                            $.hideIndicator();
+                            layer.close(index);
                             WechatAlert(data);
                         }, function(msg) {
                             alert(msg);
@@ -124,13 +124,13 @@
                     }
                 },
                 address$$load: function (id) {
-                    $.showIndicator();
+                    var index = layer.open({type: 2,shadeClose:false});
                     api.getGoodsSize(id).then(function (data) {
                         this.sizeList = data;
-                        $.hideIndicator();
+                        layer.close(index);
                     }.bind(this), function (e) {
                         $.alert(e);
-                        $.hideIndicator();
+                        layer.close(index);
                     });
                 }
             },

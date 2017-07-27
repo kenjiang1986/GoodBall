@@ -24,12 +24,12 @@
             },
             methods: {
                 pageload: function (id) {
-                    $.showIndicator();
+                    var index = layer.open({type: 2,shadeClose:false});
                     api.get_newsdetail(id).then(function (data) {
                         this.news = data;
-                        $.hideIndicator();
+                        layer.close(index);
                     }.bind(this), function (msg) {
-                        $.hideIndicator();
+                        layer.close(index);
                         $.alert(msg);
                     });
                 },

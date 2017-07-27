@@ -39,16 +39,16 @@
                },
             methods: {
                 products$$load: function (callback) {
-                    $.showIndicator();
+                    var index = layer.open({type: 2,shadeClose:false});
                     api.shop_products().then(function (products) {
                         this.products = this.products.concat(products);
                         this.loading = false;
-                        $.hideIndicator();
+                        layer.close(index);
                         (callback || function () {
                         })(products);
                     }.bind(this), function (err) {
                         this.loading = false;
-                        $.hideIndicator();
+                        layer.close(index);
                         $.alert(err);
                         (callback || function () {
                         })();

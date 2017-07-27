@@ -108,31 +108,34 @@
                 },
                 methods: {
                     getExInfo: function () {
-                        $.showIndicator();
+                        //var index = layer.open({type: 2,shadeClose:false});
                         var E = window.wangEditor
                         var editor = new E('#editor')
                         // 或者 var editor = new E( document.getElementById('#editor') )
                         editor.create();
+                        $(".w-e-text").on("click", function () {
+                            $(this).focus();
+                        })
                         //api.get_exinfo().then(function (result) {
-                        //    $.hideIndicator();
+                        //    layer.close(index);
                         //}.bind(this), function (e) {
                         //    $.alert(e);
-                        //    $.hideIndicator();
+                        //    layer.close(index);
                         //});
                     },
                     submit: function () {
                         //var E = window.wangEditor
                         //var editor = $('#editor').wangEditor();
                         //alert($("#editor").text());
-                        $.showIndicator();
+                        var index = layer.open({type: 2,shadeClose:false});
                         if (!($("#Match").val() == "" || $("#editor").text() =="" || $("#Result").val() == "" || $("#Price").val() == "")) {
                             api.addGame($("#Match").val(), $("#editor").text(), $("#RaceType").val(), $("#Result").val(), $("#Level").val(), $("#Price").val()).then(function (result) {
                                 WechatAlert("发布成功");
                                 window.location.href = "/WechatPromote/GameList";
-                                $.hideIndicator();
+                                layer.close(index);
                             }.bind(this), function (e) {
                                 WechatAlert(e);
-                                $.hideIndicator();
+                                layer.close(index);
                             });
                         } else {
                             WechatAlert("请填写完整信息");

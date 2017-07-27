@@ -101,45 +101,45 @@
         },
         methods: {
             profile$$load: function () {
-                $.showIndicator();
+                var index = layer.open({type: 2,shadeClose:false});
                 api.profile().then(function (data) {
                     console.log(data);
                     this.profile = data;
-                    $.hideIndicator();
+                    layer.close(index);
                 }.bind(this), function (msg) {
-                    $.hideIndicator();
+                    layer.close(index);
                     $.alert(msg);
                 });
             },
             address$$submit: function () {
               
-                $.showIndicator();
+                var index = layer.open({type: 2,shadeClose:false});
                 api.user_action(this.profile).then(function (result) {
-                    $.hideIndicator();
+                    layer.close(index);
                     alert(result);
                 }.bind(this), function (e) {
                     alert(e);
-                    $.hideIndicator();
+                    layer.close(index);
                 });
             },
             UserLogout: function () {
-                $.showIndicator();
+                var index = layer.open({type: 2,shadeClose:false});
                 api.user_logout().then(function (result) {
-                    $.hideIndicator();
+                    layer.close(index);
                     window.location.href = '/WechatLogin/WechatLoginIndex';
                     alert(result);
                 }.bind(this), function (e) {
                     alert(e);
-                    $.hideIndicator();
+                    layer.close(index);
                 });
             },
             //获取验证码
             getCode: function (phone) {
                 api.get_code(phone).then(function () {
-                    $.hideIndicator();
+                    layer.close(index);
                 }.bind(this), function (e) {
                     alert(e);
-                    $.hideIndicator();
+                    layer.close(index);
                 });
             },
             modifyPhone:function(){
@@ -150,13 +150,14 @@
                   content:$("#dialog").html(),
                   btn: ['确认', '取消'],
                   success: function () {
+                      var index = layer.open({ type: 2, shadeClose: false });
                       api.update_phone(this.profile).then(function (result) {
-                          $.hideIndicator();
+                          layer.close(index);
                           window.location.href = '/WechatLogin/WechatLoginIndex';
                           alert(result);
                       }.bind(this), function (e) {
                           alert(e);
-                          $.hideIndicator();
+                          layer.close(index);
                       });
                   }
                 })

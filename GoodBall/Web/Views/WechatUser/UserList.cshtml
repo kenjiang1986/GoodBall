@@ -42,22 +42,22 @@
             },
             methods: {
                 banners$$load: function (isAdmin) {
-                    //$.showIndicator();
+                    var index = layer.open({type: 2,shadeClose:false});
                     //api.get_weixin_banner().then(function (banners) {
                     //    this.banners = banners;
-                    //    $.hideIndicator();
+                    //    layer.close(index);
                     //}.bind(this), function (e) {
                     //    $.alert(e);
-                    //    $.hideIndicator();
+                    //    layer.close(index);
                     //});
 
 
                     api.getusers(1000,1,isAdmin).then(function (data) {
                         this.users = data;
-                        $.hideIndicator();
+                        layer.close(index);
                     }.bind(this), function (e) {
                         $.alert(e);
-                        $.hideIndicator();
+                        layer.close(index);
                     });
                    
 

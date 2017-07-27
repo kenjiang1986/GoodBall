@@ -57,15 +57,15 @@
                     //    $.alert(this.regInfo.phone);
                     //    return $.toast('请输入正确的验证码');
                     //}
-                    $.showIndicator();
+                    var index = layer.open({type: 2,shadeClose:false});
                     var txt = '{"phone":"' + regInfo.phone + '","password":"' + regInfo.pwd + '","code":"' + regInfo.code + '"}';
                     var dto = JSON.parse(txt);
                     api.reg_action(dto).then(function (result) {
                         WechatAlert(result);
-                        $.hideIndicator();
+                        layer.close(index);
                     }.bind(this), function (e) {
                         WechatAlert(e);
-                        $.hideIndicator();
+                        layer.close(index);
                     });
                 },
                 //获取验证码
@@ -82,10 +82,10 @@
                         $("#sendTime").show();
                         itemId = self.setInterval("countdown()", 1000);
                         WechatAlert(result);
-                        $.hideIndicator();
+                        layer.close(index);
                     }.bind(this), function (e) {
                         WechatAlert(e);
-                        $.hideIndicator();
+                        layer.close(index);
                     });
                 },
             },

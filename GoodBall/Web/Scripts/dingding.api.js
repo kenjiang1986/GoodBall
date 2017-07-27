@@ -188,9 +188,15 @@
                 price: price
             }, 'POST');
         },
-        //添加竞彩
-        'pay': function (id) {
+        //微信支付
+        'wechatPay': function (id) {
             return $.promiseApi('WechatPay/Pay', {
+                payAmountId: id,
+            });
+        },
+        //银联支付
+        'unionPay': function (id) {
+            return $.promiseApi('WechatPay/UnionPay', {
                 payAmountId: id,
             });
         },
