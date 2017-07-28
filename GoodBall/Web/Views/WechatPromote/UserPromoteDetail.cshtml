@@ -19,7 +19,7 @@
     <div class="spotDetail">
         @*<div class="list-nav">让球<a href="/WechatPromote/PromoteTypeList?raceType=1&promoteType=1"><span class="more">更多</span></a></div>*@
         <ul class="list" v-for="yq in promotes">
-            <li>
+            @*<li>
                 <div class="tit">
                     <i></i>
                     <span>比赛：{{yq.MatchName}}</span><span class="publisher">发布者：{{yq.Operator}}</span>
@@ -51,6 +51,36 @@
 
                 </div>
             </li>
+            <hr></hr>*@
+            
+            <dl>
+                <dt style="text-align: center">{{yq.MatchTime }}&nbsp;&nbsp;&nbsp;&nbsp;</dt>
+                <dd>
+                    <ul>
+                        <li class="tit">
+                            <i>
+                            </i>
+                            <span>{{yq.MatchName}}</span>
+                        </li>
+                        <li class="time">
+                            <i>
+                            </i>
+                            <span>开赛时间：{{yq.MatchTime }}</span>
+                        </li>
+                        <li class="recommend">
+                            <i>
+                            </i>
+                            <span>推介：{{{yq.Result }}}</span>
+                        </li>
+                        <li class="analysis">
+                            <i>
+                            </i>分析：{{yq.Content }}
+                        </li>
+                    </ul>
+                </dd>
+            </dl>
+            
+
         </ul>
     </div>
 </div>
@@ -83,17 +113,20 @@
                     });
                 },
                 buyPromote: function (promoteId) {
-                    if (!confirm("确定要购买吗？")) {
-                        return false;
-                    }
-                    var index = layer.open({type: 2,shadeClose:false});
-                    api.buyPromote(promoteId).then(function (data) {
-                        WechatAlert(data);
-                        $.scope().pageload();
-                        layer.close(index);
-                    }.bind(this), function (e) {
-                        $.alert(e);
-                        layer.close(index);
+                    //if (!$.confirm("确定要购买吗？")) {
+                    //    return false;
+                    //}
+                    $.confirm('确定要购买吗？', function () {
+                        var index = layer.open({ type: 2, shadeClose: false });
+                        api.buyPromote(promoteId).then(function (data) {
+                            //WechatAlert(data);
+                            $.alert(data);
+                            $.scope().pageload();
+                            layer.close(index);
+                        }.bind(this), function (e) {
+                            $.alert(e);
+                            layer.close(index);
+                        });
                     });
                 }
             },

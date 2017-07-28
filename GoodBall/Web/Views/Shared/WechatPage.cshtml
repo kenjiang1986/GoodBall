@@ -22,39 +22,36 @@
     <link href="~/Scripts/layer_mobile/need/layer.css" rel="stylesheet" />
     <link href="~/Content/css/wangEditor.min.css" rel="stylesheet" />
     <!-- endinject -->
-    <script type='text/javascript' src='//g.alicdn.com/sj/lib/zepto/zepto.min.js' charset='utf-8'></script>
-    <script type="text/javascript">$.config = {router: false};</script>
-    <script type='text/javascript' src='//g.alicdn.com/msui/sm/0.6.2/js/sm.min.js' charset='utf-8'></script>
-    <script type='text/javascript' src='//g.alicdn.com/msui/sm/0.6.2/js/??sm.min.js,sm-extend.min.js' charset='utf-8'></script>
-    <script type="text/javascript" src="//g.alicdn.com/msui/sm/0.6.2/js/sm-city-picker.min.js" charset="utf-8"></script>
-    <script type="text/javascript" src="//cdn.bootcss.com/vue/1.0.26/vue.min.js"></script>
-    <script type='text/javascript' src='//cdn.bootcss.com/jquery/2.1.4/jquery.min.js'></script>
-    <script src="~/Scripts/layer_mobile/layer.js"></script>
-    <!-- inject:js -->
-    <script src="~/Scripts/dingding.api.js"></script>
-    <script src="~/Scripts/dingding.common.js"></script>
-    <script src="~/Scripts/dingding.directive.js"></script>
-    <script src="~/Scripts/wangEditor.min.js"></script>
-    @*<script src="~/Scripts/layer.js"></script>*@
-    <!-- endinject -->
-    <script type="text/javascript">
-        function WechatAlert(msg) {
-            layer.open({
-                content: msg
-                           , skin: 'msg'
-                           , time: 1 //1秒后自动关闭
-            });
-        }
-
-    </script>
-   
-</head>
-<body>
-   
-        
-        @RenderBody()
   
    
-</body>
+</head>
+    <body>
+        <script type='text/javascript' src='//g.alicdn.com/sj/lib/zepto/zepto.min.js' charset='utf-8'></script>
+        <script type="text/javascript">$.config = { router: false };</script>
+        <script type='text/javascript' src='//g.alicdn.com/msui/sm/0.6.2/js/sm.min.js' charset='utf-8'></script>
+        <script type='text/javascript' src='//g.alicdn.com/msui/sm/0.6.2/js/??sm.min.js,sm-extend.min.js' charset='utf-8'></script>
+        <script type="text/javascript" src="//g.alicdn.com/msui/sm/0.6.2/js/sm-city-picker.min.js" charset="utf-8"></script>
+        <script type="text/javascript" src="//cdn.bootcss.com/vue/1.0.26/vue.min.js"></script>
+        <script type='text/javascript' src='//cdn.bootcss.com/jquery/2.1.4/jquery.min.js'></script>
+        <script src="~/Scripts/layer_mobile/layer.js"></script>
+        <!-- inject:js -->
+        <script src="~/Scripts/dingding.api.js"></script>
+        <script src="~/Scripts/dingding.common.js"></script>
+        <script src="~/Scripts/dingding.directive.js"></script>
+        <script src="~/Scripts/wangEditor.min.js"></script>
+        @*<script src="~/Scripts/layer.js"></script>*@
+        <!-- endinject -->
+        <script type="text/javascript">
+            function WechatAlert(msg) {
+                layer.open({
+                    content: msg
+                               , skin: 'msg'
+                               , time: 1 //1秒后自动关闭
+                });
+            }
+
+        </script>
+        @RenderBody()
+    </body>
 </html>
 

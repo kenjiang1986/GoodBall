@@ -1,4 +1,4 @@
-@charset "UTF-8";
+﻿@charset "UTF-8";
 html {
   font-size: 22px; }
 
@@ -335,7 +335,11 @@ img {
 /*专业推介*/
 .spotDetail .hd {
   padding: 14px 12px 20px 106px;
-  position: relative; }
+  position: relative;
+  overflow: hidden;
+    height: 106px;
+
+}
 
 .spotDetail .hd .tit {
   font-size: 1rem;
@@ -579,6 +583,10 @@ label.label-checkbox input[type=checkbox]:checked + .item-media i.icon-form-chec
 
 .w-e-toolbar .w-e-menu {
   float: left; }
+
+.w-e-text {
+  -webkit-user-select: text;
+  -webkit-user-modify: read-write-plaintext-only; }
 
 .list-block ul:before {
   background: none; }

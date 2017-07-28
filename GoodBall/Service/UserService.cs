@@ -131,10 +131,7 @@ namespace Service
           
             entity.UserName = user.UserName;
             entity.NickName = user.NickName;
-            entity.Password = user.Password;
-            entity.Password = MD5Helper.MD5Encrypt64(user.Password);
             entity.Integral = user.Integral;
-            entity.IsAdmin = user.IsAdmin;
             entity.Remark = user.Remark;
             
             userRepository.Save(entity);
