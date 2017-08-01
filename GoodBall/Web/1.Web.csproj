@@ -1047,6 +1047,7 @@
     <Content Include="Views\WechatPromote\PublishGame.cshtml" />
     <Content Include="Views\WechatPay\PaySuccess.cshtml" />
     <Content Include="Views\WechatPay\UnionPayCenter.cshtml" />
+    <Content Include="Views\User\UpdateUserPassword.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

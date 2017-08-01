@@ -31,6 +31,11 @@ namespace GoodBall.Controllers
             return View();
         }
 
+        public ActionResult UpdateUserPassword()
+        {
+            return View();
+        }
+
         public JsonResult GetUserList(string userName, int page, int rows)
         {
             int total;
@@ -98,7 +103,13 @@ namespace GoodBall.Controllers
             });
         }
 
-
+        public JsonResult UpdatePassword(long id, string password)
+        {
+            return ExceptionCatch.Invoke(() =>
+            {
+                UserService.Instance.UpdateUserPassword(id, password);
+            });
+        }
 
         public JsonResult GetRechargeList(long? userId)
         {

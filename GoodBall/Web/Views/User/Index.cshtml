@@ -41,6 +41,7 @@
 
     function Update(value, row) {
         var result = "<a href='javascript:void(0)' onclick='UpdateUser(\"" + row.Id + "\")'>编辑</a>  ";
+        result += "<a href='javascript:void(0)' onclick='UpdatePassword(\"" + row.Id + "\",\")'>修改密码</a>  ";
         result += "<a href='javascript:void(0)' onclick='DelUser(\"" + row.Id + "\",\")'>删除</a>  ";
         result += "<a href='javascript:void(0)'  onclick='GivingPrice(\"" + row.Id + "\")'>赠送V币</a>  ";
         result += "<a href='javascript:void(0)' onclick='UpLoadPic(\"" + row.Id + "\")'>上传图片</a>  ";
@@ -107,6 +108,20 @@
    
     //赠送V币
     function GivingPrice(id) {
+        var url = "/User/GivingPrice?id=" + id;
+        $.layer({
+            scrolling: 'auto',
+            type: 2,
+            title: '赠送V币',
+            iframe: {
+                src: url
+            },
+            area: ['300px', '200px']
+        });
+    }
+
+    //修改密码
+    function UpdatePassword(id) {
         var url = "/User/GivingPrice?id=" + id;
         $.layer({
             scrolling: 'auto',

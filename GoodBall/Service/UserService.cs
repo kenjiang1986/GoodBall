@@ -187,6 +187,17 @@ namespace Service
             UpdateUserCookie(user.Id);
         }
 
+        public void UpdateUserPassword(long id, string password)
+        {
+            if (!userRepository.Find(x => x.Id == id).Any())
+            {
+                throw new ServiceException("不存在当前用户");
+            }
+
+            userRepository.Save(x => x.Id == id, x => new User { Password = MD5Helper.MD5Encrypt64(password) });
+            UpdateUserCookie(id);
+        }
+
         public void UpdateUserBalance(long userId, int price, string rechargeRemark)
         {
             var entity = userRepository.Find(x => x.Id == userId).FirstOrDefault();
