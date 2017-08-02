@@ -452,7 +452,7 @@ img {
   border-radius: 4px 4px 0 0;
   position: relative;
   padding: 0 15px;
-  background-image: -webkit-linear-gradient(90deg, #56da76, #26bc4a 67%, #18ba3f);
+  background-image: -webkit-linear-gradient(90deg, #d01f37, #db223b 67%, #ef2a43);
   background-image: -ms-linear-gradient(90deg, #56da76 0, #26bc4a 67%, #18ba3f 100%); }
 
 .spotDetail .list dd {

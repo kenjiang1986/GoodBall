@@ -16,13 +16,14 @@
             <img v-bind:src="user.IconUrl">
         </div>
     </div>
+    <hr></hr>
     <div class="spotDetail">
         @*<div class="list-nav">让球<a href="/WechatPromote/PromoteTypeList?raceType=1&promoteType=1"><span class="more">更多</span></a></div>*@
         <ul class="list" v-for="yq in promotes">
-            @*<li>
+            <li>
                 <div class="tit">
                     <i></i>
-                    <span>比赛：{{yq.MatchName}}</span><span class="publisher">发布者：{{yq.Operator}}</span>
+                    <span>比赛：{{yq.MatchName}}</span><span class="publisher">&nbsp;&nbsp;&nbsp;发布者：{{yq.Operator}}</span>
                 </div>
                 <div class="time">
                     <i></i>
@@ -40,6 +41,14 @@
                     <i></i>
                     <span>分析：{{yq.Result }}</span>
                 </div>
+                <div class="analysis" v-if="yq.State=='中'">
+                    <i></i>
+                    <span>结果：<label style="color:red;">中</label></span>
+                </div>
+                <div class="analysis" v-if="yq.State=='不中'">
+                    <i></i>
+                    <span>结果：<label style="color:green;">不中</label></span>
+                </div>
                 <div class="recommend" v-if="yq.BuyState==false">
                     <i></i>
                     <span>推介价格：<em v-text="yq.Price"></em>V币</span>
@@ -51,36 +60,7 @@
 
                 </div>
             </li>
-            <hr></hr>*@
-            
-            <dl>
-                <dt style="text-align: center">{{yq.MatchTime }}&nbsp;&nbsp;&nbsp;&nbsp;</dt>
-                <dd>
-                    <ul>
-                        <li class="tit">
-                            <i>
-                            </i>
-                            <span>{{yq.MatchName}}</span>
-                        </li>
-                        <li class="time">
-                            <i>
-                            </i>
-                            <span>开赛时间：{{yq.MatchTime }}</span>
-                        </li>
-                        <li class="recommend">
-                            <i>
-                            </i>
-                            <span>推介：{{{yq.Result }}}</span>
-                        </li>
-                        <li class="analysis">
-                            <i>
-                            </i>分析：{{yq.Content }}
-                        </li>
-                    </ul>
-                </dd>
-            </dl>
-            
-
+            <hr></hr>
         </ul>
     </div>
 </div>
@@ -113,9 +93,6 @@
                     });
                 },
                 buyPromote: function (promoteId) {
-                    //if (!$.confirm("确定要购买吗？")) {
-                    //    return false;
-                    //}
                     $.confirm('确定要购买吗？', function () {
                         var index = layer.open({ type: 2, shadeClose: false });
                         api.buyPromote(promoteId).then(function (data) {
