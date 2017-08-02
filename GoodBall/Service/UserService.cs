@@ -49,7 +49,7 @@ namespace Service
             var result = userRepository.Find(x => x.UserName == userName && x.Password == md5Password);
             if (result.Any())
             {
-                CookieHelper.WriteEncryptCookie(userKey, JsonConvert.SerializeObject(result.FirstOrDefault().ToModel<UserDto>()), DateTime.Now);
+                CookieHelper.WriteEncryptCookie(userKey, JsonConvert.SerializeObject(result.FirstOrDefault().ToModel<UserCookieDto>()), DateTime.Now);
             }
             else
             {
@@ -65,7 +65,7 @@ namespace Service
             {
                 var user = result.FirstOrDefault();
                 user.OpenId = CookieHelper.GetCookie("OpenId");
-                CookieHelper.WriteEncryptCookie(userKey, JsonConvert.SerializeObject(user.ToModel<UserDto>()), DateTime.Now);
+                CookieHelper.WriteEncryptCookie(userKey, JsonConvert.SerializeObject(user.ToModel<UserCookieDto>()), DateTime.Now);
                 userRepository.Save(user);
             }
             else
@@ -302,7 +302,7 @@ namespace Service
             if (userId == GetCurrentUser().Id)
             {
                 CookieHelper.RemoveCookie(userKey);
-                CookieHelper.WriteEncryptCookie(userKey, JsonConvert.SerializeObject(userRepository.Find(x => x.Id == userId).FirstOrDefault().ToModel<UserDto>()), DateTime.Now);
+                CookieHelper.WriteEncryptCookie(userKey, JsonConvert.SerializeObject(userRepository.Find(x => x.Id == userId).FirstOrDefault().ToModel<UserCookieDto>()), DateTime.Now);
             }
         }
     }

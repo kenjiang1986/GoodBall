@@ -114,6 +114,7 @@
     <Compile Include="Dto\RechargeRecordDto.cs" />
     <Compile Include="Dto\ReturnRuleDto.cs" />
     <Compile Include="Dto\ShareInfo.cs" />
+    <Compile Include="Dto\UserCookieDto.cs" />
     <Compile Include="Dto\UserDto.cs" />
     <Compile Include="CustomerService.cs" />
     <Compile Include="Dto\WechatOrderInfo.cs" />
