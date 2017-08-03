@@ -127,18 +127,19 @@
                         //var E = window.wangEditor
                         //var editor = $('#editor').wangEditor();
                         //alert($("#editor").text());
-                        var index = layer.open({type: 2,shadeClose:false});
+                        
                         if (!($("#Match").val() == "" || $("#editor").text() =="" || $("#Result").val() == "" || $("#Price").val() == "")) {
+                            var index = layer.open({ type: 2, shadeClose: false });
                             api.addGame($("#Match").val(), $("#editor").text(), $("#RaceType").val(), $("#Result").val(), $("#Level").val(), $("#Price").val()).then(function (result) {
-                                WechatAlert("发布成功");
-                                window.location.href = "/WechatPromote/GameList";
                                 layer.close(index);
+                                $.alert("发布成功");
+                                window.location.href = "/WechatPromote/GameList";
                             }.bind(this), function (e) {
-                                WechatAlert(e);
+                                $.alert(e);
                                 layer.close(index);
                             });
                         } else {
-                            WechatAlert("请填写完整信息");
+                            $.alert("请填写完整信息");
                         }
                     }
                 },

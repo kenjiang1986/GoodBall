@@ -111,7 +111,7 @@ namespace Web.Controllers
                     raceType = RaceTypeEnum.足彩310.ToString();
                     break;
             }
-            var result = PromoteService.Instance.GetPromoteListByPage(new PromoteCond() { RaceType = raceType,PromoteType = promoteType}, size, index, out total);
+            var result = PromoteService.Instance.GetPromoteListByPage(new PromoteCond() { RaceType = raceType, PromoteType = promoteType }, size, index, out total);
             var user = UserService.GetCurrentUser();
             return Json(new WechatResponse()
             {
@@ -137,14 +137,14 @@ namespace Web.Controllers
         {
             var dto = new PromoteDto()
             {
-                MatchId =matchId,
-                Content =content,
+                MatchId = matchId,
+                Content = content,
                 State = PromoteStateEnum.未开始.ToString(),
-                SendType = SendTypeEnum.短信.ToString(),
-                RaceType =raceType,
-                Result= result,
+                SendType = SendTypeEnum.微信.ToString(),
+                RaceType = raceType,
+                Result = result,
                 Level = level,
-                Integral =price,
+                Integral = price,
                 PromoteType = 2
             };
             return ExceptionCatch.WechatInvoke(() =>

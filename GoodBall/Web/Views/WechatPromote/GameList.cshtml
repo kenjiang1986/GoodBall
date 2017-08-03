@@ -184,21 +184,18 @@
                         $.alert(e);
                         layer.close(index);
                     });
-
-
                 },
                 buyPromote: function (promoteId) {
-                    if (!confirm("确定要购买吗？")) {
-                        return false;
-                    }
-                    var index = layer.open({type: 2,shadeClose:false});
-                    api.buyPromote(promoteId).then(function (data) {
-                        alert(data);
-                        $.scope().banners$$load();
-                        layer.close(index);
-                    }.bind(this), function (e) {
-                        $.alert(e);
-                        layer.close(index);
+                        $.confirm('确定要购买吗？', function() {
+                        var index = layer.open({type: 2,shadeClose:false});
+                        api.buyPromote(promoteId).then(function (data) {
+                            $.alert(data);
+                            $.scope().banners$$load();
+                            layer.close(index);
+                        }.bind(this), function (e) {
+                            $.alert(e);
+                            layer.close(index);
+                        });
                     });
                 }
             },

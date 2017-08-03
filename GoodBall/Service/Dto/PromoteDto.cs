@@ -48,7 +48,7 @@ namespace Service.Dto
         public string  State { get; set; }
 
         /// <summary>
-        /// 推送类型(1、让球 2、竞彩 3、足彩310)
+        /// 发送类型
         /// </summary>
         public string  SendType { get; set; }
 
