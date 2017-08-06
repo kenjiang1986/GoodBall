@@ -164,6 +164,11 @@ namespace Service
 
         public void DeletePromote(long id)
         {
+            var promote = promoteRepository.Find(x => x.Id == id).FirstOrDefault();
+            if(promote.UserList.Any())
+            {
+                throw new ServiceException("用户已经购买了该条推介，禁止删除");
+            }
             promoteRepository.Delete(x => x.Id == id);
         }
 

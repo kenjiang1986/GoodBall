@@ -194,11 +194,14 @@ namespace Repository
         {
             _dbContext.Set<TEntity>().RemoveRange(batch);
             return _dbContext.SaveChanges() > 0;
+            
+
         }
 
         public virtual bool Delete(Expression<Func<TEntity, bool>> expression)
         {
-            return this.Delete(this.Find(expression));
+            return _dbContext.Set<TEntity>().Delete(expression) > 0;
+            //return this.Delete(this.Find(expression));
         }
 
         /// <summary>
