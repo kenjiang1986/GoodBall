@@ -30,18 +30,19 @@
         var result = "";
         if (row.State == "未发货") {
             result += "<a href='javascript:void(0)' onclick='UpdateState(\"" + row.Id + "\",\"已发货\",\"发货\")'>发货</a>  ";
+            result += "<a href='javascript:void(0)' onclick='DelOrder" + row.Id + "\")'>删除</a>  ";
         }
         else if (row.State == "已发货") {
             result += "<a href='javascript:void(0)' onclick='UpdateState(\"" + row.Id + "\",\"已收货\",\"收货\")'>收货</a>  ";
         }
         
-        result += "<a href='javascript:void(0)' onclick='DelMatch(\"" + row.Id + "\")'>删除</a>  ";
+        
 
         return result;
 
     }
 
-    function DelMatch(id) {
+    function DelOrder(id) {
 
         $.messager.confirm('温馨提示', '确定要删除订单吗？', function (r) {
             if (r) {
@@ -94,10 +95,9 @@
             <table>
                 <tr>
 
-                    <td>开始时间:</td>
-                    <td><input type="text" id="StartDate" class="easyui-datetimebox" /></td>
-                    <td>结束时间:</td>
-                    <td><input type="text" id="EndDate" class="easyui-datetimebox" /></td>
+                    <td>订单编号:</td>
+                    <td><input type="text" id="OrderNo" name="OrderNo" class="easyui-textbox" /></td>
+                   
                     <td>
                         <a href="javascript:;" class="easyui-linkbutton" data-options="iconCls:'icon-search'" onclick="Search()">查询</a>
                       

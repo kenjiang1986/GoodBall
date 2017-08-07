@@ -54,6 +54,7 @@ namespace Service
                   .ForMember(x => x.IsReturn, x => x.MapFrom(src => src.IsReturn ? "是" : "否"))
                    .ForMember(x => x.SendType, x => x.MapFrom(src => src.SendType.ToString()))
                 .ForMember(x => x.MatchTime, x => x.MapFrom(src => src.Match.MatchTime))
+                .ForMember(x => x.CreateTimeStr, x => x.MapFrom(src => src.CreateTime.ToString()))
              .ForMember(x => x.MatchName, x => x.MapFrom(src => src.Match.TeamA + "VS" + src.Match.TeamB));
             AutoMapper.Mapper.CreateMap<PromoteDto, Promote>()
                 .ForMember(x => x.CreateTime, x => x.MapFrom(src => DateTime.Now))

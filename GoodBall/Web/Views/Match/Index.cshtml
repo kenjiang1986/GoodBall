@@ -43,12 +43,12 @@
                     url: "/Match/DeleteMatch",
                     data: { id: id },
                     success: function (data) {
-                        if (data) {
+                        if (data.success) {
                             alert("操作成功", "success", function () {
                                 Search();
                             });
                         } else {
-                            alert("操作失败", "error");
+                            alert(data.message, "error");
                         }
                     }
                 });

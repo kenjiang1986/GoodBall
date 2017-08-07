@@ -81,22 +81,7 @@ namespace Web.Controllers
 
             return Json(new
             {
-                rows = result.Select(x => new
-                {
-                    x.Id,
-                    x.Content,
-                    x.Integral,
-                    x.Price,
-                    x.Operator,
-                    x.RaceType,
-                    x.SendType,
-                    x.Level,
-                    x.MatchName,
-                    x.IsSend,
-                    x.State,
-                    x.IsReturn,
-                    CreateTime = x.CreateTime.ToString(),
-                }),
+                rows = result,
                 total
             }, JsonRequestBehavior.AllowGet);
         }

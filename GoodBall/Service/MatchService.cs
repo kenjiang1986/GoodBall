@@ -1,5 +1,6 @@
 ﻿using DataCollection.Entity;
 using EnumUtils;
+using Helper;
 using Helper.Enum;
 using Repository;
 using System;
@@ -73,6 +74,10 @@ namespace Service
 
         public void DeleteMatch(long id)
         {
+            if (PromoteRepository.Instance.Source.Where(x => x.MatchId == id).Any())
+            {
+                throw new ServiceException("该比赛已经被推介，不能删除");
+            }
             matchRepository.Delete(x => x.Id == id);
         }
     }
