@@ -30,7 +30,7 @@
         var result = "";
         if (row.State == "未发货") {
             result += "<a href='javascript:void(0)' onclick='UpdateState(\"" + row.Id + "\",\"已发货\",\"发货\")'>发货</a>  ";
-            result += "<a href='javascript:void(0)' onclick='DelOrder" + row.Id + "\")'>删除</a>  ";
+            //result += "<a href='javascript:void(0)' onclick='DelOrder(\"" + row.Id + "\")'>删除</a>  ";
         }
         else if (row.State == "已发货") {
             result += "<a href='javascript:void(0)' onclick='UpdateState(\"" + row.Id + "\",\"已收货\",\"收货\")'>收货</a>  ";
