@@ -33,12 +33,13 @@
 
             @*<a href="javascript:void(0)" onclick="UpdatePassWord()" class="l-link"><i class="user user-editpwd"></i>修改密码</a>*@
          
-            <a href="javascript:;" class="l-link" id="userName"><i class="user user-name"></i>@ViewBag.UserName&nbsp;&nbsp;&nbsp;&nbsp;</i></a>
+            <a href="javascript:;" class="l-link" id="userName"><i class="user user-name"></i>@ViewBag.UserName&nbsp;&nbsp;&nbsp;&nbsp;</a>
+            <a href="javascript:;" onclick="Logout();" class="l-link" id="userName">退出 &nbsp;&nbsp;&nbsp;&nbsp;</a>
 
-            <ul class="droplistWrap" id="droplistWrap">
+            @*<ul class="droplistWrap" id="droplistWrap">
                 <li><a href="javascript:void(0)" onclick="UpdatePassWord()" class="l-link"><i class="user user-editpwd"></i>修改密码</a></li>
                 <li><a href="@ViewBag.ReLogInUrl?service=@ViewBag.ReLogInUrl" class="l-link"><i class="user user-logout"></i>用户注销</a></li>
-            </ul>
+            </ul>*@
             @*<a href="@ViewBag.ReLogInUrl?service=@ViewBag.ReLogInUrl" class="l-link"><i class="user user-logout"></i>用户注销</a>*@
         </div>
         <div class="l-topmenu-logo">好波6388后台管理系统</div>
@@ -118,6 +119,23 @@
     </div>
 
     <script type="text/javascript">
+        function Logout() {
+            $.ajax({
+                type: "POST",
+                url: "/Admin/AdminLogout",
+                dataType: "json",
+                async: true,
+                data: '',
+                success: function (data) {
+                    loadTips.hideLoadind();
+                    window.location.href = "/Home/Index";
+                },
+                error: function (data) {
+                    BaseHelper.ShowException(data);
+                }
+            });
+        }
+
         function UpdatePassWord() {
             $.layer({
                 type: 2,

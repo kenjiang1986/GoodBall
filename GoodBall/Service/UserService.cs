@@ -74,7 +74,7 @@ namespace Service
             }
         }
 
-        public void CustomerLogout()
+        public void Logout()
         {
             CookieHelper.RemoveCookie(userKey);
         }

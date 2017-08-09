@@ -1,6 +1,6 @@
 (function (document, $) {
 
-    $.debug = window.location.hostname == '192.168.3.100';
+    $.debug = window.location.hostname == '127.0.0.1';
     /**
      * 基础api生成器
      * @param api 地址
@@ -10,7 +10,7 @@
      */
     $.promiseApi = function (api, params, method) {
         var defer = $.Deferred(),
-            uri = $.debug ? 'http://192.168.3.100:8070/' : 'http://www.hb6388.com.cn/',
+            uri = $.debug ? 'http://127.0.0.1/' : 'http://www.hb6388.com.cn/',
             token = $.debug ? '3eb72Q560BYRrvg9ITkrwyjuHX/FjL7hmTn7e9BuWbZ3J/gB1+e3wPsv3CJHQVlp6VHxJzfpAIDMqGcnDJ4i3EywEa9AUQMfy6kb/RpjBEaHup4E' : '';
 
         $.ajax({

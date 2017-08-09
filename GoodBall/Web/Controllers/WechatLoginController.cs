@@ -35,8 +35,6 @@ namespace Web.Controllers
             var token = OAuthApi.GetAccessToken(ConfigHelper.WeChatAppId, ConfigHelper.WeChatSecret, code);
             CookieHelper.WriteCookie("OpenId", token.openid);
             return RedirectToAction("WechatLoginIndex", "WechatLogin");
-            
-
         }
 
         [HttpPost]
@@ -51,7 +49,7 @@ namespace Web.Controllers
         [HttpPost]
         public JsonResult Logout(string userName)
         {
-            UserService.Instance.CustomerLogout();
+            UserService.Instance.Logout();
             return Json(new WechatResponse(), JsonRequestBehavior.AllowGet);
         }
 

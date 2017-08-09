@@ -43,12 +43,15 @@
                             if (result == "操作成功") {
                                 window.location.href = "/WechatUser/Index";
                             } else {
-                                WechatAlert(result);
+                                $.alert(result);
                             }
                         }.bind(this), function (e) {
                             alert(e);
                             layer.close(index);
                         });
+                    },
+                    Tips: function () {
+                        $.alert("请联系客服重置密码，谢谢！");
                     }
                 },
                 ready: init(function () {

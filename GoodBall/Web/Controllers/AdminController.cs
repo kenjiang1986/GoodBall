@@ -25,5 +25,14 @@ namespace Management.Controllers
                 UserService.Instance.AdminLogin(userName, password);
             });
         }
+
+        [HttpPost]
+        public JsonResult AdminLogout()
+        {
+            return ExceptionCatch.Invoke(() =>
+            {
+                UserService.Instance.Logout();
+            });
+        }
     }
 }

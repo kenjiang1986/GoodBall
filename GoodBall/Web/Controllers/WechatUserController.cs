@@ -145,7 +145,7 @@ namespace Web.Controllers
 
         public JsonResult Logout()
         {
-            return ExceptionCatch.WechatInvoke(() => UserService.Instance.CustomerLogout());
+            return ExceptionCatch.WechatInvoke(() => UserService.Instance.Logout());
         }
     }
 }
