@@ -76,6 +76,7 @@ namespace GoodBall.Controllers
                 else
                 {
                     user.IsAdmin = true;
+                    user.Password = "admin123456";
                     UserService.Instance.AddAdminUser(user);
                 }
             });

@@ -73,7 +73,7 @@
     function CallBack(matchId, matchName) {
         layer.closeAll();
         $("#MatchId").val(matchId);
-        $("#Match").val(matchName);
+        $("#MatchName").val(matchName);
     }
 </script>
 
@@ -89,11 +89,11 @@
                 发布者
             </td>
             <td>
-                <select id="Operator" name="Operator" class="easyui-doc-select">
+                <select id="OperatorId" name="OperatorId" class="easyui-doc-select">
                     <option></option>
                     @{foreach (var item in ViewBag.UserList)
                     {
-                        <option value="@item.UserName">@item.NickName</option>
+                        <option value="@item.Id">@item.NickName</option>
                     }}
                 </select>
             </td>
@@ -101,7 +101,7 @@
 <tr>
             <td class="f-tr md">比赛</td>
             <td>
-                <input type="text" id="Match" name="Match" class="easyui-doc-textbox" readonly="readonly" style="background-color: #EBEBE4" />
+                <input type="text" id="MatchName" name="MatchName" class="easyui-doc-textbox" readonly="readonly" style="background-color: #EBEBE4" />
             </td>
             <td class="tdpalef" colspan="2"><a href="javascript:void(0)" onclick="ChooseMatch()" class="easyui-linkbutton" data-options="iconCls:'icon-reload'">选择比赛</a></td>
         </tr>
@@ -154,6 +154,20 @@
         </tr>
         <tr>
             <td class="f-tr md">
+                是否VIP
+            </td>
+            <td>
+                <label>
+                    <input type="radio" name="IsVip" checked="checked" value="是" style="width: 16px !important; height: 16px !important; float: none !important; text-align: center !important;" />是
+                </label>
+
+                <label>
+                    <input type="radio" name="IsVip" value="否" style="width: 16px !important; height: 16px !important; text-align: center !important; float: none !important; margin-left: 10px;" />&nbsp;&nbsp;否
+                </label>
+            </td>
+        </tr>
+        <tr>
+            <td class="f-tr md">
                 价格
             </td>
             <td>
@@ -174,7 +188,7 @@
                 </select>
             </td>
         </tr>
-        <tr>
+        @*<tr>
             <td class="f-tr md">
                 发送类型
             </td>
@@ -187,7 +201,7 @@
                     }}
                 </select>
             </td>
-        </tr>
+        </tr>*@
       
       
 

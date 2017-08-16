@@ -23,7 +23,7 @@
                     </div>
                     <div class="recommend" v-if="yq.BuyState==true">
                         <i></i>
-                        <span>推介：{{{yq.Content }}}</span>
+                        <span>推介内容：{{{yq.Content }}}</span>
                     </div>
                     <div class="analysis" v-if="yq.BuyState==true">
                         <i></i>
@@ -31,8 +31,12 @@
                     </div>
                     <div class="recommend" v-if="yq.BuyState==false">
                         <i></i>
-                        <span v-if="yq.PromoteType==1">
-                            价格：<em>{{yq.Price}}</em>
+                        <span v-if="yq.PromoteType==1 && yq.IsVip == '是'">
+                            VIP推介：<em>{{yq.Price}}</em>
+                            V币
+                        </span>
+                        <span v-if="yq.PromoteType==1 && yq.IsVip == '否'">
+                            推介：<em>{{yq.Price}}</em>
                             V币
                         </span>
                         <span v-else>

@@ -21,7 +21,7 @@ namespace DataCollection.Entity
         public int Quantity { get; set; }
 
         /// <summary>
-        /// 积分
+        /// 价格
         /// </summary>
         public int Integral { get; set; }
 

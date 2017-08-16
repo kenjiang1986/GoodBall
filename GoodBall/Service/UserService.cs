@@ -275,9 +275,8 @@ namespace Service
         /// <returns></returns>
         public List<PromoteDto> GetUserPublishList(long userId, int promoteType)
         {
-            var user = userRepository.Find(x => x.Id == userId).FirstOrDefault();
             var list =
-                PromoteRepository.Instance.Find(x => x.Operator == user.UserName && x.PromoteType == promoteType)
+                PromoteRepository.Instance.Find(x => x.OperatorId == userId && x.PromoteType == promoteType)
                     .ToList();
             return list.ToListModel<Promote, PromoteDto>();
         }
@@ -286,7 +285,7 @@ namespace Service
         {
             var code = SmsService.GetPhoneNumber(4, true);
             HttpContext.Current.Session[phone] = code;
-            HttpContext.Current.Session.Timeout = 1;
+            HttpContext.Current.Session.Timeout = 3;
             return SmsService.SendSms(phone, string.Format("您的验证码是：{0}。请不要把验证码泄露给其他人。", code));
         }
 

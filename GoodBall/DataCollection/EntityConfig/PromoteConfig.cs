@@ -13,8 +13,9 @@ namespace DataCollection.EntityConfig
         {
             base.ToTable("Promote");
             base.HasKey(x => x.Id);
-            base.Property(x => x.Content).HasMaxLength(2000);
+            base.Property(x => x.Content).IsMaxLength();
             base.HasRequired(x => x.Match).WithMany().HasForeignKey(x => x.MatchId);
+            base.HasRequired(x => x.Operator).WithMany().HasForeignKey(x => x.OperatorId);
         }
     }
 }

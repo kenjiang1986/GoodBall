@@ -4,10 +4,10 @@
 
 <div class="products-page content page" id="productlist">
     <div class="banner">
-        积分商城
+        体育商城
     </div>
     <div class="">
-        <div class="content-block-title">您共有<b class="text-danger">@ViewBag.UserIntegral</b>积分</div>
+        <div class="content-block-title">您共有<b class="text-danger">@ViewBag.UserIntegral</b>V币</div>
         <div class="content-block">
             <div class="products-item col-50" v-for="product in products">
                 <div class="product-box">
@@ -19,8 +19,8 @@
                     </div>
                   
                     <div class="txt">
-                        <span><em v-text="product.Integral"></em>积分</span>
-                        <a v-on:click="products$$exchange(product.Id)"  class="button button-fill button-danger">点击兑换</a>
+                        <span><em v-text="product.Integral"></em>V币</span>
+                        <a v-on:click="products$$exchange(product.Id)"  class="button button-fill button-danger">购买</a>
                     </div>
                 </div>
             </div>

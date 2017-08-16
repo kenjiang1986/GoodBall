@@ -95,14 +95,14 @@
         });
     })(Vue, Zepto, jQuery.api);
 
-    var int = 60;
+    var int = 180;
     function countdown() {
         //$("#sendTime").removeAttr("disabled");
        document.getElementById("sendTime").innerHTML = int + "秒后可重新获取";
         int--;
         if (int < 0) {
             itemId = window.clearInterval(itemId)//结束  
-            int = 60; //重新赋值  
+            int = 180; //重新赋值  
             $("#sendCode").show();
             $("#sendTime").hide();
             //$("#sendCode").removeAttr("disabled").html("重新获取校验码");//将按钮可用  

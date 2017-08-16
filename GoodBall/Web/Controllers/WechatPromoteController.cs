@@ -127,6 +127,7 @@ namespace Web.Controllers
                     x.Content,
                     x.Result,
                     x.Integral,
+                    x.IsVip,
                     LevelStr = ComboLevel(x.Level),
                     
                 })

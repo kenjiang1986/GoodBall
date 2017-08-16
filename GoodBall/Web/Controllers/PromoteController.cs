@@ -40,6 +40,7 @@ namespace Web.Controllers
             return ExceptionCatch.Invoke(() =>
             {
                 Promote.PromoteType = 1;
+                Promote.SendType = "微信";
                 if (Promote.Id > 0)
                 {
                     PromoteService.Instance.UpdatePromote(Promote);
@@ -65,13 +66,13 @@ namespace Web.Controllers
             });
         }
 
-        public JsonResult SendPromote(long? id)
-        {
-            return ExceptionCatch.Invoke(() =>
-            {
-                PromoteService.Instance.SendPromote(id.Value);
-            });
-        }
+        //public JsonResult SendPromote(long? id)
+        //{
+        //    return ExceptionCatch.Invoke(() =>
+        //    {
+        //        PromoteService.Instance.SendPromote(id.Value);
+        //    });
+        //}
 
         public JsonResult GetList(PromoteCond cond, int page, int rows)
         {

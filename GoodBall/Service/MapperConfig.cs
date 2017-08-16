@@ -50,21 +50,19 @@ namespace Service
                  .ForMember(x => x.BuyState, x => x.MapFrom(src => src.UserList.Any(y => y.Id == UserService.GetCurrentUser().Id)))
                  .ForMember(x => x.RaceType, x => x.MapFrom(src => src.RaceType.ToString()))
                   .ForMember(x => x.State, x => x.MapFrom(src => src.State.ToString()))
-                  .ForMember(x => x.IsSend, x => x.MapFrom(src => src.IsSend ? "是" : "否"))
                   .ForMember(x => x.IsReturn, x => x.MapFrom(src => src.IsReturn ? "是" : "否"))
-                   .ForMember(x => x.SendType, x => x.MapFrom(src => src.SendType.ToString()))
+                  .ForMember(x => x.IsVip, x => x.MapFrom(src => src.IsVip ? "是" : "否"))
                 .ForMember(x => x.MatchTime, x => x.MapFrom(src => src.Match.MatchTime))
                 .ForMember(x => x.CreateTimeStr, x => x.MapFrom(src => src.CreateTime.ToString()))
+                .ForMember(x => x.Operator, x => x.MapFrom(src => src.Operator.NickName))
+                .ForMember(x => x.UserCount, x => x.MapFrom(src => src.UserList.Count))
              .ForMember(x => x.MatchName, x => x.MapFrom(src => src.Match.TeamA + "VS" + src.Match.TeamB));
             AutoMapper.Mapper.CreateMap<PromoteDto, Promote>()
                 .ForMember(x => x.CreateTime, x => x.MapFrom(src => DateTime.Now))
+                .ForMember(x => x.IsVip, x => x.MapFrom(src => src.IsVip == "是"))
                 .ForMember(x => x.RaceType, x => x.MapFrom(src => EnumHelper.Parse<RaceTypeEnum>(src.RaceType)))
-                  .ForMember(x => x.State, x => x.MapFrom(src => EnumHelper.Parse<PromoteStateEnum>(src.State)))
-                 .ForMember(x => x.SendType, x => x.MapFrom(src => EnumHelper.Parse<SendTypeEnum>(src.SendType)));
-                
-
-
-
+                .ForMember(x => x.State, x => x.MapFrom(src => EnumHelper.Parse<PromoteStateEnum>(src.State)));
+               
             AutoMapper.Mapper.CreateMap<RechargeRecord, RechargeRecordDto>();
             AutoMapper.Mapper.CreateMap<RechargeRecordDto, RechargeRecord>()
                 .ForMember(x => x.CreateTime, x => x.MapFrom(src => DateTime.Now));

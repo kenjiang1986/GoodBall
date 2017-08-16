@@ -44,17 +44,14 @@ namespace DataCollection.Entity
         /// </summary>
         public PromoteStateEnum State { get; set; }
 
-        /// <summary>·
-        /// 推送类型
-        /// </summary>
-        public SendTypeEnum SendType { get; set; }
-
         /// <summary>
         /// 推介类型（1、推介 2、人人竞彩）
         /// </summary>
         public int PromoteType { get; set; }
 
-        public string Operator { get; set; }
+        public virtual User Operator { get; set; }
+
+        public long OperatorId { get; set; }
 
         public DateTime CreateTime { get; set; }
 
@@ -62,12 +59,16 @@ namespace DataCollection.Entity
 
         public long MatchId { get; set; }
 
-        public bool IsSend { get; set; }
 
         /// <summary>
         /// 是否退费 
         /// </summary>
         public bool IsReturn { get; set; }
+
+        /// <summary>
+        /// 是否VIP推介
+        /// </summary>
+        public bool IsVip { get; set; }
 
         public string Result { get; set; }
 

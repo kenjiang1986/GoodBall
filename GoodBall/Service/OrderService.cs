@@ -64,9 +64,9 @@ namespace Service
             {
                 throw new ServiceException("当前用户未登录，不能完成下单操作");
             }
-            if (user.Integral < goods.Integral)
+            if (user.Balance < goods.Integral)
             {
-                throw new ServiceException("对不起，您的积分暂时不足以兑换此商品，请选择其它商品进行兑换");
+                throw new ServiceException("对不起，您的帐户余额暂不足，请选择其它商品购买或者充值后进行购买");
             }
 
             var entity = dto.ToModel<Order>();
@@ -76,10 +76,13 @@ namespace Service
             entity.UserId = userId;
             //减库存
             goods.Quantity = goods.Quantity - Convert.ToInt32(dto.Quantity);
+            //扣除费用
+            user.Balance = user.Balance - goods.Integral;
             orderRepository.Transaction(() =>
             {
                 orderRepository.Insert(entity);
                 GoodsRepository.Instance.Save(goods);
+                UserService.Instance.UpdateUserBalance(user.Id, user.Balance, string.Format("用户购买商品{0}，扣除{1}V币，订单号为{2}", goods.GoodsName, user.Balance, entity.OrderNo));
             });
         }
 

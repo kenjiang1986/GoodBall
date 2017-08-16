@@ -30,10 +30,7 @@ namespace Service
             {
                 query = query.Where(x => x.RaceType.ToString() == cond.RaceType);
             }
-            if (cond.IsSend.HasValue)
-            {
-                query = query.Where(x => x.IsSend == cond.IsSend.Value);
-            }
+           
             query = query.OrderByDescending(x => x.CreateTime);
             return promoteRepository.FindForPaging(size, index, query, out total).ToList().ToListModel<Promote, PromoteDto>();
         }
@@ -46,7 +43,6 @@ namespace Service
         public void AddPromote(PromoteDto dto)
         {
             var entity = dto.ToModel<Promote>();
-            entity.IsSend = false;
             promoteRepository.Insert(entity);
         }
 
@@ -54,13 +50,13 @@ namespace Service
         {
             var entity = promoteRepository.Find(x => x.Id == dto.Id).FirstOrDefault();
             entity.RaceType =  EnumHelper.Parse<RaceTypeEnum>(dto.RaceType);
+            entity.IsVip = dto.IsVip == "是";
             entity.Content = dto.Content;
             entity.level = dto.Level;
             entity.Integral = dto.Integral;
             entity.Price = dto.Price;
             entity.State = EnumHelper.Parse<PromoteStateEnum>(dto.State);
-            entity.Operator = dto.Operator;
-            entity.SendType = EnumHelper.Parse<SendTypeEnum>(dto.SendType);
+            entity.OperatorId = dto.OperatorId;
             promoteRepository.Transaction(() =>
             {
                 //推介不中并且未退费，进行退费操作
@@ -86,23 +82,14 @@ namespace Service
                 //按百分比退款
                 if (rule.Type == 1)
                 {
-                    updatePrice = price + (int)(price * rule.Numerical);
+                    updatePrice = (int)(price * rule.Numerical);
                 }
+              
                 foreach (var user in userList)
                 {
-                        RechargeRecordService.Instance.AddRecharge
-                        (
-                            new RechargeRecordDto()
-                            {
-                                Price = updatePrice,
-                                Operator = UserService.GetCurrentUser().UserName,
-                                UserId = user.Id,
-                                UserName = user.UserName,
-                                Remark = string.Format("推介不中退款{0}V币", updatePrice)
-                            }
-                        );
                     user.Balance = user.Balance + updatePrice;
-                    UserRepository.Instance.Save(user);
+                    UserService.Instance.UpdateUserBalance(user.Id, user.Balance,
+                        string.Format("推介不中退款{0}V币", updatePrice));
                 }
             }
         }
@@ -172,37 +159,37 @@ namespace Service
             promoteRepository.Delete(x => x.Id == id);
         }
 
-        public void SendPromote(long id)
-        {
-            var promote = promoteRepository.Find(x => x.Id == id).FirstOrDefault();
+        //public void SendPromote(long id)
+        //{
+        //    var promote = promoteRepository.Find(x => x.Id == id).FirstOrDefault();
 
-            if (promote.SendType.Equals(SendTypeEnum.短信))
-            {
-                foreach (var user in promote.UserList)
-                {
-                    SmsService.SendSms(user.Phone, promote.Content);
-                }
-            }
-            else if (promote.SendType.Equals(SendTypeEnum.微信))
-            {
-                var wechatPromote = new WechatPromoteDto()
-                {
-                    Match = string.Format("{0}VS{1}", promote.Match.TeamA, promote.Match.TeamB),
-                    MatchTime = promote.Match.MatchTime.ToString(),
-                    Result = promote.Result,
-                    MatchResult = promote.Match.MatchResult
-                };
-                foreach (var user in promote.UserList)
-                {
-                    if (!string.IsNullOrEmpty(user.OpenId))
-                    {
-                        wechatPromote.OpenId = user.OpenId;
-                        WechatService.SendPromoteMessage(wechatPromote);
-                    }
-                }
-            }
+        //    if (promote.SendType.Equals(SendTypeEnum.短信))
+        //    {
+        //        foreach (var user in promote.UserList)
+        //        {
+        //            SmsService.SendSms(user.Phone, promote.Content);
+        //        }
+        //    }
+        //    else if (promote.SendType.Equals(SendTypeEnum.微信))
+        //    {
+        //        var wechatPromote = new WechatPromoteDto()
+        //        {
+        //            Match = string.Format("{0}VS{1}", promote.Match.TeamA, promote.Match.TeamB),
+        //            MatchTime = promote.Match.MatchTime.ToString(),
+        //            Result = promote.Result,
+        //            MatchResult = promote.Match.MatchResult
+        //        };
+        //        foreach (var user in promote.UserList)
+        //        {
+        //            if (!string.IsNullOrEmpty(user.OpenId))
+        //            {
+        //                wechatPromote.OpenId = user.OpenId;
+        //                WechatService.SendPromoteMessage(wechatPromote);
+        //            }
+        //        }
+        //    }
 
-            promoteRepository.Save(x => x.Id == id, x => new Promote { IsSend = true });
-        }
+        //    promoteRepository.Save(x => x.Id == id, x => new Promote { IsSend = true });
+        //}
     }
 }

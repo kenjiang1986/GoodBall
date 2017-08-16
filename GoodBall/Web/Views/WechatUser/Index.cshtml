@@ -21,11 +21,11 @@
                                         <img style="width:40px; height:40px; border-radius: 50%" v-bind:src="profile.IconUrl">
                                         <input id="Uploadfile" name="Uploadfile" type="file">请选择文件
                                         &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-                                        &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                                       
                                         <input type="hidden" id="imageType" name="imageType" value="UserIcon" />
                                         <input type="hidden" id="id" name="id" value="{{profile.Id}}" />
                                     </div>
-                                    <a href="javascript:void(0)" onclick="SubmitForm()">点击上传</a>
+                                    <a href="javascript:void(0)" v-on:click="SubmitForm()">点击上传</a>
                                 </div>
                             </form>
 </div>
@@ -175,7 +175,19 @@
                       });
                   }
                 })
-            }
+            },
+            SubmitForm: function () {
+                var index = layer.open({ type: 2, shadeClose: false });
+                var val = $("#Uploadfile").val();
+                if (val == "" || val == null) {
+                    $.alert("请选择上传文件");
+                    layer.close(index);
+                    return;
+                }
+
+                $("#form1").submit();
+                layer.close(index);
+            },
         },
         ready: init(function () {
             $.scope().profile$$load();
@@ -183,13 +195,13 @@
     });
 })(Vue, Zepto, jQuery.api);
     
-function SubmitForm() {
-    var val = $("#Uploadfile").val();
-    if (val == "" || val == null) {
-        alert("请选择上传文件");
-        return;
-    }
+//function SubmitForm() {
+//    var val = $("#Uploadfile").val();
+//    if (val == "" || val == null) {
+//        alert("请选择上传文件");
+//        return;
+//    }
     
-    $("#form1").submit();
-}
+//    $("#form1").submit();
+//}
     </script>

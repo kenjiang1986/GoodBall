@@ -88,14 +88,7 @@ namespace Web.Controllers
             return ExceptionCatch.WechatInvoke(() =>
             {
                 OrderService.Instance.AddOrder(order);
-            }, "兑换成功");
-            
-
-            return Json(new WechatResponse()
-            {
-                data = "兑换成功"
-            }, JsonRequestBehavior.AllowGet);
+            }, "购买成功");
         }
-
     }
 }

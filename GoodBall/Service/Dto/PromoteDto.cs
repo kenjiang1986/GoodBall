@@ -54,11 +54,14 @@ namespace Service.Dto
 
         public string Operator { get; set; }
 
+        /// <summary>
+        /// 发布者ID
+        /// </summary>
+        public long OperatorId { get; set; }
+
         public DateTime CreateTime { get; set; }
 
         public string CreateTimeStr { get; set; }
-
-        public string IsSend { get; set; }
 
         public bool BuyState { get; set; }
 
@@ -70,5 +73,15 @@ namespace Service.Dto
         /// 是否退费 
         /// </summary>
         public string IsReturn { get; set; }
+
+        /// <summary>
+        /// 是否VIP推介
+        /// </summary>
+        public string IsVip { get; set; }
+
+        /// <summary>
+        /// 推介购买人数
+        /// </summary>
+        public string UserCount { get; set; }
     }
 }
