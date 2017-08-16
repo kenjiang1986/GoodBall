@@ -130,9 +130,9 @@
                 var index = layer.open({type: 2,shadeClose:false});
                 api.user_action(this.profile).then(function (result) {
                     layer.close(index);
-                    alert(result);
+                    $.alert(result);
                 }.bind(this), function (e) {
-                    alert(e);
+                    $.alert(e);
                     layer.close(index);
                 });
             },
@@ -141,9 +141,9 @@
                 api.user_logout().then(function (result) {
                     layer.close(index);
                     window.location.href = '/WechatLogin/WechatLoginIndex';
-                    alert(result);
+                    $.alert(result);
                 }.bind(this), function (e) {
-                    alert(e);
+                    $.alert(e);
                     layer.close(index);
                 });
             },
@@ -152,7 +152,7 @@
                 api.get_code(phone).then(function () {
                     layer.close(index);
                 }.bind(this), function (e) {
-                    alert(e);
+                    $.alert(e);
                     layer.close(index);
                 });
             },
