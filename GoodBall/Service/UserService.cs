@@ -1,6 +1,7 @@
 ﻿using System.Configuration;
 using DataCollection.Entity;
 using Helper;
+using Helper.Enum;
 using Newtonsoft.Json;
 using Repository;
 using System;
@@ -198,7 +199,48 @@ namespace Service
             UpdateUserCookie(id);
         }
 
-        public void UpdateUserBalance(long userId, int price, string rechargeRemark)
+        public void AddUserBalance()
+        {
+            
+        }
+
+        public void UpdateUserBalance(long userId, int price, string rechargeRemark, BalanceMethod method)
+        {
+            var entity = userRepository.Find(x => x.Id == userId).FirstOrDefault();
+            if (entity == null)
+            {
+                throw new ServiceException("不存在当前用户");
+            }
+
+            switch (method)
+            {
+                case BalanceMethod.Add:
+                    entity.Balance += price;
+                    break;
+                case BalanceMethod.Subtract:
+                    entity.Balance -= price;
+                    break;
+                case BalanceMethod.Update:
+                    entity.Balance = price;
+                    break;
+            }
+
+            var rechargeRecord = new RechargeRecord();
+            rechargeRecord.CreateTime = DateTime.Now;
+            rechargeRecord.Operator = GetCurrentUser().UserName;
+            rechargeRecord.UserName = entity.UserName;
+            rechargeRecord.Price = price;
+            rechargeRecord.UserId = userId;
+            rechargeRecord.Remark = rechargeRemark;
+
+            userRepository.Transaction(()=>
+            {
+                userRepository.Save(entity);
+                rechargeRepository.Insert(rechargeRecord);
+            });
+        }
+
+        public void UpdateUBalance(long userId, int price, string rechargeRemark)
         {
             var entity = userRepository.Find(x => x.Id == userId).FirstOrDefault();
             if (entity == null)
@@ -215,7 +257,7 @@ namespace Service
             rechargeRecord.UserId = userId;
             rechargeRecord.Remark = rechargeRemark;
 
-            userRepository.Transaction(()=>
+            userRepository.Transaction(() =>
             {
                 userRepository.Save(entity);
                 rechargeRepository.Insert(rechargeRecord);

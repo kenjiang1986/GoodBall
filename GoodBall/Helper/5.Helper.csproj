@@ -86,6 +86,7 @@
     <Compile Include="ConfigHelper.cs" />
     <Compile Include="CookieHelper.cs" />
     <Compile Include="DESEncrypt.cs" />
+    <Compile Include="Enum\BalanceMethod.cs" />
     <Compile Include="Enum\CalTypeEnum.cs" />
     <Compile Include="Enum\MatchStateEnum.cs" />
     <Compile Include="Enum\NewsTypeEnum.cs" />

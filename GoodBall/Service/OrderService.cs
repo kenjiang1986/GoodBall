@@ -76,13 +76,11 @@ namespace Service
             entity.UserId = userId;
             //减库存
             goods.Quantity = goods.Quantity - Convert.ToInt32(dto.Quantity);
-            //扣除费用
-            user.Balance = user.Balance - goods.Integral;
             orderRepository.Transaction(() =>
             {
                 orderRepository.Insert(entity);
                 GoodsRepository.Instance.Save(goods);
-                UserService.Instance.UpdateUserBalance(user.Id, user.Balance, string.Format("用户购买商品{0}，扣除{1}V币，订单号为{2}", goods.GoodsName, user.Balance, entity.OrderNo));
+                UserService.Instance.UpdateUserBalance(user.Id, goods.Integral, string.Format("用户购买商品{0}，扣除{1}V币，订单号为{2}", goods.GoodsName, goods.Integral, entity.OrderNo), BalanceMethod.Subtract);
             });
         }
 

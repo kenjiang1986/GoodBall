@@ -87,9 +87,8 @@ namespace Service
               
                 foreach (var user in userList)
                 {
-                    user.Balance = user.Balance + updatePrice;
-                    UserService.Instance.UpdateUserBalance(user.Id, user.Balance,
-                        string.Format("推介不中退款{0}V币", updatePrice));
+                    UserService.Instance.UpdateUserBalance(user.Id, updatePrice,
+                        string.Format("推介不中退款{0}V币", updatePrice), BalanceMethod.Add);
                 }
             }
         }

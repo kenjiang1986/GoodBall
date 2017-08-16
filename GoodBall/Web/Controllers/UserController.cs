@@ -92,7 +92,7 @@ namespace GoodBall.Controllers
         {
             return ExceptionCatch.Invoke(() =>
             {
-                UserService.Instance.UpdateUserBalance(id.Value, price.Value, remark);
+                UserService.Instance.UpdateUserBalance(id.Value, price.Value, remark, Helper.Enum.BalanceMethod.Add);
             });
         }
 
