@@ -207,6 +207,13 @@
 
             }, 'POST');
         },
+        //打赏
+        'reward': function (id, price) {
+            return $.promiseApi('WechatPromote/Reward', {
+                promoteId: id,
+                price: price,
+            });
+        },
        
     };
 

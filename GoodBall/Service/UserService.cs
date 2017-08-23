@@ -240,30 +240,6 @@ namespace Service
             });
         }
 
-        public void UpdateUBalance(long userId, int price, string rechargeRemark)
-        {
-            var entity = userRepository.Find(x => x.Id == userId).FirstOrDefault();
-            if (entity == null)
-            {
-                throw new ServiceException("不存在当前用户");
-            }
-            entity.Balance += price;
-
-            var rechargeRecord = new RechargeRecord();
-            rechargeRecord.CreateTime = DateTime.Now;
-            rechargeRecord.Operator = GetCurrentUser().UserName;
-            rechargeRecord.UserName = entity.UserName;
-            rechargeRecord.Price = price;
-            rechargeRecord.UserId = userId;
-            rechargeRecord.Remark = rechargeRemark;
-
-            userRepository.Transaction(() =>
-            {
-                userRepository.Save(entity);
-                rechargeRepository.Insert(rechargeRecord);
-            });
-        }
-
         public void DeleteUser(long id)
         {
             userRepository.Delete(x => x.Id == id);

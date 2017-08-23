@@ -51,6 +51,11 @@
                         {{{yq.LevelStr}}}
 
                     </div>
+                    <div class="reward" v-on:click="reward(yq.Id
+
+)" style="text-align: center;">
+                        <span class="good"></span>
+                    </div>
                     </li>
             </ul>
         </div>
@@ -86,6 +91,11 @@
                         {{{yq.LevelStr}}}
 
                     </div>
+                    <div class="reward" v-on:click="reward(yq.Id
+
+)" style="text-align: center;">
+                        <span class="good"></span>
+                    </div>
                     </li>
 
             </ul>
@@ -120,12 +130,11 @@
                     </div>
 
                     <div class="tip">
-
                         {{{yq.LevelStr}}}
-
                     </div>
-
-
+                    <div class="reward" v-on:click="reward(yq.Id)" style="text-align: center;">
+                        <span class="good"></span>
+                    </div>
             </ul>
         </div>
     
@@ -202,7 +211,20 @@
                             layer.close(index);
                         });
                     });
+                },
+                reward: function (id) {
+                    $.prompt('请输入打赏金额', function (value) {
+                        api.reward(id, value).then(function (data) {
+                            $.alert(value);
+                            $.scope().banners$$load();
+                            layer.close(index);
+                        }.bind(this), function (e) {
+                            $.alert(e);
+                            layer.close(index);
+                        });
+                    });
                 }
+
             },
             ready: init(function () {
                 $.scope().banners$$load();

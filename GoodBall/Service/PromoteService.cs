@@ -93,6 +93,23 @@ namespace Service
             }
         }
 
+        /// <summary>
+        /// 打赏
+        /// </summary>
+        /// <param name="id"></param>
+        /// <param name="price"></param>
+        /// <returns></returns>
+        public bool Reward(int id, int price)
+        {
+            var promote = PromoteRepository.Instance.Source.FirstOrDefault(x => x.Id == id);
+            var user = UserService.Instance.GetUser(promote.OperatorId);
+            UserRepository.Instance.Transaction(()=>{
+                UserService.Instance.UpdateUserBalance(UserService.GetCurrentUser().Id, price, string.Format("打赏扣减{0}V币", price), BalanceMethod.Subtract);
+                UserService.Instance.UpdateUserBalance(user.Id, price, string.Format("打赏增加{0}V币", price), BalanceMethod.Add);
+            });
+            return true;
+        }
+
         public bool BuyPromote(int id)
         {
             bool isAddRecord = false;

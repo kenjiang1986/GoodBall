@@ -46,9 +46,10 @@
                         <p  v-on:click="buyPromote(yq.Id)" ><a href="#" class="button button-fill button-danger">购买 </a></p>
                     </div>
                     <div class="tip">
-
                         {{{yq.LevelStr}}}
-
+                    </div>
+                    <div class="reward" v-on:click="reward(yq.Id)" style="text-align: center;">
+                        <span class="good"></span>
                     </div>
                 </li>
 
@@ -103,6 +104,11 @@
                     }.bind(this), function (e) {
                         $.alert(e);
                         layer.close(index);
+                    });
+                },
+                reward: function (id) {
+                    $.prompt('请输入打赏金额', function (value) {
+                        $.alert(value);
                     });
                 }
             },

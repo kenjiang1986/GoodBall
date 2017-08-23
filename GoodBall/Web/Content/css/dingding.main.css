@@ -590,3 +590,8 @@ label.label-checkbox input[type=checkbox]:checked + .item-media i.icon-form-chec
 
 .list-block ul:before {
   background: none; }
+
+.reward .good {
+  width: 35px;
+  height: 35px; }
+

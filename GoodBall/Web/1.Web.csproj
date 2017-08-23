@@ -194,6 +194,7 @@
     <Content Include="Content\images\errorpage_bg.png" />
     <Content Include="Content\images\excel.png" />
     <Content Include="Content\images\exchange_top_bg.png" />
+    <Content Include="Content\images\good.png" />
     <Content Include="Content\images\icloud.png" />
     <Content Include="Content\images\icloud_title.png" />
     <Content Include="Content\images\icon-check.png" />
@@ -263,6 +264,7 @@
     <Content Include="Content\images\star_icon.png" />
     <Content Include="Content\images\time_icon.png" />
     <Content Include="Content\images\tit_icon.png" />
+    <Content Include="Content\images\union.png" />
     <Content Include="Content\images\update.png" />
     <Content Include="Content\images\user.png" />
     <Content Include="Content\images\user_icon.png" />

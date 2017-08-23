@@ -162,6 +162,19 @@ namespace Web.Controllers
             });
         }
 
+        /// <summary>
+        /// 打赏
+        /// </summary>
+        /// <param name="promoteId"></param>
+        /// <returns></returns>
+        public JsonResult Reward(int promoteId, int price)
+        {
+            return ExceptionCatch.WechatInvoke(() =>
+            {
+                PromoteService.Instance.Reward(promoteId, price);
+            });
+        }
+
         private string ComboLevel(int num)
         {
             string result = "推荐度";
