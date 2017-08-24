@@ -169,10 +169,7 @@ namespace Web.Controllers
         /// <returns></returns>
         public JsonResult Reward(int promoteId, int price)
         {
-            return ExceptionCatch.WechatInvoke(() =>
-            {
-                PromoteService.Instance.Reward(promoteId, price);
-            });
+            return ExceptionCatch.WechatInvoke(() => PromoteService.Instance.Reward(promoteId, price), "打赏成功");
         }
 
         private string ComboLevel(int num)

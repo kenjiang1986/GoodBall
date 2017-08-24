@@ -215,7 +215,7 @@
                 reward: function (id) {
                     $.prompt('请输入打赏金额', function (value) {
                         api.reward(id, value).then(function (data) {
-                            $.alert(value);
+                            $.alert(data);
                             $.scope().banners$$load();
                             layer.close(index);
                         }.bind(this), function (e) {

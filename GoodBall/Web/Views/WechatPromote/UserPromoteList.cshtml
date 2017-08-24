@@ -36,6 +36,9 @@
                         {{{yq.LevelStr}}}
 
                     </div>
+                    <div class="reward" v-on:click="reward(yq.Id)" style="text-align: center;">
+                        <span class="good"></span>
+                    </div>
                 </li>
             </ul>
         </div>
@@ -73,6 +76,18 @@
                     }.bind(this), function (e) {
                         $.alert(e);
                         layer.close(index);
+                    });
+                },
+                reward: function (id) {
+                    $.prompt('请输入打赏金额', function (value) {
+                        api.reward(id, value).then(function (data) {
+                            $.alert(data);
+                            $.scope().banners$$load();
+                            layer.close(index);
+                        }.bind(this), function (e) {
+                            $.alert(e);
+                            layer.close(index);
+                        });
                     });
                 }
             },

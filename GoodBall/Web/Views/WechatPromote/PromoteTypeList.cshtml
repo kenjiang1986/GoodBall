@@ -108,7 +108,14 @@
                 },
                 reward: function (id) {
                     $.prompt('请输入打赏金额', function (value) {
-                        $.alert(value);
+                        api.reward(id, value).then(function (data) {
+                            $.alert(data);
+                            $.scope().banners$$load();
+                            layer.close(index);
+                        }.bind(this), function (e) {
+                            $.alert(e);
+                            layer.close(index);
+                        });
                     });
                 }
             },
