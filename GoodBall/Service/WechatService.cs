@@ -21,7 +21,7 @@ namespace Service
     public class WechatService : MessageHandler<MessageContext<IRequestMessageBase, IResponseMessageBase>>
     {
 
-        private static string msgContent = string.Format("客服已收到您的消息，将会尽快进行回复，如有紧急问题，请拨打客服电话：{0}", ConfigHelper.CustomerPhone);
+        private static string msgContent = ConfigHelper.CustomerContent;
         public WechatService(Stream inputStream, PostModel postModel, int maxRecordCount = 0)
             : base(inputStream, postModel, maxRecordCount)
         {
@@ -37,7 +37,7 @@ namespace Service
          public override IResponseMessageBase DefaultResponseMessage(IRequestMessageBase requestMessage)
          {
              var responseMessage = base.CreateResponseMessage<ResponseMessageText>();
-             responseMessage.Content = "公众号即将上线，敬请关注！";
+             responseMessage.Content = ConfigHelper.FocusContent;
              return responseMessage;
          }
 

@@ -24,6 +24,10 @@ namespace Helper
         public static string AdminName = ConfigurationManager.AppSettings["AdminName"];
 
         public static string CustomerPhone = ConfigurationManager.AppSettings["CustomerPhone"];
+
+        public static string FocusContent = ConfigurationManager.AppSettings["FocusContent"];
+
+        public static string CustomerContent = ConfigurationManager.AppSettings["CustomerContent"];
         
         //public static string GetAdminName()
         //{

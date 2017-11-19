@@ -43,7 +43,7 @@ namespace Web.Controllers
                 {
                     x.Id,
                     PayAmount = x.BaseAmount + x.GiveAmount,
-                    PayAmountText = "充值" + x.BaseAmount + x.CalType + x.GiveAmount,
+                    PayAmountText = x.GiveAmount > 0 ? "充值" + x.BaseAmount + x.CalType + x.GiveAmount : "充值" + x.BaseAmount,
                 })
             }, JsonRequestBehavior.AllowGet);
         }
