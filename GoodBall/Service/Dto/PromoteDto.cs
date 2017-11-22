@@ -83,5 +83,8 @@ namespace Service.Dto
         /// 推介购买人数
         /// </summary>
         public string UserCount { get; set; }
+
+        
+    
     }
 }

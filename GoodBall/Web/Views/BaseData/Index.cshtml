@@ -171,7 +171,7 @@
         </div>
         
         <input type="hidden" id="id" name="id" />
-        <div title="退还V币" class="easyui-doc-padding">
+        <div title="基础数据设置" class="easyui-doc-padding">
            
             <table class="easyui-doc-table">
                 <tr>
@@ -184,12 +184,24 @@
                     </td>
                 </tr>
            
+               
+                
+                <tr>
+                    <td>
+                        第一次折扣价格
+                    </td>
+                    <td>
+                        <input type="text" id="FirstPrice" name="FirstPrice" style="padding-left:5px; line-height:20px;" class="easyui-validatebox textbox" required="true" />
+                        <label style="color:red;">设置价格后,客户每一次购买推介时为此价格，从第二次开始将恢复原价！</label>
+                    </td>
+                </tr>
                 <tr>
                     <td colspan="2" style="text-align: center;">
                         <a href="javascript:;" class="easyui-linkbutton" iconcls="icon-ok" id="submitform" onclick="Submit()">保存</a>
                     </td>
                 </tr>
-
             </table>
         </div>
+        
+        
     </div></form>

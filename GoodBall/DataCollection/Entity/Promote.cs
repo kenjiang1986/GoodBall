@@ -72,6 +72,7 @@ namespace DataCollection.Entity
 
         public string Result { get; set; }
 
+
         public virtual ICollection<User> UserList { get; set; }
     }
 }

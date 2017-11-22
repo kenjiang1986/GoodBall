@@ -57,11 +57,12 @@ namespace Service
             var rule = returnRuleRepository.Source.FirstOrDefault();
             if(rule == null)
             {
-                returnRuleRepository.Insert(new ReturnRule() { Type = 1, Numerical = (decimal)dto.Numerical/100 });
+                returnRuleRepository.Insert(new ReturnRule() { Type = 1, Numerical = (decimal)dto.Numerical/100, FirstPrice = dto.FirstPrice });
             }
             else
             {
                 rule.Numerical = (decimal)dto.Numerical/100;
+                rule.FirstPrice = dto.FirstPrice;
                 returnRuleRepository.Save(rule);
             }
          }

@@ -19,5 +19,11 @@ namespace Service.Dto
         ///  数值
         /// </summary>
         public int Numerical { get; set; }
+
+
+        /// <summary>
+        ///  第一次折扣价格
+        /// </summary>
+        public int FirstPrice { get; set; }
     }
 }

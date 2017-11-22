@@ -126,7 +126,9 @@ namespace Service
                 throw new ServiceException("不存在当前登录用户");
             }
 
-            if (promote.PromoteType == 1 ? user.Balance - promote.Price < 0 : user.Integral - promote.Integral < 0)
+            var payPrice = GetDiscountPrice() > 0 ? GetDiscountPrice() : promote.Price;
+
+            if (promote.PromoteType == 1 ? user.Balance - payPrice < 0 : user.Integral - promote.Integral < 0)
             {
                 throw new ServiceException("您的余额不足，请充值后再进行购买");
             }
@@ -134,7 +136,7 @@ namespace Service
             promote.UserList.Add(user);
             if (promote.PromoteType == 1)
             {
-                user.Balance = user.Balance - promote.Price;
+                user.Balance = user.Balance - payPrice;
                 isAddRecord = true;
             }
             else if (promote.PromoteType == 2)
@@ -152,11 +154,11 @@ namespace Service
                       (
                           new RechargeRecordDto()
                           {
-                              Price = promote.Price,
+                              Price = payPrice,
                               Operator = UserService.GetCurrentUser().UserName,
                               UserId = user.Id,
                               UserName = user.UserName,
-                              Remark = string.Format("购买推介用户余额扣减{0}V币", promote.Price)
+                              Remark = string.Format("购买推介用户余额扣减{0}V币", payPrice)
                           }
                       );
                 }
@@ -173,6 +175,21 @@ namespace Service
                 throw new ServiceException("用户已经购买了该条推介，禁止删除");
             }
             promoteRepository.Delete(x => x.Id == id);
+        }
+
+        /// <summary>
+        /// 获取折扣价格
+        /// </summary>
+        /// <returns></returns>
+        public int GetDiscountPrice()
+        {
+            var rule = PayAmountService.Instance.GetReturnRule();
+            //如果有设置第一次购买价格并且未购买过推介的
+            if (rule != null && !UserService.Instance.GetUserPromoteList(UserService.GetCurrentUser().Id, 1).Any())
+            {
+                return rule.FirstPrice;
+            }
+            return 0;
         }
 
         //public void SendPromote(long id)

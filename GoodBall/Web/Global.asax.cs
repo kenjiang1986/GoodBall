@@ -28,6 +28,9 @@ namespace GoodBall
             log4net.Config.XmlConfigurator.Configure(new System.IO.FileInfo(path));
 
             AccessTokenContainer.Register(ConfigHelper.WeChatAppId, ConfigHelper.WeChatSecret);
+
+            //JS与CSS文件版本号
+            Application["JSVersion"] = OrderHelper.GetOrderNo();
         }
     }
 }

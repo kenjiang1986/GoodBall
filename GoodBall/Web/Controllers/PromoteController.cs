@@ -55,6 +55,11 @@ namespace Web.Controllers
         public JsonResult GetPromote(long? id)
         {
             var result = PromoteService.Instance.GetPromote(id.Value);
+            var rule = PayAmountService.Instance.GetReturnRule();
+            if (rule != null)
+            {
+                result.Price = rule.FirstPrice;
+            }
             return Json(result, JsonRequestBehavior.AllowGet);
         }
 

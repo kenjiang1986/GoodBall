@@ -75,6 +75,11 @@ namespace Web.Controllers
         public JsonResult GetUserPromotes(long userId, int promoteType)
         {
             var result = UserService.Instance.GetUserPromoteList(userId, promoteType);
+            var firstPrice = PromoteService.Instance.GetDiscountPrice();
+            if (firstPrice > 0)
+            {
+                result.ForEach(x => x.Price = firstPrice);
+            }
             return Json(new WechatResponse()
             {
                 data = result
@@ -90,6 +95,11 @@ namespace Web.Controllers
         public JsonResult GetUserPublishPromotes(long userId, int promoteType)
         {
             var result = UserService.Instance.GetUserPromoteList(userId, promoteType);
+            var firstPrice = PromoteService.Instance.GetDiscountPrice();
+            if (firstPrice > 0)
+            {
+                result.ForEach(x => x.Price = firstPrice);
+            }
             return Json(new WechatResponse()
             {
                 data = result
@@ -112,6 +122,11 @@ namespace Web.Controllers
                     break;
             }
             var result = PromoteService.Instance.GetPromoteListByPage(new PromoteCond() { RaceType = raceType, PromoteType = promoteType }, size, index, out total);
+            var firstPrice = PromoteService.Instance.GetDiscountPrice();
+            if (firstPrice > 0)
+            {
+                result.ForEach(x => x.Price = firstPrice);
+            }
             var user = UserService.GetCurrentUser();
             return Json(new WechatResponse()
             {

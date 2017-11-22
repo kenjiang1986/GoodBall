@@ -281,7 +281,7 @@ namespace Service
         /// <returns></returns>
         public List<PromoteDto> GetUserPromoteList(long userId, int promoteType)
         {
-            var list = userRepository.Source.Where(x => x.Id == userId).FirstOrDefault().PromoteList.Where(x => x.PromoteType == promoteType).ToList();
+            var list = userRepository.Source.FirstOrDefault(x => x.Id == userId).PromoteList.Where(x => x.PromoteType == promoteType).ToList();
             return list.ToListModel<Promote, PromoteDto>();
         }
 
