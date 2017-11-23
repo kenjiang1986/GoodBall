@@ -94,7 +94,7 @@ namespace Web.Controllers
         /// <returns></returns>
         public JsonResult GetUserPublishPromotes(long userId, int promoteType)
         {
-            var result = UserService.Instance.GetUserPromoteList(userId, promoteType);
+            var result = UserService.Instance.GetUserPublishList(userId, promoteType);
             var firstPrice = PromoteService.Instance.GetDiscountPrice();
             if (firstPrice > 0)
             {
